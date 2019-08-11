@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
 
-function App() {
+import { compose, withHandlers, withState } from 'recompose'
+
+import React from 'react'
+
+function App({ items, onKeyDown, onInputChange, onItemAdd, setValue, value }) {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <input
+          type="text"
+          value={value}
+          onChange={onInputChange}
+          onKeyDown={onKeyDown}
+        />
+        <button type="submit " onClick={onItemAdd}>
+          ADD
+        </button>
       </header>
+      <div>Packliste: </div>
+      <div>
+        {items.map((item, key) => (
+          <div key={key}>{item}</div>
+        ))}
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default compose(
+  withState('value', 'setValue', 'something'),
+  withState('items', 'setItems', []),
+  withHandlers({
+    onItemAdd: ({ items, setItems, setValue, value }) => () => {
+      setItems([...items, value])
+      setValue('')
+    },
+  }),
+  withHandlers({
+    onKeyDown: ({ onItemAdd }) => ({ keyCode }) => {
+      if (keyCode === 13) {
+        onItemAdd()
+      }
+    },
+    onInputChange: ({ setValue }) => ({ target }) => {
+      setValue(target.value)
+    },
+  })
+)(App)
