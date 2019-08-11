@@ -49,6 +49,9 @@ export default compose(
   withState('items', 'setItems', []),
   withHandlers({
     onItemAdd: ({ items, setItems, setValue, value }) => () => {
+      if (!value) {
+        return
+      }
       const item = {
         name: value,
         id: uniqueId(),
