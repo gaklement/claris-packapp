@@ -3,10 +3,20 @@ import './App.css'
 import { compose, withHandlers, withState } from 'recompose'
 
 import React from 'react'
+import { defaultStyle } from 'substyle'
+import { uniqueId } from 'lodash'
 
-function App({ items, onKeyDown, onInputChange, onItemAdd, setValue, value }) {
+function App({
+  items,
+  onKeyDown,
+  onInputChange,
+  onItemAdd,
+  onItemRemove,
+  style,
+  value,
+}) {
   return (
-    <div className="App">
+    <div {...style} className="App">
       <header className="App-header">
         <input
           type="text"
@@ -18,23 +28,37 @@ function App({ items, onKeyDown, onInputChange, onItemAdd, setValue, value }) {
           ADD
         </button>
       </header>
-      <div>Packliste: </div>
+      <h2>Packliste:</h2>
       <div>
         {items.map((item, key) => (
-          <div key={key}>{item}</div>
+          <div key={key}>
+            <button onClick={() => onItemRemove(item)}>Remove</button>
+            <div {...style('itemName')}>{item.name}</div>
+          </div>
         ))}
       </div>
     </div>
   )
 }
+const styled = defaultStyle(() => ({
+  itemName: { display: 'inline' },
+}))
 
 export default compose(
-  withState('value', 'setValue', 'something'),
+  withState('value', 'setValue', 'Socken'),
   withState('items', 'setItems', []),
   withHandlers({
     onItemAdd: ({ items, setItems, setValue, value }) => () => {
-      setItems([...items, value])
+      const item = {
+        name: value,
+        id: uniqueId(),
+      }
+      setItems([...items, item])
       setValue('')
+    },
+    onItemRemove: ({ items, setItems }) => ev => {
+      const updatedItems = items.filter(item => item.name !== ev.name)
+      setItems(updatedItems)
     },
   }),
   withHandlers({
@@ -46,5 +70,6 @@ export default compose(
     onInputChange: ({ setValue }) => ({ target }) => {
       setValue(target.value)
     },
-  })
+  }),
+  styled
 )(App)
