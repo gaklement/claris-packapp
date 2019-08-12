@@ -3,6 +3,7 @@ import './App.css'
 import { compose, withHandlers, withState } from 'recompose'
 
 import React from 'react'
+import Wizard from './Wizard'
 import { defaultStyle } from 'substyle'
 import { uniqueId } from 'lodash'
 
@@ -48,6 +49,7 @@ function App({
           </div>
         ))}
       </div>
+      <Wizard />
     </div>
   )
 }
