@@ -7,23 +7,34 @@ import { defaultStyle } from 'substyle'
 import { uniqueId } from 'lodash'
 
 function App({
+  amount,
   items,
+  onAmountChange,
   onKeyDown,
   onInputChange,
   onItemAdd,
   onItemRemove,
   style,
-  value,
+  itemName,
 }) {
   return (
     <div {...style} className="App">
       <header className="App-header">
-        <input
-          type="text"
-          value={value}
-          onChange={onInputChange}
-          onKeyDown={onKeyDown}
-        />
+        <div>
+          <input
+            {...style('amount')}
+            min={1}
+            type="number"
+            value={amount}
+            onChange={onAmountChange}
+          />
+          <input
+            type="text"
+            value={itemName}
+            onChange={onInputChange}
+            onKeyDown={onKeyDown}
+          />
+        </div>
         <button type="submit " onClick={onItemAdd}>
           ADD
         </button>
@@ -33,7 +44,7 @@ function App({
         {items.map((item, key) => (
           <div key={key}>
             <button onClick={() => onItemRemove(item)}>Remove</button>
-            <div {...style('itemName')}>{item.name}</div>
+            <div {...style('itemName')}>{`${item.amount} ${item.name}`}</div>
           </div>
         ))}
       </div>
@@ -41,27 +52,46 @@ function App({
   )
 }
 const styled = defaultStyle(() => ({
+  amount: {
+    width: 40,
+  },
   itemName: { display: 'inline' },
 }))
 
 export default compose(
-  withState('value', 'setValue', 'Socken'),
+  withState('itemName', 'setItemName', 'Socken'),
+  withState('amount', 'setAmount', 1),
   withState('items', 'setItems', []),
   withHandlers({
-    onItemAdd: ({ items, setItems, setValue, value }) => () => {
-      if (!value) {
+    onItemAdd: ({
+      amount,
+      items,
+      setAmount,
+      setItems,
+      setItemName,
+      itemName,
+    }) => () => {
+      if (!itemName) {
         return
       }
       const item = {
-        name: value,
+        name: itemName,
+        amount,
         id: uniqueId(),
       }
       setItems([...items, item])
-      setValue('')
+      setItemName('')
+      setAmount(1)
     },
-    onItemRemove: ({ items, setItems }) => ev => {
-      const updatedItems = items.filter(item => item.name !== ev.name)
+    onItemRemove: ({ items, setItems }) => removedItem => {
+      const updatedItems = items.filter(item => item.name !== removedItem.name)
       setItems(updatedItems)
+    },
+    onInputChange: ({ setItemName }) => ({ target }) => {
+      setItemName(target.value)
+    },
+    onAmountChange: ({ setAmount }) => ({ target }) => {
+      setAmount(target.value)
     },
   }),
   withHandlers({
@@ -69,9 +99,6 @@ export default compose(
       if (keyCode === 13) {
         onItemAdd()
       }
-    },
-    onInputChange: ({ setValue }) => ({ target }) => {
-      setValue(target.value)
     },
   }),
   styled
