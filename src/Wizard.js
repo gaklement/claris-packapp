@@ -4,18 +4,21 @@ import React from 'react'
 import { defaultStyle } from 'substyle'
 import wizardQuestions from './wizardQuestions'
 
-function Wizard({ onClick, style, wizardActive }) {
+function Wizard({ currentQuestionId, onClick, style, wizardActive }) {
   return (
     <div {...style()}>
       <button onClick={onClick}>Wizard</button>
       {wizardActive && (
         <div {...style('container')}>
-          {wizardQuestions.map((wizardQuestion, questionKey) => (
-            <div key={questionKey}>
-              <div>{wizardQuestion.question}</div>
-              {wizardQuestion.answers.map((answer, answerKey) => (
-                <div key={answerKey}>{answer}</div>
-              ))}
+          {wizardQuestions[currentQuestionId].question}
+          {wizardQuestions[currentQuestionId].answers.map((answer, key) => (
+            <div
+              key={key}
+              {...style('answer')}
+              onClick={ev => console.log(ev.target.value)}
+            >
+              <input type="radio" />
+              <div>{answer}</div>
             </div>
           ))}
         </div>
@@ -30,10 +33,14 @@ const styled = defaultStyle(() => ({
     backgroundColor: 'lightblue',
     margin: 'auto',
   },
+  answer: {
+    display: 'flex',
+  },
 }))
 
 export default compose(
   withState('wizardActive', 'setWizardActive', false),
+  withState('currentQuestionId', 'setCurrentQuestionId', 0),
   withHandlers({
     onClick: ({ setWizardActive }) => () => {
       setWizardActive(true)
