@@ -13,32 +13,40 @@ function Wizard({
   setCurrentQuestionId,
   style,
 }) {
+  console.log('given', givenAnswers)
   return (
     <div {...style}>
-      {wizardQuestions[currentQuestionId].question}
-      {wizardQuestions[currentQuestionId].answers.map((answer, key) => (
-        <div key={key} {...style('answer')}>
-          <input
-            type="radio"
-            name="answer"
-            value={key}
-            onClick={() => setPendingAnswer(key)}
-          />
-          <div>{answer}</div>
-        </div>
-      ))}
-      <button
-        onClick={ev => {
-          setGivenAnswers({
-            question: currentQuestionId,
-            answered: pendingAnswer,
-          })
-          setCurrentQuestionId(currentQuestionId + 1)
-        }}
-        type="text"
-      >
-        Next
-      </button>
+      {wizardQuestions[currentQuestionId] &&
+        wizardQuestions[currentQuestionId].question}
+      {wizardQuestions[currentQuestionId] &&
+        wizardQuestions[currentQuestionId].answers.map((answer, key) => (
+          <div key={key} {...style('answer')}>
+            <input
+              type="radio"
+              name="answer"
+              value={key}
+              onClick={() => setPendingAnswer(key)}
+            />
+            <div>{answer}</div>
+          </div>
+        ))}
+      {wizardQuestions[currentQuestionId] && (
+        <button
+          onClick={ev => {
+            setGivenAnswers([
+              ...givenAnswers,
+              {
+                question: currentQuestionId,
+                answered: pendingAnswer,
+              },
+            ])
+            setCurrentQuestionId(currentQuestionId + 1)
+          }}
+          type="text"
+        >
+          Next
+        </button>
+      )}
     </div>
   )
 }
