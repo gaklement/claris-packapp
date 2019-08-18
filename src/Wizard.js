@@ -4,17 +4,13 @@ import React from 'react'
 import { defaultStyle } from 'substyle'
 import wizardQuestions from './wizardQuestions'
 
-function Wizard({ currentQuestionId, onClick, style, wizardActive }) {
+function Wizard({ currentQuestionId, setGivenAnswers, style }) {
   return (
     <div {...style}>
       {wizardQuestions[currentQuestionId].question}
       {wizardQuestions[currentQuestionId].answers.map((answer, key) => (
-        <div
-          key={key}
-          {...style('answer')}
-          onClick={ev => console.log(ev.target.value)}
-        >
-          <input type="radio" />
+        <div key={key} {...style('answer')}>
+          <input type="radio" name="answer" value={`answer-${key}`} />
           <div>{answer}</div>
         </div>
       ))}
@@ -34,5 +30,6 @@ const styled = defaultStyle(() => ({
 
 export default compose(
   withState('currentQuestionId', 'setCurrentQuestionId', 0),
+  withState('givenAnswers', 'setGivenAnswers', []),
   styled
 )(Wizard)
