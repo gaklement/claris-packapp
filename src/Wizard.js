@@ -33,6 +33,7 @@ function Wizard({
             question: currentQuestionId,
             answered: pendingAnswer,
           })
+          setCurrentQuestionId(currentQuestionId + 1)
         }}
         type="text"
       >
