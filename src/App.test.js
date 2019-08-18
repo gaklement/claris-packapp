@@ -1,9 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { configure, mount } from 'enzyme'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
+import Adapter from 'enzyme-adapter-react-16'
+import App from './App'
+import React from 'react'
+
+configure({ adapter: new Adapter() })
+
+describe('App', () => {
+  let component
+  beforeEach(() => {
+    component = mount(<App />)
+  })
+  it('should be possible to change the amount', () => {
+    console.log(component)
+  })
+})
