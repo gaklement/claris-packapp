@@ -36,12 +36,12 @@ function App({
             onKeyDown={onKeyDown}
           />
         </div>
-        <button type="submit " onClick={onItemAdd}>
+        <button type="submit" onClick={onItemAdd}>
           ADD
         </button>
       </header>
       <h2>Packliste:</h2>
-      <div>
+      <div id="items">
         {items.map((item, key) => (
           <div key={key}>
             <button onClick={() => onItemRemove(item)}>Remove</button>
