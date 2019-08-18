@@ -3,6 +3,7 @@ import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import App from './App'
 import React from 'react'
+import Wizard from './Wizard'
 
 configure({ adapter: new Adapter() })
 
@@ -53,5 +54,14 @@ describe('App', () => {
         .filter({ id: 'items' })
         .text()
     ).toContain('8 T-Shirts')
+  })
+
+  it.only('should start the wizard when the button is clicked', () => {
+    component
+      .find('button')
+      .filter({ id: 'wizard' })
+      .prop('onClick')()
+
+    expect(Wizard).toBeTruthy()
   })
 })

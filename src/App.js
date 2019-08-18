@@ -9,14 +9,16 @@ import { uniqueId } from 'lodash'
 
 function App({
   amount,
+  itemName,
   items,
   onAmountChange,
   onKeyDown,
   onInputChange,
   onItemAdd,
   onItemRemove,
+  setWizardActive,
   style,
-  itemName,
+  wizardActive,
 }) {
   return (
     <div {...style} className="App">
@@ -49,7 +51,13 @@ function App({
           </div>
         ))}
       </div>
-      <Wizard />
+      {wizardActive ? (
+        <Wizard />
+      ) : (
+        <button id="wizard" onClick={() => setWizardActive(true)}>
+          Start wizard
+        </button>
+      )}
     </div>
   )
 }
@@ -64,6 +72,7 @@ export default compose(
   withState('itemName', 'setItemName', 'Socken'),
   withState('amount', 'setAmount', 1),
   withState('items', 'setItems', []),
+  withState('wizardActive', 'setWizardActive', false),
   withHandlers({
     onItemAdd: ({
       amount,
