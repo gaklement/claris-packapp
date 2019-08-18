@@ -13,7 +13,8 @@ function Wizard({
   setCurrentQuestionId,
   style,
 }) {
-  console.log('given', givenAnswers)
+  console.log('pend', pendingAnswer)
+  const wizardEnd = !wizardQuestions[currentQuestionId]
   return (
     <div {...style}>
       {wizardQuestions[currentQuestionId] &&
@@ -24,19 +25,33 @@ function Wizard({
             <input
               type="radio"
               name="answer"
-              value={key}
-              onClick={() => setPendingAnswer(key)}
+              value={answer}
+              onClick={() => setPendingAnswer(answer)}
             />
             <div>{answer}</div>
           </div>
         ))}
-      {wizardQuestions[currentQuestionId] && (
+      {wizardEnd ? (
+        <div>
+          Done:
+          {givenAnswers.map((answer, key) => {
+            const question = wizardQuestions.find(wizardQuestion => {
+              return wizardQuestion.id === answer.questionId
+            })
+
+            const mappedItems = question.itemsMap.find(map => {
+              return map.id === answer.answered
+            })
+            return mappedItems.items.map(item => <div key={key}>{item}</div>)
+          })}
+        </div>
+      ) : (
         <button
           onClick={ev => {
             setGivenAnswers([
               ...givenAnswers,
               {
-                question: currentQuestionId,
+                questionId: currentQuestionId,
                 answered: pendingAnswer,
               },
             ])
