@@ -13,24 +13,28 @@ function Wizard({
   setCurrentQuestionId,
   style,
 }) {
-  console.log('pend', pendingAnswer)
+  const currentQuestion =
+    wizardQuestions[currentQuestionId] &&
+    wizardQuestions[currentQuestionId].question
+  const currentAnswers =
+    wizardQuestions[currentQuestionId] &&
+    wizardQuestions[currentQuestionId].answers
   const wizardEnd = !wizardQuestions[currentQuestionId]
   return (
     <div {...style}>
-      {wizardQuestions[currentQuestionId] &&
-        wizardQuestions[currentQuestionId].question}
-      {wizardQuestions[currentQuestionId] &&
-        wizardQuestions[currentQuestionId].answers.map((answer, key) => (
-          <div key={key} {...style('answer')}>
-            <input
-              type="radio"
-              name="answer"
-              value={answer}
-              onClick={() => setPendingAnswer(answer)}
-            />
-            <div>{answer}</div>
-          </div>
-        ))}
+      {currentQuestion}
+      {currentAnswers.map((answer, key) => (
+        <div key={answer} {...style('answer')}>
+          <input
+            key={answer}
+            type="radio"
+            name="answer"
+            value={answer}
+            onClick={setPendingAnswer(answer)}
+          />
+          <div>{answer}</div>
+        </div>
+      ))}
       {wizardEnd ? (
         <div>
           Done:
@@ -42,7 +46,12 @@ function Wizard({
             const mappedItems = question.itemsMap.find(map => {
               return map.id === answer.answered
             })
-            return mappedItems.items.map(item => <div key={key}>{item}</div>)
+            return (
+              mappedItems &&
+              mappedItems.items.map(item => (
+                <div key={`key-${item}`}>{item}</div>
+              ))
+            )
           })}
         </div>
       ) : (
