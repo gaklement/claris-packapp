@@ -1,4 +1,4 @@
-import { compose, withState } from 'recompose'
+import { compose, withHandlers, withState } from 'recompose'
 
 import React from 'react'
 import { defaultStyle } from 'substyle'
@@ -7,34 +7,29 @@ import wizardQuestions from './wizardQuestions'
 function Wizard({
   currentQuestionId,
   givenAnswers,
+  onNextClick,
   pendingAnswer,
-  setGivenAnswers,
   setPendingAnswer,
-  setCurrentQuestionId,
   style,
 }) {
-  const currentQuestion =
-    wizardQuestions[currentQuestionId] &&
-    wizardQuestions[currentQuestionId].question
-  const currentAnswers =
-    wizardQuestions[currentQuestionId] &&
-    wizardQuestions[currentQuestionId].answers
   const wizardEnd = !wizardQuestions[currentQuestionId]
+
   return (
     <div {...style}>
-      {currentQuestion}
-      {currentAnswers.map((answer, key) => (
-        <div key={answer} {...style('answer')}>
-          <input
-            key={answer}
-            type="radio"
-            name="answer"
-            value={answer}
-            onClick={setPendingAnswer(answer)}
-          />
-          <div>{answer}</div>
-        </div>
-      ))}
+      {!wizardEnd && wizardQuestions[currentQuestionId].question}
+      {!wizardEnd &&
+        wizardQuestions[currentQuestionId].answers.map((answer, key) => (
+          <div key={answer} {...style('answer')}>
+            <input
+              key={answer}
+              type="radio"
+              name="answer"
+              value={answer}
+              onClick={() => setPendingAnswer(answer)}
+            />
+            <div>{answer}</div>
+          </div>
+        ))}
       {wizardEnd ? (
         <div>
           Done:
@@ -55,19 +50,7 @@ function Wizard({
           })}
         </div>
       ) : (
-        <button
-          onClick={ev => {
-            setGivenAnswers([
-              ...givenAnswers,
-              {
-                questionId: currentQuestionId,
-                answered: pendingAnswer,
-              },
-            ])
-            setCurrentQuestionId(currentQuestionId + 1)
-          }}
-          type="text"
-        >
+        <button onClick={onNextClick} type="text" disabled={!pendingAnswer}>
           Next
         </button>
       )}
@@ -89,5 +72,25 @@ export default compose(
   withState('currentQuestionId', 'setCurrentQuestionId', 0),
   withState('givenAnswers', 'setGivenAnswers', []),
   withState('pendingAnswer', 'setPendingAnswer'),
+  withHandlers({
+    onNextClick: ({
+      currentQuestionId,
+      givenAnswers,
+      pendingAnswer,
+      setCurrentQuestionId,
+      setGivenAnswers,
+      setPendingAnswer,
+    }) => () => {
+      setGivenAnswers([
+        ...givenAnswers,
+        {
+          questionId: currentQuestionId,
+          answered: pendingAnswer,
+        },
+      ])
+      setCurrentQuestionId(currentQuestionId + 1)
+      setPendingAnswer('')
+    },
+  }),
   styled
 )(Wizard)
