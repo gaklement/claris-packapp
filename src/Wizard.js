@@ -13,10 +13,11 @@ function Wizard({
   style,
 }) {
   const wizardEnd = !wizardQuestions[currentQuestionId]
-
   return (
     <div {...style}>
-      {!wizardEnd && wizardQuestions[currentQuestionId].question}
+      {!wizardEnd && (
+        <div id="question">wizardQuestions[currentQuestionId].question</div>
+      )}
       {!wizardEnd &&
         wizardQuestions[currentQuestionId].answers.map((answer, key) => (
           <div key={answer} {...style('answer')}>
@@ -50,7 +51,12 @@ function Wizard({
           })}
         </div>
       ) : (
-        <button onClick={onNextClick} type="text" disabled={!pendingAnswer}>
+        <button
+          id="next"
+          onClick={onNextClick}
+          type="text"
+          disabled={!pendingAnswer}
+        >
           Next
         </button>
       )}
