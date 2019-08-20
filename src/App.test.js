@@ -1,11 +1,7 @@
-import { configure, mount } from 'enzyme'
-
-import Adapter from 'enzyme-adapter-react-16'
 import App from './App'
 import React from 'react'
 import Wizard from './Wizard'
-
-configure({ adapter: new Adapter() })
+import { mount } from 'enzyme'
 
 describe('App', () => {
   const findAmountField = () =>
@@ -56,12 +52,13 @@ describe('App', () => {
     ).toContain('8 T-Shirts')
   })
 
-  it.only('should start the wizard when the button is clicked', () => {
+  it('should start the wizard when the button is clicked', () => {
     component
       .find('button')
       .filter({ id: 'wizard' })
       .prop('onClick')()
 
-    expect(Wizard).toBeTruthy()
+    component.update()
+    expect(component.find(Wizard)).toExist()
   })
 })

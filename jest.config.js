@@ -1,5 +1,3 @@
 module.exports = {
-  jest: {
-    setupFilesAfterEnv: ['./src/setupTests.js'],
-  },
+  setupFilesAfterEnv: ['./src/setupTests.js'],
 }

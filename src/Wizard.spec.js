@@ -1,11 +1,7 @@
-import { configure, mount } from 'enzyme'
-
-import Adapter from 'enzyme-adapter-react-16'
 import React from 'react'
 import Wizard from './Wizard'
+import { mount } from 'enzyme'
 import wizardquestions from './wizardQuestions'
-
-configure({ adapter: new Adapter() })
 
 describe('Wizard', () => {
   let component
