@@ -6,7 +6,6 @@ import ItemList from './ItemList'
 import React from 'react'
 import Wizard from './Wizard'
 import { defaultStyle } from 'substyle'
-import { uniqueId } from 'lodash'
 
 function App({
   itemName,
@@ -70,7 +69,7 @@ export default compose(
       setItemName('')
     },
     onItemRemove: ({ items, setItems }) => removedItem => {
-      const updatedItems = items.filter(item => item.name !== removedItem.name)
+      const updatedItems = items.filter(item => item !== removedItem)
       setItems(updatedItems)
     },
     onInputChange: ({ setItemName }) => ({ target }) => {
