@@ -4,27 +4,11 @@ import Wizard from './Wizard'
 import { mount } from 'enzyme'
 
 describe('App', () => {
-  const findAmountField = () =>
-    component.find('input').filter({
-      type: 'number',
-    })
   const findItemField = () => component.find('input').filter({ type: 'text' })
 
   let component
   beforeEach(() => {
     component = mount(<App />)
-  })
-
-  it('should show 1 as amount default', () => {
-    expect(findAmountField().prop('value')).toBe(1)
-  })
-
-  it('should be possible to change the amount', () => {
-    findAmountField().prop('onChange')({ target: { value: 4 } })
-
-    component.update()
-
-    expect(findAmountField().prop('value')).toBe(4)
   })
 
   it('should be possible to enter an item name', () => {
@@ -36,7 +20,6 @@ describe('App', () => {
   })
 
   it('should be possible to add an item to the list', () => {
-    findAmountField().prop('onChange')({ target: { value: 8 } })
     findItemField().prop('onChange')({ target: { value: 'T-Shirts' } })
 
     component
@@ -49,7 +32,7 @@ describe('App', () => {
         .find('div')
         .filter({ id: 'items' })
         .text()
-    ).toContain('8 T-Shirts')
+    ).toContain('T-Shirts')
   })
 
   it('should start the wizard when the button is clicked', () => {

@@ -8,10 +8,8 @@ import { defaultStyle } from 'substyle'
 import { uniqueId } from 'lodash'
 
 function App({
-  amount,
   itemName,
   items,
-  onAmountChange,
   onKeyDown,
   onInputChange,
   onItemAdd,
@@ -24,13 +22,6 @@ function App({
     <div {...style} className="App">
       <header className="App-header">
         <div>
-          <input
-            {...style('amount')}
-            min={1}
-            type="number"
-            value={amount}
-            onChange={onAmountChange}
-          />
           <input
             type="text"
             value={itemName}
@@ -47,7 +38,7 @@ function App({
         {items.map((item, key) => (
           <div key={key}>
             <button onClick={() => onItemRemove(item)}>Remove</button>
-            <div {...style('itemName')}>{`${item.amount} ${item.name}`}</div>
+            <div {...style('itemName')}>{item.name}</div>
           </div>
         ))}
       </div>
@@ -62,37 +53,24 @@ function App({
   )
 }
 const styled = defaultStyle(() => ({
-  amount: {
-    width: 40,
-  },
   itemName: { display: 'inline' },
 }))
 
 export default compose(
   withState('itemName', 'setItemName', 'Socken'),
-  withState('amount', 'setAmount', 1),
   withState('items', 'setItems', []),
   withState('wizardActive', 'setWizardActive', false),
   withHandlers({
-    onItemAdd: ({
-      amount,
-      items,
-      setAmount,
-      setItems,
-      setItemName,
-      itemName,
-    }) => () => {
+    onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
       if (!itemName) {
         return
       }
       const item = {
         name: itemName,
-        amount,
         id: uniqueId(),
       }
       setItems([...items, item])
       setItemName('')
-      setAmount(1)
     },
     onItemRemove: ({ items, setItems }) => removedItem => {
       const updatedItems = items.filter(item => item.name !== removedItem.name)
@@ -100,9 +78,6 @@ export default compose(
     },
     onInputChange: ({ setItemName }) => ({ target }) => {
       setItemName(target.value)
-    },
-    onAmountChange: ({ setAmount }) => ({ target }) => {
-      setAmount(target.value)
     },
   }),
   withHandlers({
