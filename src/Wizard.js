@@ -1,8 +1,8 @@
 import { compose, withHandlers, withState } from 'recompose'
+import { isNil, uniqueId } from 'lodash'
 
 import React from 'react'
 import { defaultStyle } from 'substyle'
-import { isNil } from 'lodash'
 import wizardQuestions from './wizardQuestions'
 
 function Wizard({
@@ -71,8 +71,9 @@ export default compose(
       setPendingAnswer,
     }) => () => {
       const options = wizardQuestions[currentQuestionId].answers
-      const mappedItems = options.find(option => option.id === pendingAnswer)
-        .items
+      const mappedItems = addId(
+        options.find(option => option.id === pendingAnswer).items
+      )
       const wizardEnd = !wizardQuestions[currentQuestionId + 1]
 
       if (wizardEnd) {
@@ -86,3 +87,7 @@ export default compose(
   }),
   styled
 )(Wizard)
+
+function addId(mappedItems) {
+  return mappedItems.map(itemName => ({ id: uniqueId(), name: itemName }))
+}

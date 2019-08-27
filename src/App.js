@@ -6,6 +6,7 @@ import ItemList from './ItemList'
 import React from 'react'
 import Wizard from './Wizard'
 import { defaultStyle } from 'substyle'
+import { uniqueId } from 'lodash'
 
 function App({
   itemName,
@@ -65,7 +66,13 @@ export default compose(
       if (!itemName) {
         return
       }
-      setItems([...items, itemName])
+
+      const item = {
+        id: uniqueId(),
+        name: itemName,
+      }
+
+      setItems([...items, item])
       setItemName('')
     },
     onItemRemove: ({ items, setItems }) => removedItem => {
