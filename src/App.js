@@ -2,6 +2,7 @@ import './App.css'
 
 import { compose, withHandlers, withState } from 'recompose'
 
+import ItemList from './ItemList'
 import React from 'react'
 import Wizard from './Wizard'
 import { defaultStyle } from 'substyle'
@@ -35,12 +36,13 @@ function App({
       </header>
       <h2>Packliste:</h2>
       <div id="items">
-        {items.map((item, key) => (
+        {/* {items.map((item, key) => (
           <div key={key}>
             <button onClick={() => onItemRemove(item)}>Remove</button>
             <div {...style('itemName')}>{item.name}</div>
           </div>
-        ))}
+        ))} */}
+        <ItemList items={items} onItemRemove={onItemRemove} />
       </div>
       {wizardActive ? (
         <Wizard />
