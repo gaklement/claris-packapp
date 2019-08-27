@@ -15,6 +15,7 @@ function App({
   onInputChange,
   onItemAdd,
   onItemRemove,
+  setItems,
   setWizardActive,
   style,
   wizardActive,
@@ -36,16 +37,14 @@ function App({
       </header>
       <h2>Packliste:</h2>
       <div id="items">
-        {/* {items.map((item, key) => (
-          <div key={key}>
-            <button onClick={() => onItemRemove(item)}>Remove</button>
-            <div {...style('itemName')}>{item.name}</div>
-          </div>
-        ))} */}
         <ItemList items={items} onItemRemove={onItemRemove} />
       </div>
       {wizardActive ? (
-        <Wizard />
+        <Wizard
+          onWizardComplete={mappedItems => {
+            setItems([...items, ...mappedItems])
+          }}
+        />
       ) : (
         <button id="wizard" onClick={() => setWizardActive(true)}>
           Start wizard
@@ -67,11 +66,7 @@ export default compose(
       if (!itemName) {
         return
       }
-      const item = {
-        name: itemName,
-        id: uniqueId(),
-      }
-      setItems([...items, item])
+      setItems([...items, itemName])
       setItemName('')
     },
     onItemRemove: ({ items, setItems }) => removedItem => {

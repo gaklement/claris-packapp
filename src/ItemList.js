@@ -5,7 +5,7 @@ function ItemList({ items, onItemRemove, style }) {
   return items.map((item, key) => (
     <div key={key}>
       <button onClick={() => onItemRemove(item)}>Remove</button>
-      <div {...style('itemName')}>{item.name}</div>
+      <div {...style('itemName')}>{item}</div>
     </div>
   ))
 }

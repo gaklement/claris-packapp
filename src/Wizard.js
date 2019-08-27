@@ -2,60 +2,42 @@ import { compose, withHandlers, withState } from 'recompose'
 
 import React from 'react'
 import { defaultStyle } from 'substyle'
+import { isNil } from 'lodash'
 import wizardQuestions from './wizardQuestions'
 
 function Wizard({
   currentQuestionId,
-  givenAnswers,
   onNextClick,
   pendingAnswer,
   setPendingAnswer,
   style,
 }) {
   const wizardEnd = !wizardQuestions[currentQuestionId]
+
   return (
     <div {...style}>
       {!wizardEnd && (
-        <div id="question">wizardQuestions[currentQuestionId].question</div>
+        <div id="question">{`${wizardQuestions[currentQuestionId].question}`}</div>
       )}
       {!wizardEnd &&
         wizardQuestions[currentQuestionId].answers.map((answer, key) => (
-          <div key={answer} {...style('answer')}>
+          <div key={key} {...style('answer')}>
             <input
-              key={answer}
+              key={answer.id}
               type="radio"
               name="answer"
-              value={answer}
-              onClick={() => setPendingAnswer(answer)}
+              value={answer.id}
+              onClick={() => setPendingAnswer(answer.id)}
             />
-            <div>{answer}</div>
+            <div>{answer.option}</div>
           </div>
         ))}
-      {wizardEnd ? (
-        <div>
-          Done:
-          {givenAnswers.map((answer, key) => {
-            const question = wizardQuestions.find(wizardQuestion => {
-              return wizardQuestion.id === answer.questionId
-            })
-
-            const mappedItems = question.itemsMap.find(map => {
-              return map.id === answer.answered
-            })
-            return (
-              mappedItems &&
-              mappedItems.items.map(item => (
-                <div key={`key-${item}`}>{item}</div>
-              ))
-            )
-          })}
-        </div>
-      ) : (
+      {!wizardEnd && (
         <button
           id="next"
           onClick={onNextClick}
           type="text"
-          disabled={!pendingAnswer}
+          disabled={isNil(pendingAnswer)}
         >
           Next
         </button>
@@ -82,20 +64,24 @@ export default compose(
     onNextClick: ({
       currentQuestionId,
       givenAnswers,
+      onWizardComplete,
       pendingAnswer,
       setCurrentQuestionId,
       setGivenAnswers,
       setPendingAnswer,
     }) => () => {
-      setGivenAnswers([
-        ...givenAnswers,
-        {
-          questionId: currentQuestionId,
-          answered: pendingAnswer,
-        },
-      ])
+      const options = wizardQuestions[currentQuestionId].answers
+      const mappedItems = options.find(option => option.id === pendingAnswer)
+        .items
+      const wizardEnd = !wizardQuestions[currentQuestionId + 1]
+
+      if (wizardEnd) {
+        onWizardComplete([...givenAnswers, ...mappedItems])
+      }
+
+      setGivenAnswers([...givenAnswers, ...mappedItems])
       setCurrentQuestionId(currentQuestionId + 1)
-      setPendingAnswer('')
+      setPendingAnswer(null)
     },
   }),
   styled
