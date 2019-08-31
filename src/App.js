@@ -1,9 +1,10 @@
 import './App.css'
 
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
 import ItemList from './ItemList'
 import React from 'react'
+import WelcomeScreen from './WelcomeScreen'
 import Wizard from './Wizard'
 import { defaultStyle } from 'substyle'
 import { uniqueId } from 'lodash'
@@ -17,9 +18,14 @@ function App({
   onItemRemove,
   setItems,
   setWizardActive,
+  showWelcome,
   style,
   wizardActive,
 }) {
+  if (showWelcome) {
+    return <WelcomeScreen />
+  }
+
   return (
     <div {...style} className="App">
       <header className="App-header">
@@ -61,6 +67,7 @@ export default compose(
   withState('itemName', 'setItemName', 'Socken'),
   withState('items', 'setItems', []),
   withState('wizardActive', 'setWizardActive', false),
+  withState('showWelcome', 'setShowWelcome', true),
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
       if (!itemName) {
@@ -88,6 +95,15 @@ export default compose(
       if (keyCode === 13) {
         onItemAdd()
       }
+    },
+  }),
+  lifecycle({
+    componentDidMount(props) {
+      const { setShowWelcome } = this.props
+
+      setTimeout(() => {
+        setShowWelcome(false)
+      }, 3000)
     },
   }),
   styled
