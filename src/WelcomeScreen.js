@@ -1,9 +1,10 @@
+import { compose, lifecycle } from 'recompose'
+
 import React from 'react'
-import { compose } from 'recompose'
 import { css } from 'glamor'
 import { defaultStyle } from 'substyle'
 
-const keyframes = css.keyframes({
+const hello = css.keyframes({
   from: {
     fontSize: 11,
   },
@@ -12,14 +13,26 @@ const keyframes = css.keyframes({
   },
 })
 
-function WelcomeScreen({ style }) {
+const handleContinue = window.addEventListener('keydown', () =>
+  console.log('==keydown')
+)
+
+function WelcomeScreen({ onContinue, style }) {
   return <div {...style}>HELLO</div>
 }
 
 const styled = defaultStyle(() => ({
-  animation: 'x 1.2s ease-in-out',
+  animation: '2s ease-in-out',
   animationDuration: 4000,
-  animationName: keyframes,
+  animationName: hello,
   fontSize: 200,
 }))
-export default compose(styled)(WelcomeScreen)
+
+export default compose(
+  lifecycle({
+    componentWillUnmount() {
+      window.removeEventListener('keydown', handleContinue)
+    },
+  }),
+  styled
+)(WelcomeScreen)
