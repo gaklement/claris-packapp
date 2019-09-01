@@ -30,7 +30,7 @@ function App({
     return <WelcomeScreen />
   }
 
-  if (true) {
+  if (false) {
     return <ItemList items={testData} />
   }
 
