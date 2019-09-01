@@ -115,6 +115,8 @@ export default compose(
         setTestData(values(snapshot.val()))
       })
 
+      // initializeTestData(database)
+
       setTimeout(() => {
         setShowWelcome(false)
       }, 3000)

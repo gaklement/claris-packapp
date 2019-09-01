@@ -1,8 +1,7 @@
+import data from '../data'
+
 export default function initializeTestData(database) {
-  const packages = [
-    { id: 'basics', name: 'Basics', includePackageIds: ['cosmetic'] },
-    { id: 'cosmetic', name: 'Kosmetik' },
-  ]
+  const packages = data.packages
 
   const packagesRef = database.ref('packages')
 
@@ -11,10 +10,7 @@ export default function initializeTestData(database) {
     packageRef.set(packageInstance)
   })
 
-  const items = [
-    { id: 'shoes', name: 'Schuhe', packageIds: ['basics'] },
-    { id: 'floss', name: 'Zahnseide', packageIds: ['cosmetics'] },
-  ]
+  const items = data.items
 
   const itemsRef = database.ref('items')
 
