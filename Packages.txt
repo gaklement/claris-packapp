@@ -1,0 +1,96 @@
+BASICS
+Unterwäsche
+Socken
+BH
+T-Shirt
+Pullover
+Jäckchen
+Handyladekabel
+Schminke
+Kurze Hose
+Lange Hose
+Package Kosmetik
+Package Medizin
+
+MEDIZIN
+Tabletten
+Aspirin
+
+KOSMETIK
+Zahnbürste
+Zahnpasta
+Abschminkzeug
+Wattepads
+Pinzette
+Tampons
+Zahnseide
+Mundspülung
+Bürste
+Shampoo
+Spülung
+Spiegelchen
+Wattestäbchen
+Taschentücher
+Creme
+Bodywash
+Haarspray
+Haarschaum
+Haargummis
+Haarspangen
+Pflaster
+Desinfektionsspray
+Sonnencreme
+Slipeinlagen
+Oropax
+Kontaktlinsenflüssigkeit
+
+
+STRANDURLAUB
+Bikini
+
+Strumpfhose
+Leggins
+Jogginghose
+kurze Jogginghose
+
+
+Geschenke für den wo man hinfährt
+Verpflegung
+Kissen für die Fahrt
+
+Rock
+Handtuch
+Strandhandtuch
+Schmuck
+Kosmetik
+
+
+Ticket
+Tagebuch
+Spiele
+Boombox
+Sonnenbrille
+
+Schuhe
+Kinderbespaßung
+Computer
+Adapter
+
+Bonus
+Basics
+Hochzeit
+Kurzfristig einpacken (morgens)
+Kleidung
+Kosmetik
+Medizin
+Badeurlaub
+
+
+
+packages
+    { id: 'basics', name: 'Basics, includePackageIds: [ 'cosmetic' ] }
+    { id: 'cosmetic', name: 'Kosmetik' }
+items
+   { id: 'shoes', name: 'Schuhe', packageIds: ['basics'] }
+   { id: 'floss', name: 'Zahnseide', packageIds: ['cosmetics'] }
+

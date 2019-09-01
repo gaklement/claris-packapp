@@ -1,13 +1,14 @@
 import './App.css'
 
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
+import { uniqueId, values } from 'lodash'
 
 import ItemList from './ItemList'
 import React from 'react'
 import WelcomeScreen from './WelcomeScreen'
 import Wizard from './Wizard'
+import { database } from './firebase'
 import { defaultStyle } from 'substyle'
-import { uniqueId } from 'lodash'
 
 function App({
   itemName,
@@ -20,10 +21,15 @@ function App({
   setWizardActive,
   showWelcome,
   style,
+  testData,
   wizardActive,
 }) {
   if (showWelcome) {
     return <WelcomeScreen />
+  }
+
+  if (true) {
+    return <ItemList items={testData} />
   }
 
   return (
@@ -68,6 +74,7 @@ export default compose(
   withState('items', 'setItems', []),
   withState('wizardActive', 'setWizardActive', false),
   withState('showWelcome', 'setShowWelcome', true),
+  withState('testData', 'setTestData', true), //
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
       if (!itemName) {
@@ -98,8 +105,12 @@ export default compose(
     },
   }),
   lifecycle({
-    componentDidMount(props) {
-      const { setShowWelcome } = this.props
+    componentDidMount() {
+      const { setShowWelcome, setTestData } = this.props
+      const ref = database.ref('packages')
+      ref.on('value', snapshot => {
+        setTestData(values(snapshot.val()))
+      })
 
       setTimeout(() => {
         setShowWelcome(false)
