@@ -1,7 +1,8 @@
 import { compose, withHandlers, withState } from 'recompose'
-import { isNil, uniqueId } from 'lodash'
+import { flatten, isNil, uniqueId, values } from 'lodash'
 
 import React from 'react'
+import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 import wizardQuestions from './wizardQuestions'
 
@@ -61,8 +62,31 @@ export default compose(
   withState('givenAnswers', 'setGivenAnswers', []),
   withState('pendingAnswer', 'setPendingAnswer'),
   withHandlers({
+    resolveItems: ({ givenAnswers, onWizardComplete, pendingAnswer }) => () => {
+      const packageIds = getMappedPackageIds({ givenAnswers, pendingAnswer })
+      const ref = database.ref('items')
+
+      ref.on('value', snapshot => {
+        const allItems = values(snapshot.val())
+
+        const mappedItems = allItems.filter(item => {
+          let includesPackage
+          packageIds.forEach(packageId => {
+            if (item.packageIds.includes(packageId)) {
+              includesPackage = true
+            }
+          })
+          return includesPackage
+        })
+
+        onWizardComplete(mappedItems)
+      })
+    },
+  }),
+  withHandlers({
     onNextClick: ({
       currentQuestionId,
+      resolveItems,
       givenAnswers,
       onWizardComplete,
       pendingAnswer,
@@ -70,19 +94,15 @@ export default compose(
       setGivenAnswers,
       setPendingAnswer,
     }) => () => {
-      const options = wizardQuestions[currentQuestionId].answers
-      const mappedItems = addId(
-        options.find(option => option.id === pendingAnswer).items
-      )
       const wizardEnd = !wizardQuestions[currentQuestionId + 1]
 
       if (wizardEnd) {
-        onWizardComplete([...givenAnswers, ...mappedItems])
+        resolveItems()
       }
 
-      setGivenAnswers([...givenAnswers, ...mappedItems])
-      setCurrentQuestionId(currentQuestionId + 1)
       setPendingAnswer(null)
+      setGivenAnswers([...givenAnswers, pendingAnswer])
+      setCurrentQuestionId(currentQuestionId + 1)
     },
   }),
   styled
@@ -90,4 +110,23 @@ export default compose(
 
 function addId(mappedItems) {
   return mappedItems.map(itemName => ({ id: uniqueId(), name: itemName }))
+}
+
+function getMappedPackageIds({ givenAnswers, pendingAnswer }) {
+  const answers = flatten(
+    wizardQuestions.reduce(
+      (question, currentValue) => [...question, currentValue.answers],
+      []
+    )
+  )
+
+  const matchingAnswers = answers.filter(answerOption =>
+    [...givenAnswers, pendingAnswer].includes(answerOption.id)
+  )
+
+  const packageIds = flatten(
+    matchingAnswers.map(matchingAnswer => matchingAnswer.packageIds)
+  )
+
+  return packageIds
 }

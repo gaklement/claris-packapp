@@ -1,29 +1,33 @@
 export default [
   {
     id: 0,
-    question: 'Question 0',
+    question: 'Hochzeit oder Wandern',
     answers: [
-      { id: '0-0', option: 'Answer 1-1', items: ['Socken', 'Kissen', 'Milch'] },
+      {
+        id: '0-0',
+        option: 'Hochzeit',
+        packageIds: ['wedding'],
+      },
       {
         id: '0-1',
-        option: 'Answer 1-2',
-        items: ['Schlüppi', 'Sonnenbrille', 'Handtuch'],
+        option: 'Wandern',
+        packageIds: ['hiking'],
       },
     ],
   },
   {
     id: 1,
-    question: 'Question 1',
+    question: 'Basics oder Kosmetik',
     answers: [
       {
         id: '1-0',
-        option: 'Answer 1-0',
-        items: ['Butter', 'Milch', 'Backpulver'],
+        option: 'Basics',
+        packageIds: ['basics'],
       },
       {
         id: '1-1',
-        option: 'Answer 1-1',
-        items: ['Mehl', 'Zucker', 'Eier'],
+        option: 'Kosmetik',
+        packageIds: ['cosmetics'],
       },
     ],
   },

@@ -30,10 +30,6 @@ function App({
     return <WelcomeScreen />
   }
 
-  if (false) {
-    return <ItemList items={testData} />
-  }
-
   return (
     <div {...style} className="App">
       <header className="App-header">
