@@ -10,7 +10,7 @@ import Wizard from './Wizard'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 
-// import { initializeTestData } from './dataUtils'
+// import { initializePackages } from './dataUtils'
 
 function App({
   itemName,
@@ -23,12 +23,12 @@ function App({
   setWizardActive,
   showWelcome,
   style,
-  testData,
+  packages,
   wizardActive,
 }) {
-  if (showWelcome) {
-    return <WelcomeScreen />
-  }
+  // if (showWelcome) {
+  //   return <WelcomeScreen />
+  // }
 
   return (
     <div {...style} className="App">
@@ -47,7 +47,11 @@ function App({
       </header>
       <h2>Packliste:</h2>
       <div id="items">
-        <ItemList items={items} onItemRemove={onItemRemove} />
+        <ItemList
+          items={items}
+          onItemRemove={onItemRemove}
+          packages={packages}
+        />
       </div>
       {wizardActive ? (
         <Wizard
@@ -72,7 +76,7 @@ export default compose(
   withState('items', 'setItems', []),
   withState('wizardActive', 'setWizardActive', false),
   withState('showWelcome', 'setShowWelcome', true),
-  withState('testData', 'setTestData', true), //
+  withState('packages', 'setPackages', []), //
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
       if (!itemName) {
@@ -104,14 +108,14 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { setShowWelcome, setTestData } = this.props
+      const { setShowWelcome, setPackages } = this.props
       const ref = database.ref('packages')
 
       ref.on('value', snapshot => {
-        setTestData(values(snapshot.val()))
+        setPackages(values(snapshot.val()))
       })
 
-      // initializeTestData(database)
+      // initializePackages(database)
 
       setTimeout(() => {
         setShowWelcome(false)
