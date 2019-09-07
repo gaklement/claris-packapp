@@ -16,8 +16,8 @@ function ItemList({ items, onItemRemove, packages, style }) {
             <h3>{packages.find(pack => pack.id === key).name}</h3>
             {map(category, (item, key) => (
               <div key={key}>
+                <div {...style('itemName')}>{item.name}</div>
                 <button onClick={() => onItemRemove(item)}>Remove</button>
-                <div {...style('itemName')}>{item.name}}</div>
               </div>
             ))}
           </div>
@@ -27,8 +27,22 @@ function ItemList({ items, onItemRemove, packages, style }) {
   )
 }
 
-const styled = defaultStyle(() => ({
-  itemName: { display: 'inline' },
-}))
+const styled = defaultStyle(() => {
+  const lineHeight = '24px'
+  return {
+    itemName: {
+      backgroundColor: '#ededf3',
+      color: '#848282',
+      display: 'inline-block',
+      fontSize: 14,
+      lineHeight,
+      marginBottom: 1,
+      minHeight: lineHeight,
+      textAlign: 'left',
+      verticalAlign: 'center',
+      width: 200,
+    },
+  }
+})
 
 export default styled(ItemList)
