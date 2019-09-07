@@ -13,13 +13,11 @@ function ItemList({ items, onItemRemove, packages, style }) {
       {map(groupedByCategory, (category, key) => {
         return (
           <div key={key}>
-            <div>{packages.find(pack => pack.id === key).name}</div>
+            <h3>{packages.find(pack => pack.id === key).name}</h3>
             {map(category, (item, key) => (
               <div key={key}>
                 <button onClick={() => onItemRemove(item)}>Remove</button>
-                <div {...style('itemName')}>
-                  {item.name} {item.packageIds[0]}
-                </div>
+                <div {...style('itemName')}>{item.name}}</div>
               </div>
             ))}
           </div>
