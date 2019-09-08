@@ -56,7 +56,6 @@ const styled = defaultStyle(() => {
       color: fontColor,
       display: 'inline-block',
       fontSize: 14,
-      letterSpacing: 1,
       lineHeight,
       marginBottom: 1,
       minHeight: lineHeight,

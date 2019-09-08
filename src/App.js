@@ -68,7 +68,8 @@ function App({
   )
 }
 const styled = defaultStyle(() => ({
-  fontFamily: 'Arial, Helvetica, sans-serif',
+  fontFamily: 'Inconsolata, monospace',
+
   itemName: { display: 'inline' },
 }))
 
