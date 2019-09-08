@@ -1,17 +1,24 @@
+import { compose, withHandlers, withState } from 'recompose'
 import { groupBy, map } from 'lodash'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Item from './Item'
 import React from 'react'
 import { defaultStyle } from 'substyle'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-function ItemList({ items, onItemRemove, packages, style }) {
+function ItemList({
+  checkedOffItems,
+  items,
+  onClickItemCheck,
+  onItemRemove,
+  packages,
+  style,
+}) {
   const groupedByCategory = groupBy(items, item => {
     return item.packageIds
   })
 
   return (
-    <div>
+    <div {...style}>
       {map(groupedByCategory, (category, key) => {
         return (
           <div key={key}>
@@ -20,18 +27,20 @@ function ItemList({ items, onItemRemove, packages, style }) {
                 ? packages.find(pack => pack.id === key).name
                 : 'Auf die Schnelle'}
             </h3>
-            {map(category, (item, key) => (
-              <div key={key}>
-                <div {...style('itemName')}>{item.name}</div>
-                <div {...style('remove')}>
-                  <FontAwesomeIcon
-                    {...style('icon')}
-                    icon={faTimes}
-                    onClick={() => onItemRemove(item)}
-                  />
-                </div>
-              </div>
-            ))}
+            {map(category, (item, key) => {
+              const isCheckedOff = checkedOffItems.find(
+                checkedOffItem => checkedOffItem.id === item.id
+              )
+              return (
+                <Item
+                  key={key}
+                  isCheckedOff={isCheckedOff}
+                  item={item}
+                  onClickItemCheck={onClickItemCheck}
+                  onItemRemove={onItemRemove}
+                />
+              )
+            })}
           </div>
         )
       })}
@@ -40,31 +49,30 @@ function ItemList({ items, onItemRemove, packages, style }) {
 }
 
 const styled = defaultStyle(() => {
-  const fontColor = '#848282'
-  const lineHeight = '24px'
   return {
-    remove: {
-      backgroundColor: '#ededf3',
-      color: fontColor,
-      display: 'inline-block',
-      fontSize: 14,
-      lineHeight,
-      paddingRight: 10,
-    },
-    itemName: {
-      backgroundColor: '#ededf3',
-      color: fontColor,
-      display: 'inline-block',
-      fontSize: 14,
-      lineHeight,
-      marginBottom: 1,
-      minHeight: lineHeight,
-      paddingLeft: 10,
-      textAlign: 'left',
-      verticalAlign: 'center',
-      width: 200,
-    },
+    fontSize: 14,
+    lineHeight: '24px',
   }
 })
 
-export default styled(ItemList)
+export default compose(
+  withState('checkedOffItems', 'setCheckedOffItems', []),
+  withHandlers({
+    onClickItemCheck: ({ checkedOffItems, setCheckedOffItems, items }) => (
+      clickedItem,
+      isCheckedOff
+    ) => {
+      if (!isCheckedOff) {
+        setCheckedOffItems([...checkedOffItems, clickedItem])
+        return
+      }
+
+      setCheckedOffItems(
+        checkedOffItems.filter(
+          checkedOffItem => checkedOffItem.id !== clickedItem.id
+        )
+      )
+    },
+  }),
+  styled
+)(ItemList)
