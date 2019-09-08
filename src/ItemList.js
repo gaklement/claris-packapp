@@ -30,7 +30,6 @@ function ItemList({ items, onItemRemove, packages, style }) {
                     onClick={() => onItemRemove(item)}
                   />
                 </div>
-                {/* <button onClick={() => onItemRemove(item)}>Remove</button> */}
               </div>
             ))}
           </div>
@@ -48,16 +47,20 @@ const styled = defaultStyle(() => {
       backgroundColor: '#ededf3',
       color: fontColor,
       display: 'inline-block',
+      fontSize: 14,
       lineHeight,
+      paddingRight: 10,
     },
     itemName: {
       backgroundColor: '#ededf3',
       color: fontColor,
       display: 'inline-block',
       fontSize: 14,
+      letterSpacing: 1,
       lineHeight,
       marginBottom: 1,
       minHeight: lineHeight,
+      paddingLeft: 10,
       textAlign: 'left',
       verticalAlign: 'center',
       width: 200,
