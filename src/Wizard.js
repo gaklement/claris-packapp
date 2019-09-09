@@ -63,21 +63,40 @@ export default compose(
   withState('pendingAnswer', 'setPendingAnswer'),
   withHandlers({
     resolveItems: ({ givenAnswers, onWizardComplete, pendingAnswer }) => () => {
-      const packageIds = getMappedPackageIds({ givenAnswers, pendingAnswer })
+      const packageIdsFromAnswers = getMappedPackageIds({
+        givenAnswers,
+        pendingAnswer,
+      })
+
       const ref = database.ref('items')
 
       ref.on('value', snapshot => {
         const allItems = values(snapshot.val())
 
-        const mappedItems = allItems.filter(item => {
-          let includesPackage
-          packageIds.forEach(packageId => {
-            if (item.packageIds.includes(packageId)) {
-              includesPackage = true
+        // get all the items that include one or more of the packageIds from the answers
+        // then replace the item's packageIds array with only one of packageIds from the answers
+        // so in the final packlist the items with multiple packageIds only get listed once,
+        // and can be grouped in one key later in the processing
+        const mappedItems = allItems
+          .filter(item => {
+            let includesPackage
+            packageIdsFromAnswers.forEach(packageIdsFromAnswer => {
+              if (item.packageIds.includes(packageIdsFromAnswer)) {
+                includesPackage = true
+              }
+            })
+            return includesPackage
+          })
+          .map(item => {
+            return {
+              ...item,
+              packageIds: [
+                item.packageIds.find(packageId =>
+                  packageIdsFromAnswers.includes(packageId)
+                ),
+              ],
             }
           })
-          return includesPackage
-        })
 
         onWizardComplete(mappedItems)
       })
