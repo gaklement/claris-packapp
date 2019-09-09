@@ -1,6 +1,6 @@
 const data = {
   packages: [
-    { id: 'afterSunLotion', name: 'Après sun', includePackageIds: ['beach'] },
+    { id: 'adHoc', name: 'adHoc' },
     { id: 'basics', name: 'Basics', includePackageIds: ['cosmetic'] },
     { id: 'beach', name: 'Strandurlaub' },
     { id: 'byBus', name: 'Busreise' },
@@ -12,6 +12,7 @@ const data = {
     { id: 'quietTime', name: 'Ruhe' },
   ],
   items: [
+    { id: 'afterSunLotion', name: 'Après sun', includePackageIds: ['beach'] },
     { id: 'bahnCard', name: 'Bahn-Card', packageIds: ['byTrain'] },
     { id: 'bandages', name: 'Pflaster', packageIds: ['cosmetics'] },
     { id: 'beachTowel', name: 'Strandhandtuch', packageIds: ['beach'] },
