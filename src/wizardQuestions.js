@@ -1,17 +1,22 @@
 export default [
   {
     id: 0,
-    question: 'Hochzeit oder Wandern',
+    question: 'Welches Transportmittel nimmst du?',
     answers: [
       {
-        id: '0-0',
-        option: 'Hochzeit',
-        packageIds: ['wedding'],
+        id: 'train',
+        option: 'Zug',
+        packageIds: ['byTrain'],
       },
       {
-        id: '0-1',
-        option: 'Wandern',
-        packageIds: ['hiking'],
+        id: 'airplane',
+        option: 'Flugzeug',
+        packageIds: ['byPlane'],
+      },
+      {
+        id: 'bus',
+        option: 'Bus',
+        packageIds: ['byBus'],
       },
     ],
   },
