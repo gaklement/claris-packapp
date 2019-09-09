@@ -23,9 +23,11 @@ function ItemList({
         return (
           <div key={key}>
             <h3>
-              {packages.find(pack => pack.id === key)
-                ? packages.find(pack => pack.id === key).name
-                : 'Auf die Schnelle'}
+              {packages.find(pack => pack.id === key) &&
+                packages.find(pack => pack.id === key).name
+              // : 'Auf die Schnelle'
+              // i leave the code with a bug
+              }
             </h3>
             {map(category, (item, key) => {
               const isCheckedOff = checkedOffItems.find(
