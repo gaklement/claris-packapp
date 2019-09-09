@@ -10,7 +10,7 @@ import Wizard from './Wizard'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 
-// import { initializePackages } from './dataUtils'
+// import { initializeTestData } from './dataUtils'
 
 function App({
   itemName,
@@ -88,6 +88,7 @@ export default compose(
       const item = {
         id: uniqueId(),
         name: itemName,
+        packageIds: ['adHoc'],
       }
 
       setItems([...items, item])
@@ -117,7 +118,7 @@ export default compose(
         setPackages(values(snapshot.val()))
       })
 
-      // initializePackages(database)
+      // initializeTestData(database)
 
       setTimeout(() => {
         setShowWelcome(false)
