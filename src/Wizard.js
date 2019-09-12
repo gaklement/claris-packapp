@@ -1,5 +1,5 @@
 import { compose, withHandlers, withState } from 'recompose'
-import { flatten, isNil, uniqueId, values } from 'lodash'
+import { flatten, isNil, values } from 'lodash'
 
 import React from 'react'
 import { database } from './firebase'
