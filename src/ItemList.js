@@ -17,31 +17,31 @@ function ItemList({
   packages,
   style,
 }) {
-  const groupedByCategory = groupBy(items, item => {
+  const itemGroupedByCategory = groupBy(items, item => {
     return item.packageIds
   })
 
   return (
     <div {...style}>
-      {map(groupedByCategory, (category, key) => {
-        const isCollapsed = collapsedCategories.includes(key)
+      {map(itemGroupedByCategory, (categoryGroup, categoryGroupKey) => {
+        const isCollapsed = collapsedCategories.includes(categoryGroupKey)
         return (
-          <div key={key}>
+          <div key={categoryGroupKey}>
             <div>
               <h3 {...style('title')}>
-                {packages.find(pack => pack.id === key)
-                  ? packages.find(pack => pack.id === key).name
+                {packages.find(pack => pack.id === categoryGroupKey)
+                  ? packages.find(pack => pack.id === categoryGroupKey).name
                   : 'Auf die Schnelle'}
               </h3>
               <FontAwesomeIcon
                 style={style('collapse')}
                 icon={isCollapsed ? faChevronDown : faChevronUp}
-                onClick={() => onCollapseCategory(key)}
+                onClick={() => onCollapseCategory(categoryGroupKey)}
               />
             </div>
 
             {!isCollapsed &&
-              map(category, (item, key) => {
+              map(categoryGroup, (item, key) => {
                 const isCheckedOff = checkedOffItems.find(
                   checkedOffItem => checkedOffItem.id === item.id
                 )
