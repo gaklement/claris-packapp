@@ -63,42 +63,49 @@ export default compose(
   withState('pendingAnswer', 'setPendingAnswer'),
   withHandlers({
     resolveItems: ({ givenAnswers, onWizardComplete, pendingAnswer }) => () => {
-      const packageIdsFromAnswers = getMappedPackageIds({
-        givenAnswers,
-        pendingAnswer,
-      })
+      const packagesRef = database.ref('packages')
 
-      const ref = database.ref('items')
+      packagesRef.once('value', packagesSnapshot => {
+        const packageIdsFromAnswers = getMappedPackageIds({
+          givenAnswers,
+          pendingAnswer,
+          categories: values(packagesSnapshot.val()),
+        })
 
-      ref.on('value', snapshot => {
-        const allItems = values(snapshot.val())
+        const itemsRef = database.ref('items')
 
-        // get all the items that include one or more of the packageIds from the answers
-        // then replace the item's packageIds array with only one of packageIds from the answers
-        // so in the final packlist the items with multiple packageIds only get listed once,
-        // and can be grouped in one key later in the processing
-        const mappedItems = allItems
-          .filter(item => {
-            let includesPackage
-            packageIdsFromAnswers.forEach(packageIdsFromAnswer => {
-              if (item.packageIds.includes(packageIdsFromAnswer)) {
-                includesPackage = true
+        itemsRef.once('value', itemsSnapshot => {
+          const allItems = values(itemsSnapshot.val())
+
+          // get all the items that include one or more of the packageIds from the answers
+          // then replace the item's packageIds array with only one of packageIds from the answers
+          // so in the final packlist the items with multiple packageIds only get listed once,
+          // and can be grouped in one key later in the processing
+
+          const mappedItems = allItems
+            .filter(item => {
+              let isIncludedInPackage
+
+              packageIdsFromAnswers.forEach(packageIdFromAnswers => {
+                if (item.packageIds.includes(packageIdFromAnswers)) {
+                  isIncludedInPackage = true
+                }
+              })
+              return isIncludedInPackage
+            })
+            .map(item => {
+              return {
+                ...item,
+                packageIds: [
+                  item.packageIds.find(packageId =>
+                    packageIdsFromAnswers.includes(packageId)
+                  ),
+                ],
               }
             })
-            return includesPackage
-          })
-          .map(item => {
-            return {
-              ...item,
-              packageIds: [
-                item.packageIds.find(packageId =>
-                  packageIdsFromAnswers.includes(packageId)
-                ),
-              ],
-            }
-          })
 
-        onWizardComplete(mappedItems)
+          onWizardComplete(mappedItems)
+        })
       })
     },
   }),
@@ -107,7 +114,6 @@ export default compose(
       currentQuestionId,
       resolveItems,
       givenAnswers,
-      onWizardComplete,
       pendingAnswer,
       setCurrentQuestionId,
       setGivenAnswers,
@@ -127,25 +133,39 @@ export default compose(
   styled
 )(Wizard)
 
-function addId(mappedItems) {
-  return mappedItems.map(itemName => ({ id: uniqueId(), name: itemName }))
-}
-
-function getMappedPackageIds({ givenAnswers, pendingAnswer }) {
-  const answers = flatten(
+function getMappedPackageIds({ categories, givenAnswers, pendingAnswer }) {
+  // get all possible answer options
+  const allAnswerOptions = flatten(
     wizardQuestions.reduce(
       (question, currentValue) => [...question, currentValue.answers],
       []
     )
   )
 
-  const matchingAnswers = answers.filter(answerOption =>
+  // filter for the ones that are relevant based on the given answers
+  const matchingAnswerOptions = allAnswerOptions.filter(answerOption =>
     [...givenAnswers, pendingAnswer].includes(answerOption.id)
   )
 
+  // get their packageIds
   const packageIds = flatten(
-    matchingAnswers.map(matchingAnswer => matchingAnswer.packageIds)
+    matchingAnswerOptions.map(matchingAnswerOption => {
+      return matchingAnswerOption.packageIds
+    })
   )
 
-  return packageIds
+  // get the packageIds that are implicitly included in
+  // one of the categories that will be displayed on the packlist
+
+  let implicitCategories = []
+
+  categories.forEach(category => {
+    if (category.includePackageIds) {
+      category.includePackageIds.forEach(includePackageId =>
+        implicitCategories.push(includePackageId)
+      )
+    }
+  })
+
+  return [...packageIds, ...implicitCategories]
 }
