@@ -2,6 +2,7 @@ import { compose, withHandlers, withState } from 'recompose'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { groupBy, map } from 'lodash'
 
+import FavouriteButton from './FavouriteButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Item from './Item'
 import React from 'react'
@@ -55,6 +56,7 @@ function ItemList({
                   />
                 )
               })}
+            <FavouriteButton items={items} />
           </div>
         )
       })}
