@@ -4,7 +4,8 @@ import Wizard from './Wizard'
 import { mount } from 'enzyme'
 
 describe('App', () => {
-  const findItemField = () => component.find('input').filter({ type: 'text' })
+  const findItemField = () =>
+    component.find('input').filter({ type: 'text', id: 'adHocName' })
 
   let component
   beforeEach(() => {
