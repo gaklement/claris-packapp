@@ -2,8 +2,6 @@ import { compose, withHandlers, withState } from 'recompose'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { groupBy, map } from 'lodash'
 
-import AllFavourites from './AllFavourites'
-import FavouriteButton from './FavouriteButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Item from './Item'
 import React from 'react'
@@ -25,8 +23,6 @@ function ItemList({
 
   return (
     <div {...style}>
-      <FavouriteButton items={items} />
-      <AllFavourites />
       {map(itemGroupedByCategory, (categoryGroup, categoryGroupKey) => {
         const isCollapsed = collapsedCategories.includes(categoryGroupKey)
         return (

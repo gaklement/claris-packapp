@@ -3,14 +3,15 @@ import './App.css'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { uniqueId, values } from 'lodash'
 
+import AllFavourites from './AllFavourites'
+import FavouriteButton from './FavouriteButton'
 import ItemList from './ItemList'
 import React from 'react'
 import WelcomeScreen from './WelcomeScreen'
 import Wizard from './Wizard'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
-
-// import { initializeTestData } from './dataUtils'
+import { initializeTestData } from './dataUtils'
 
 function App({
   itemName,
@@ -36,6 +37,7 @@ function App({
         <div>
           <input
             type="text"
+            id="adHocName"
             value={itemName}
             onChange={onInputChange}
             onKeyDown={onKeyDown}
@@ -45,6 +47,12 @@ function App({
           ADD
         </button>
       </header>
+      <FavouriteButton items={items} />
+      <AllFavourites
+        setItemsFromFavourites={itemsFromFavourites =>
+          setItems([...items, ...itemsFromFavourites])
+        }
+      />
       <h2>Packliste:</h2>
       <div id="items">
         <ItemList
@@ -78,7 +86,7 @@ export default compose(
   withState('items', 'setItems', []),
   withState('wizardActive', 'setWizardActive', false),
   withState('showWelcome', 'setShowWelcome', true),
-  withState('packages', 'setPackages', []), //
+  withState('packages', 'setPackages', []),
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
       if (!itemName) {
