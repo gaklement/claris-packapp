@@ -1,25 +1,10 @@
-import { compose, lifecycle } from 'recompose'
 import { faAmbulance, faBolt, faList } from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { css } from 'glamor'
 import { defaultStyle } from 'substyle'
 
-const hello = css.keyframes({
-  from: {
-    fontSize: 11,
-  },
-  to: {
-    fontSize: 200,
-  },
-})
-
-const handleContinue = window.addEventListener('keydown', () =>
-  console.log('==keydown')
-)
-
-function WelcomeScreen({ onContinue, onMenuItemSelect, style }) {
+function WelcomeScreen({ onMenuItemSelect, style }) {
   return (
     <div {...style}>
       <div {...style('menuItem')} onClick={() => onMenuItemSelect('wizard')}>
@@ -78,11 +63,4 @@ const styled = defaultStyle(() => {
   }
 })
 
-export default compose(
-  lifecycle({
-    componentWillUnmount() {
-      window.removeEventListener('keydown', handleContinue)
-    },
-  }),
-  styled
-)(WelcomeScreen)
+export default styled(WelcomeScreen)
