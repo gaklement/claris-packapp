@@ -1,16 +1,16 @@
 const data = {
   packages: [
     { id: 'adHoc', name: 'adHoc' },
-    { id: 'test', name: 'test' },
     {
       id: 'basics',
       name: 'Basics',
       includePackageIds: ['cosmetics', 'rightBeforeLeaving'],
     },
     { id: 'beach', name: 'Strandurlaub' },
-    { id: 'byBus', name: 'Busreise' },
-    { id: 'byPlane', name: 'Flugzeugreise' },
-    { id: 'byTrain', name: 'Zugreise' },
+    { id: 'byBus', name: 'Mit dem Bus' },
+    { id: 'byCar', name: 'Mit dem Auto' },
+    { id: 'byPlane', name: 'Mit dem Flugzeug' },
+    { id: 'byTrain', name: 'Mit dem Zug' },
     { id: 'cosmetics', name: 'Kosmetik' },
     { id: 'hiking', name: 'Wandern' },
     { id: 'wedding', name: 'Hochzeit' },
@@ -19,6 +19,7 @@ const data = {
   ],
   items: [
     { id: 'afterSunLotion', name: 'Après sun', packageIds: ['beach'] },
+
     { id: 'bahnCard', name: 'Bahn-Card', packageIds: ['byTrain'] },
     { id: 'bandages', name: 'Pflaster', packageIds: ['cosmetics'] },
     { id: 'beachTowel', name: 'Strandhandtuch', packageIds: ['beach'] },
@@ -42,6 +43,7 @@ const data = {
       name: 'Desinfektionsspray',
       packageIds: ['cosmetics'],
     },
+    { id: 'driversLicense', name: 'Führerschein', packageIds: ['byCar'] },
     { id: 'eyeCover', name: 'Schlafmaske', packageIds: ['byPlane'] },
     { id: 'faceCream', name: 'Creme', packageIds: ['cosmetics'] },
     { id: 'flipFlops', name: 'Badelatschen', packageIds: ['beach'] },

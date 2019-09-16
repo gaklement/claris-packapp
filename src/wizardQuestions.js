@@ -18,6 +18,11 @@ export default [
         option: 'Bus',
         packageIds: ['byBus'],
       },
+      {
+        id: 'car',
+        option: 'Auto',
+        packageIds: ['byCar'],
+      },
     ],
   },
   {

@@ -1,0 +1,77 @@
+
+Todo:
+  ✔ Remove item from list @done(19-08-12 01:38)
+  Edit item name
+  ✔ Allow specifying amount for each item @done(19-08-12 20:30)
+  Edit amout
+
+  ✔ Add button to start wizard @done(19-08-12 23:49)
+  ✔ Open wizard window @done(19-08-12 23:49)
+  ✔ Define wizard questions @done(19-08-12 23:49)
+  ✔ Dont show all questions at once @done(19-08-18 19:37)
+  ✔ Render one question @done(19-08-18 19:37)
+  ✔ Render relevant answers @done(19-08-18 19:37)
+  ✔ Make radiobuttons interactive @done(19-08-18 21:42)
+  ✔ Add next button @done(19-08-18 21:42)
+  ☐ Add cancel button to wizard
+  ✔ Save answer to questions @done(19-08-19 18:06)
+  ✔ Map answers to item packages @done(19-08-18 21:42)
+  ✔ Move wizardActive to app.js @done(19-08-18 19:48)
+  ✔ disable next button when no answer is pending @done(19-08-19 18:06)
+  ✔ allow dynamic adding via button @done(19-08-27 20:24)
+  ✔ refactor wizardQuestions, get rid of itemsMap, put into answers as object @done(19-08-27 20:23)
+  ☐ Design travel-back list feature to tick off things that were actually needed
+  ✔ Enable saving list as favourite @done(19-09-14 00:41)
+  ✔ Design welcome part @done(19-09-01 16:39)
+  ☐ Start with initial styling
+  ✔ uniqueId from lodash writes duplicate ids @done(19-09-12 23:50)
+  ☐ restrict db access
+  ✔ move app to private account in github @done(19-09-10 20:34)
+  ✔ set up database @done(19-09-01 16:39)
+  ✔ draft database structure @done(19-09-01 20:46)
+  ✔ write to database @done(19-09-14 00:41)
+  ✔ read from database @done(19-09-02 17:06)
+  ✔ add wizardpackages (eg hochzeit => abendkleid, wandern => wanderschuhe) @done(19-09-01 20:51)
+  ✔ refactor wizardQuestions.answers to have packages instead of items @done(19-09-02 17:07)
+  ✔ fetch all packages for an answer @done(19-09-02 16:59)
+  ✔ write query to find all items for a specific package @done(19-09-02 17:04)
+  ✔ complete wizard and fetch answerpackages from database @done(19-09-02 17:06)
+  ☐ write tests for dataUtils
+  ☐ write tests for everything
+  ☐ enable calculating amount of items based on travel length
+  ✔ enable includePackageIds @done(19-09-12 23:49)
+  ✔ make categories on packlist collapsible @done(19-09-10 20:08)
+  ✔ fix bug where adHoc items should be categorized as such, with a title @done(19-09-09 22:30)
+  ✔ fix bug where sunscreen should not be in airplane @done(19-09-09 22:30)
+  ✔ fix bug: why does the items have so much padding when byPlane @done(19-09-09 22:30)
+  ☐ find calm colours
+  ✔ fix bug where all categories are collapsed at once @done(19-09-10 20:33)
+  ✔ reset database in initializeTestData before writing @done(19-09-12 23:49)
+  ☐ use the real questions
+  ☐ enable printing
+  ☐ implement transition when expanding and collapsing categories
+  ☐ indicate that a category's items are not completely checked off
+  ☐ dream: a little panda that motivates her when completing a category and congratulates when completely finished
+  ☐ contextually group final items inside category
+  ✔ show me which favourites exist @done(19-09-15 16:23)
+  ☐ show fetched favourite items in a separate list (bug: 1. select favourite1, 2. fetch, 3. select favourite2, 4. fetch. observed: i see merged lists items
+  ☐ add a select all items from list to be merged with already added adhoc items (could be an alert that asks "overwrite current packlist or merge")
+  ☐ allow specifying a category (selectable from dropdwon) when adding an adhoc item
+  ☐ probably do not allow adding a new category since it would need to be involved in a question
+  ☐ add styling for mobile
+
+  ☐ react-testing-library und dann kann man nach label text suchen
+
+
+
+
+☐ Wizard questions
+- What's your name
+- How many nights are you gone for?
+- How often are you going to pee your pants?
+- How are you travelling? Airplane, Train, Bus, Car, 
+- Are you going to a festive event?
+- Where are you staying? (Hotel, Privat: Geschenke, Handtuch, AirBnB: Kontaktdaten)
+- Would you like to take a look at the diversity list (Schlafsack, Geschenke?,)
+- Are you gonna have quiet time for yourself (Tagebuch)
+
