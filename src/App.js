@@ -20,40 +20,46 @@ function App({
   onInputChange,
   onItemAdd,
   onItemRemove,
+  onMenuItemSelect,
+  selectedMenuItem,
   setItems,
-  setWizardActive,
-  showWelcome,
   style,
   packages,
-  wizardActive,
 }) {
-  // if (showWelcome) {
-  //   return <WelcomeScreen />
-  // }
+  if (!selectedMenuItem) {
+    return <WelcomeScreen onMenuItemSelect={onMenuItemSelect} />
+  }
 
   return (
     <div {...style} className="App">
       <header className="App-header">
+        {selectedMenuItem === 'adHoc' && (
+          <div>
+            <input
+              type="text"
+              id="adHocName"
+              value={itemName}
+              onChange={onInputChange}
+              onKeyDown={onKeyDown}
+            />
+
+            <button type="submit" onClick={onItemAdd}>
+              ADD
+            </button>
+          </div>
+        )}
+      </header>
+      {selectedMenuItem === 'favourites' && (
         <div>
-          <input
-            type="text"
-            id="adHocName"
-            value={itemName}
-            onChange={onInputChange}
-            onKeyDown={onKeyDown}
+          <FavouriteButton items={items} />
+          <AllFavourites
+            setItemsFromFavourites={itemsFromFavourites =>
+              setItems([...items, ...itemsFromFavourites])
+            }
           />
         </div>
-        <button type="submit" onClick={onItemAdd}>
-          ADD
-        </button>
-      </header>
-      <FavouriteButton items={items} />
-      <AllFavourites
-        setItemsFromFavourites={itemsFromFavourites =>
-          setItems([...items, ...itemsFromFavourites])
-        }
-      />
-      <h2>Packliste:</h2>
+      )}
+
       <div id="items">
         <ItemList
           items={items}
@@ -61,16 +67,12 @@ function App({
           packages={packages}
         />
       </div>
-      {wizardActive ? (
+      {selectedMenuItem === 'wizard' && (
         <Wizard
           onWizardComplete={mappedItems => {
             setItems([...items, ...mappedItems])
           }}
         />
-      ) : (
-        <button id="wizard" onClick={() => setWizardActive(true)}>
-          Start wizard
-        </button>
       )}
     </div>
   )
@@ -84,9 +86,9 @@ const styled = defaultStyle(() => ({
 export default compose(
   withState('itemName', 'setItemName', 'Socken'),
   withState('items', 'setItems', []),
-  withState('wizardActive', 'setWizardActive', false),
-  withState('showWelcome', 'setShowWelcome', true),
   withState('packages', 'setPackages', []),
+  withState('selectedMenuItem', 'setSelectedMenuItem'),
+
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
       if (!itemName) {
@@ -116,10 +118,13 @@ export default compose(
         onItemAdd()
       }
     },
+    onMenuItemSelect: ({ setSelectedMenuItem }) => menuItem => {
+      setSelectedMenuItem(menuItem)
+    },
   }),
   lifecycle({
     componentDidMount() {
-      const { setShowWelcome, setPackages } = this.props
+      const { setPackages } = this.props
       const ref = database.ref('packages')
 
       ref.on('value', snapshot => {
@@ -127,10 +132,6 @@ export default compose(
       })
 
       // initializeTestData(database)
-
-      setTimeout(() => {
-        setShowWelcome(false)
-      }, 3000)
     },
   }),
   styled
