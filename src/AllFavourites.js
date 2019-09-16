@@ -46,9 +46,10 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { setFavourites } = this.props
+      const { setFavourites, setSelectedFavourite } = this.props
       database.ref('favourites').once('value', snapshot => {
         setFavourites(keys(snapshot.val()))
+        setSelectedFavourite(keys(snapshot.val())[0])
       })
     },
   })
