@@ -24,7 +24,7 @@ const data = {
     { id: 'bandages', name: 'Pflaster', packageIds: ['cosmetics'] },
     { id: 'beachTowel', name: 'Strandhandtuch', packageIds: ['beach'] },
     { id: 'bikini', name: 'Bikini', packageIds: ['beach'] },
-    { id: 'bra', name: 'BH', packageIds: ['basics'], amount: 4 },
+    { id: 'bra', name: 'BH', packageIds: ['basics'], dayFactor: 4 },
     { id: 'bodyWash', name: 'Duschgel', packageIds: ['cosmetics'] },
     { id: 'book', name: 'Buch', packageIds: ['beach', 'byPlane', 'quietTime'] },
     { id: 'cardigan', name: 'Strickjacke', packageIds: ['basics'] },

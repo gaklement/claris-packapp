@@ -15,8 +15,8 @@ function Item({
   return (
     <div {...style}>
       <div {...style('itemName')}>
-        {item.amount
-          ? `${item.amount * travelLength} x ${item.name}`
+        {item.dayFactor
+          ? `${item.dayFactor * travelLength} x ${item.name}`
           : item.name}
       </div>
       <div {...style('toolbar')}>
