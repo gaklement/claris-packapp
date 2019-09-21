@@ -14,7 +14,11 @@ function Item({
 }) {
   return (
     <div {...style}>
-      <div {...style('itemName')}>{item.name}</div>
+      <div {...style('itemName')}>
+        {item.amount
+          ? `${item.amount * travelLength} x ${item.name}`
+          : item.name}
+      </div>
       <div {...style('toolbar')}>
         <FontAwesomeIcon
           {...style('remove')}
