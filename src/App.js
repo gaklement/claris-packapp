@@ -21,21 +21,21 @@ function App({
   onInputChange,
   onItemAdd,
   onItemRemove,
-  onMenuItemSelect,
-  selectedMenuItem,
   setItems,
   setItemsFromFavourites,
+  setWizardActive,
   style,
   packages,
+  wizardActive,
 }) {
-  if (!selectedMenuItem) {
-    return <WelcomeScreen onMenuItemSelect={onMenuItemSelect} />
-  }
+  // if (!selectedMenuItem) {
+  //   return <WelcomeScreen onMenuItemSelect={onMenuItemSelect} />
+  // }
 
   return (
     <div {...style} className="App">
       <header className="App-header">
-        {selectedMenuItem === 'adHoc' && (
+        {
           <div>
             <input
               type="text"
@@ -49,9 +49,9 @@ function App({
               ADD
             </button>
           </div>
-        )}
+        }
       </header>
-      {selectedMenuItem === 'favourites' && (
+      {
         <div>
           <FavouriteButton items={items} />
           <AllFavourites
@@ -60,7 +60,7 @@ function App({
             }
           />
         </div>
-      )}
+      }
       {itemsFromFavourites.length > 0 && (
         <ItemList items={itemsFromFavourites} packages={packages} />
       )}
@@ -71,12 +71,16 @@ function App({
           packages={packages}
         />
       </div>
-      {selectedMenuItem === 'wizard' && (
+      {wizardActive ? (
         <Wizard
           onWizardComplete={mappedItems => {
             setItems([...items, ...mappedItems])
           }}
         />
+      ) : (
+        <button type="input" onClick={() => setWizardActive(true)}>
+          Start wizard
+        </button>
       )}
     </div>
   )
@@ -90,9 +94,9 @@ const styled = defaultStyle(() => ({
 export default compose(
   withState('itemName', 'setItemName', 'Socken'),
   withState('items', 'setItems', []),
-  withState('packages', 'setPackages', []),
-  withState('selectedMenuItem', 'setSelectedMenuItem'),
   withState('itemsFromFavourites', 'setItemsFromFavourites', []),
+  withState('packages', 'setPackages', []),
+  withState('wizardActive', 'setWizardActive', false),
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
       if (!itemName) {
