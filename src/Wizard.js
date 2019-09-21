@@ -9,9 +9,12 @@ import wizardQuestions from './wizardQuestions'
 function Wizard({
   currentQuestionId,
   onNextClick,
+  onTravelLengthComplete,
   pendingAnswer,
   setPendingAnswer,
+  setTravelLength,
   style,
+  travelLength,
 }) {
   const wizardEnd = !wizardQuestions[currentQuestionId]
 
@@ -21,24 +24,44 @@ function Wizard({
         <div id="question">{`${wizardQuestions[currentQuestionId].question}`}</div>
       )}
       {!wizardEnd &&
-        wizardQuestions[currentQuestionId].answers.map((answer, key) => (
-          <div key={key} {...style('answer')}>
-            <input
-              key={answer.id}
-              type="radio"
-              name="answer"
-              value={answer.id}
-              onClick={() => setPendingAnswer(answer.id)}
-            />
-            <div>{answer.option}</div>
-          </div>
+        (wizardQuestions[currentQuestionId].specialQuestion ? (
+          <input
+            type="number"
+            onChange={({ target }) => {
+              setTravelLength(target.value)
+              setPendingAnswer('unLockNextButton')
+            }}
+          />
+        ) : (
+          wizardQuestions[currentQuestionId].answers.map((answer, key) => (
+            <div key={key} {...style('answer')}>
+              {
+                <input
+                  key={answer.id}
+                  type="radio"
+                  name="answer"
+                  value={answer.id}
+                  onClick={() => setPendingAnswer(answer.id)}
+                />
+              }
+              <div>{answer.option}</div>
+            </div>
+          ))
         ))}
       {!wizardEnd && (
         <button
           id="next"
-          onClick={onNextClick}
+          onClick={() => {
+            if (wizardQuestions[currentQuestionId].specialQuestion) {
+              onTravelLengthComplete(travelLength)
+            }
+            onNextClick()
+          }}
           type="text"
-          disabled={isNil(pendingAnswer)}
+          disabled={
+            travelLength === undefined ||
+            (travelLength !== undefined && isNil(pendingAnswer))
+          }
         >
           Next
         </button>
@@ -61,8 +84,14 @@ export default compose(
   withState('currentQuestionId', 'setCurrentQuestionId', 0),
   withState('givenAnswers', 'setGivenAnswers', []),
   withState('pendingAnswer', 'setPendingAnswer'),
+  withState('travelLength', 'setTravelLength'),
   withHandlers({
-    resolveItems: ({ givenAnswers, onWizardComplete, pendingAnswer }) => () => {
+    resolveItems: ({
+      givenAnswers,
+      onWizardComplete,
+      pendingAnswer,
+      travelLength,
+    }) => () => {
       const packagesRef = database.ref('packages')
 
       packagesRef.once('value', packagesSnapshot => {

@@ -23,6 +23,7 @@ function App({
   onItemRemove,
   setItems,
   setItemsFromFavourites,
+  setTravelLength,
   setWizardActive,
   style,
   packages,
@@ -73,6 +74,7 @@ function App({
       </div>
       {wizardActive ? (
         <Wizard
+          onTravelLengthComplete={asdf => console.log('==asdf', asdf)}
           onWizardComplete={mappedItems => {
             setItems([...items, ...mappedItems])
           }}

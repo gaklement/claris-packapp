@@ -1,5 +1,11 @@
 export default [
   {
+    id: 'special',
+    question: 'Wie viele Nächte bist du weg?',
+    specialQuestion: true,
+    answers: [], // it will break in allAnswerOptions in Wizard.js if removed
+  },
+  {
     id: 0,
     question: 'Welches Transportmittel nimmst du?',
     answers: [
