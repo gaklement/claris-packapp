@@ -4,7 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { defaultStyle } from 'substyle'
 
-function Item({ isCheckedOff, item, onClickItemCheck, onItemRemove, style }) {
+function Item({
+  isCheckedOff,
+  item,
+  onClickItemCheck,
+  onItemRemove,
+  travelLength,
+  style,
+}) {
   return (
     <div {...style}>
       <div {...style('itemName')}>{item.name}</div>

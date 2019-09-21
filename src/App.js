@@ -21,12 +21,13 @@ function App({
   onInputChange,
   onItemAdd,
   onItemRemove,
+  packages,
   setItems,
   setItemsFromFavourites,
   setTravelLength,
   setWizardActive,
   style,
-  packages,
+  travelLength,
   wizardActive,
 }) {
   // if (!selectedMenuItem) {
@@ -65,16 +66,19 @@ function App({
       {itemsFromFavourites.length > 0 && (
         <ItemList items={itemsFromFavourites} packages={packages} />
       )}
-      <div id="items">
-        <ItemList
-          items={items}
-          onItemRemove={onItemRemove}
-          packages={packages}
-        />
-      </div>
+      {items.length > 0 && (
+        <div id="items">
+          <ItemList
+            items={items}
+            onItemRemove={onItemRemove}
+            packages={packages}
+            travelLength={travelLength}
+          />
+        </div>
+      )}
       {wizardActive ? (
         <Wizard
-          onTravelLengthComplete={asdf => console.log('==asdf', asdf)}
+          onTravelLengthComplete={lengthOfTrip => setTravelLength(lengthOfTrip)}
           onWizardComplete={mappedItems => {
             setItems([...items, ...mappedItems])
           }}
@@ -98,6 +102,7 @@ export default compose(
   withState('items', 'setItems', []),
   withState('itemsFromFavourites', 'setItemsFromFavourites', []),
   withState('packages', 'setPackages', []),
+  withState('travelLength', 'setTravelLength'),
   withState('wizardActive', 'setWizardActive', false),
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {

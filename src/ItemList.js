@@ -16,6 +16,7 @@ function ItemList({
   onItemRemove,
   packages,
   style,
+  travelLength,
 }) {
   const itemGroupedByCategory = groupBy(items, item => {
     return item.packageIds
@@ -52,6 +53,7 @@ function ItemList({
                     item={item}
                     onClickItemCheck={onClickItemCheck}
                     onItemRemove={onItemRemove}
+                    travelLength={travelLength}
                   />
                 )
               })}

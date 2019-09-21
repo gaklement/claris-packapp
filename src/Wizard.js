@@ -24,7 +24,7 @@ function Wizard({
         <div id="question">{`${wizardQuestions[currentQuestionId].question}`}</div>
       )}
       {!wizardEnd &&
-        (wizardQuestions[currentQuestionId].specialQuestion ? (
+        (wizardQuestions[currentQuestionId].id === 'travelLengthQuestion' ? (
           <input
             type="number"
             onChange={({ target }) => {
@@ -52,7 +52,9 @@ function Wizard({
         <button
           id="next"
           onClick={() => {
-            if (wizardQuestions[currentQuestionId].specialQuestion) {
+            if (
+              wizardQuestions[currentQuestionId].id === 'travelLengthQuestion'
+            ) {
               onTravelLengthComplete(travelLength)
             }
             onNextClick()
@@ -86,12 +88,7 @@ export default compose(
   withState('pendingAnswer', 'setPendingAnswer'),
   withState('travelLength', 'setTravelLength'),
   withHandlers({
-    resolveItems: ({
-      givenAnswers,
-      onWizardComplete,
-      pendingAnswer,
-      travelLength,
-    }) => () => {
+    resolveItems: ({ givenAnswers, onWizardComplete, pendingAnswer }) => () => {
       const packagesRef = database.ref('packages')
 
       packagesRef.once('value', packagesSnapshot => {
