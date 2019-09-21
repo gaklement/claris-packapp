@@ -16,7 +16,7 @@ function Item({
     <div {...style}>
       <div {...style('itemName')}>
         {item.dayFactor
-          ? `${item.dayFactor * travelLength} x ${item.name}`
+          ? `${Math.ceil(item.dayFactor * travelLength)} x ${item.name}`
           : item.name}
       </div>
       <div {...style('toolbar')}>
