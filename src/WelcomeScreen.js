@@ -56,7 +56,7 @@ const styled = defaultStyle(() => {
     },
 
     label: {
-      fontSize: 18,
+      fontSize,
       lineHeight: `${fontSize}px`,
       margin: 'auto',
     },

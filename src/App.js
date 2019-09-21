@@ -16,6 +16,7 @@ import { initializeTestData } from './dataUtils'
 function App({
   itemName,
   items,
+  itemsFromFavourites,
   onKeyDown,
   onInputChange,
   onItemAdd,
@@ -23,6 +24,7 @@ function App({
   onMenuItemSelect,
   selectedMenuItem,
   setItems,
+  setItemsFromFavourites,
   style,
   packages,
 }) {
@@ -54,12 +56,14 @@ function App({
           <FavouriteButton items={items} />
           <AllFavourites
             setItemsFromFavourites={itemsFromFavourites =>
-              setItems([...items, ...itemsFromFavourites])
+              setItemsFromFavourites(itemsFromFavourites)
             }
           />
         </div>
       )}
-
+      {itemsFromFavourites.length > 0 && (
+        <ItemList items={itemsFromFavourites} packages={packages} />
+      )}
       <div id="items">
         <ItemList
           items={items}
@@ -88,7 +92,7 @@ export default compose(
   withState('items', 'setItems', []),
   withState('packages', 'setPackages', []),
   withState('selectedMenuItem', 'setSelectedMenuItem'),
-
+  withState('itemsFromFavourites', 'setItemsFromFavourites', []),
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
       if (!itemName) {
