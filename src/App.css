@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
 
 body {
-
+  background-image: linear-gradient(to top right, #ad3f3f, #61a5ec 102%);
+  /* background-image: linear-gradient(to bottom right, red, yellow); */
+  min-height: 970px;
   background-color: #c7afc7;
   font-size: 14px;
   line-height: 14px;
+
+
 }
 
 /* .App {

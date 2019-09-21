@@ -36,18 +36,21 @@ function App({
     <div {...style} className="App">
       <header className="App-header">
         {
-          <div>
-            <input
-              type="text"
+          <div {...style('adHoc')}>
+            <div
+              {...style('adHocInput')}
+              // type="text"
               id="adHocName"
-              value={itemName}
+              // value={itemName}
               onChange={onInputChange}
               onKeyDown={onKeyDown}
-            />
+            >
+              {itemName}
+            </div>
 
-            <button type="submit" onClick={onItemAdd}>
-              ADD
-            </button>
+            <div {...style('adHocAdd')} onClick={onItemAdd}>
+              +
+            </div>
           </div>
         }
       </header>
@@ -87,11 +90,41 @@ function App({
     </div>
   )
 }
-const styled = defaultStyle(() => ({
-  fontFamily: 'Inconsolata, monospace',
+const styled = defaultStyle(() => {
+  // const fontSize = 14
+  const height = 28
+  return {
+    fontFamily: 'Inconsolata, monospace',
 
-  itemName: { display: 'inline' },
-}))
+    itemName: { display: 'inline' },
+    adHoc: {
+      display: 'flex',
+    },
+    adHocAdd: {
+      backgroundColor: '#dca3a3',
+      border: 'none',
+      borderRadius: 3,
+      // fontSize,
+      height,
+      lineHeight: `${height}px`,
+      marginLeft: 2,
+      textAlign: 'center',
+      width: height,
+    },
+    adHocInput: {
+      borderRadius: 3,
+      border: 'none',
+      backgroundColor: 'white',
+      flexGrow: 1,
+      // fontSize,
+      height,
+      lineHeight: `${height}px`,
+      opacity: 0.6,
+      paddingBottom: 0,
+      paddingLeft: 4,
+    },
+  }
+})
 
 export default compose(
   withState('itemName', 'setItemName', 'Socken'),
