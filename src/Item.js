@@ -8,7 +8,7 @@ function Item({ isCheckedOff, item, onClickItemCheck, onItemRemove, style }) {
   return (
     <div {...style}>
       <div {...style('itemName')}>
-        {item.dayFactor ? `${item.amount} x ${item.name}` : item.name}
+        {item.amount ? `${item.amount} x ${item.name}` : item.name}
       </div>
       <div {...style('toolbar')}>
         <FontAwesomeIcon

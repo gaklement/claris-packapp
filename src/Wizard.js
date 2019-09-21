@@ -121,9 +121,10 @@ export default compose(
             .map(item => {
               return {
                 ...item,
-                amount: item.dayFactor
-                  ? Math.ceil(travelLength * item.dayFactor)
-                  : null,
+                amount:
+                  item.dayFactor && travelLength
+                    ? Math.ceil(travelLength * item.dayFactor)
+                    : null,
                 packageIds: [
                   item.packageIds.find(packageId =>
                     packageIdsFromAnswers.includes(packageId)
