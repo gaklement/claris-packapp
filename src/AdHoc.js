@@ -7,14 +7,14 @@ import { uniqueId } from 'lodash'
 function AdHoc({ itemName, onItemAdd, onInputChange, onKeyDown, style }) {
   return (
     <div {...style('adHoc')}>
-      <div
+      <input
         {...style('adHocInput')}
         id="adHocName"
+        type="text"
         onChange={onInputChange}
         onKeyDown={onKeyDown}
-      >
-        {itemName}
-      </div>
+        value={itemName}
+      />
 
       <div {...style('adHocAdd')} onClick={onItemAdd}>
         +
@@ -34,11 +34,11 @@ const styled = defaultStyle(() => {
       backgroundColor: '#dca3a3',
       border: 'none',
       borderRadius: 3,
-      // fontSize,
       height,
       lineHeight: `${height}px`,
-      marginLeft: 2,
+      marginLeft: 3,
       textAlign: 'center',
+      paddingBottom: 1,
       width: height,
     },
     adHocInput: {
@@ -46,7 +46,6 @@ const styled = defaultStyle(() => {
       border: 'none',
       backgroundColor: 'white',
       flexGrow: 1,
-      // fontSize,
       height,
       lineHeight: `${height}px`,
       opacity: 0.6,

@@ -35,19 +35,15 @@ function App({
 
   return (
     <div {...style} className="App">
-      <header className="App-header">
-        <AdHoc items={items} setItems={setItems} />
-      </header>
-      {
-        <div>
-          <FavouriteButton items={items} />
-          <AllFavourites
-            setItemsFromFavourites={itemsFromFavourites =>
-              setItemsFromFavourites(itemsFromFavourites)
-            }
-          />
-        </div>
-      }
+      <AdHoc items={items} setItems={setItems} />
+
+      <FavouriteButton items={items} />
+      <AllFavourites
+        setItemsFromFavourites={itemsFromFavourites =>
+          setItemsFromFavourites(itemsFromFavourites)
+        }
+      />
+
       {itemsFromFavourites.length > 0 && (
         <ItemList
           items={itemsFromFavourites}
@@ -87,6 +83,7 @@ function App({
 const styled = defaultStyle(() => {
   // const fontSize = 14
   return {
+    padding: 5,
     fontFamily: 'Inconsolata, monospace',
 
     itemName: { display: 'inline' },
