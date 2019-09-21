@@ -3,6 +3,7 @@ import './App.css'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 import { uniqueId, values } from 'lodash'
 
+import AdHoc from './AdHoc'
 import AllFavourites from './AllFavourites'
 import FavouriteButton from './FavouriteButton'
 import ItemList from './ItemList'
@@ -35,24 +36,7 @@ function App({
   return (
     <div {...style} className="App">
       <header className="App-header">
-        {
-          <div {...style('adHoc')}>
-            <div
-              {...style('adHocInput')}
-              // type="text"
-              id="adHocName"
-              // value={itemName}
-              onChange={onInputChange}
-              onKeyDown={onKeyDown}
-            >
-              {itemName}
-            </div>
-
-            <div {...style('adHocAdd')} onClick={onItemAdd}>
-              +
-            </div>
-          </div>
-        }
+        <AdHoc items={items} setItems={setItems} />
       </header>
       {
         <div>
@@ -65,7 +49,17 @@ function App({
         </div>
       }
       {itemsFromFavourites.length > 0 && (
-        <ItemList items={itemsFromFavourites} packages={packages} />
+        <ItemList
+          items={itemsFromFavourites}
+          onItemRemove={removedItem => {
+            const updatedItems = itemsFromFavourites.filter(
+              item => item !== removedItem
+            )
+
+            setItemsFromFavourites(updatedItems)
+          }}
+          packages={packages}
+        />
       )}
       {items.length > 0 && (
         <div id="items">
@@ -92,75 +86,26 @@ function App({
 }
 const styled = defaultStyle(() => {
   // const fontSize = 14
-  const height = 28
   return {
     fontFamily: 'Inconsolata, monospace',
 
     itemName: { display: 'inline' },
-    adHoc: {
-      display: 'flex',
-    },
-    adHocAdd: {
-      backgroundColor: '#dca3a3',
-      border: 'none',
-      borderRadius: 3,
-      // fontSize,
-      height,
-      lineHeight: `${height}px`,
-      marginLeft: 2,
-      textAlign: 'center',
-      width: height,
-    },
-    adHocInput: {
-      borderRadius: 3,
-      border: 'none',
-      backgroundColor: 'white',
-      flexGrow: 1,
-      // fontSize,
-      height,
-      lineHeight: `${height}px`,
-      opacity: 0.6,
-      paddingBottom: 0,
-      paddingLeft: 4,
-    },
   }
 })
 
 export default compose(
-  withState('itemName', 'setItemName', 'Socken'),
   withState('items', 'setItems', []),
   withState('itemsFromFavourites', 'setItemsFromFavourites', []),
   withState('packages', 'setPackages', []),
   withState('wizardActive', 'setWizardActive', false),
   withHandlers({
-    onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
-      if (!itemName) {
-        return
-      }
-
-      const item = {
-        id: uniqueId(),
-        name: itemName,
-        packageIds: ['adHoc'],
-      }
-
-      setItems([...items, item])
-      setItemName('')
-    },
     onItemRemove: ({ items, setItems }) => removedItem => {
       const updatedItems = items.filter(item => item !== removedItem)
+      console.log('==hello', updatedItems)
       setItems(updatedItems)
-    },
-    onInputChange: ({ setItemName }) => ({ target }) => {
-      setItemName(target.value)
     },
   }),
   withHandlers({
-    onKeyDown: ({ onItemAdd }) => ({ keyCode }) => {
-      if (keyCode === 13) {
-        onItemAdd()
-      }
-    },
     onMenuItemSelect: ({ setSelectedMenuItem }) => menuItem => {
       setSelectedMenuItem(menuItem)
     }, //
