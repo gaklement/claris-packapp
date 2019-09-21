@@ -24,10 +24,8 @@ function App({
   packages,
   setItems,
   setItemsFromFavourites,
-  setTravelLength,
   setWizardActive,
   style,
-  travelLength,
   wizardActive,
 }) {
   // if (!selectedMenuItem) {
@@ -72,13 +70,11 @@ function App({
             items={items}
             onItemRemove={onItemRemove}
             packages={packages}
-            travelLength={travelLength}
           />
         </div>
       )}
       {wizardActive ? (
         <Wizard
-          onTravelLengthComplete={lengthOfTrip => setTravelLength(lengthOfTrip)}
           onWizardComplete={mappedItems => {
             setItems([...items, ...mappedItems])
           }}
@@ -102,7 +98,6 @@ export default compose(
   withState('items', 'setItems', []),
   withState('itemsFromFavourites', 'setItemsFromFavourites', []),
   withState('packages', 'setPackages', []),
-  withState('travelLength', 'setTravelLength'),
   withState('wizardActive', 'setWizardActive', false),
   withHandlers({
     onItemAdd: ({ items, setItems, setItemName, itemName }) => () => {
@@ -135,7 +130,7 @@ export default compose(
     },
     onMenuItemSelect: ({ setSelectedMenuItem }) => menuItem => {
       setSelectedMenuItem(menuItem)
-    },
+    }, //
   }),
   lifecycle({
     componentDidMount() {

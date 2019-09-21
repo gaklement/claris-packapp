@@ -9,7 +9,6 @@ import wizardQuestions from './wizardQuestions'
 function Wizard({
   currentQuestionId,
   onNextClick,
-  onTravelLengthComplete,
   pendingAnswer,
   setPendingAnswer,
   setTravelLength,
@@ -52,11 +51,6 @@ function Wizard({
         <button
           id="next"
           onClick={() => {
-            if (
-              wizardQuestions[currentQuestionId].id === 'travelLengthQuestion'
-            ) {
-              onTravelLengthComplete(travelLength)
-            }
             onNextClick()
           }}
           type="text"
@@ -88,7 +82,12 @@ export default compose(
   withState('pendingAnswer', 'setPendingAnswer'),
   withState('travelLength', 'setTravelLength'),
   withHandlers({
-    resolveItems: ({ givenAnswers, onWizardComplete, pendingAnswer }) => () => {
+    resolveItems: ({
+      givenAnswers,
+      onWizardComplete,
+      pendingAnswer,
+      travelLength,
+    }) => () => {
       const packagesRef = database.ref('packages')
 
       packagesRef.once('value', packagesSnapshot => {
@@ -122,6 +121,9 @@ export default compose(
             .map(item => {
               return {
                 ...item,
+                amount: item.dayFactor
+                  ? Math.ceil(travelLength * item.dayFactor)
+                  : null,
                 packageIds: [
                   item.packageIds.find(packageId =>
                     packageIdsFromAnswers.includes(packageId)

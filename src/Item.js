@@ -4,20 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { defaultStyle } from 'substyle'
 
-function Item({
-  isCheckedOff,
-  item,
-  onClickItemCheck,
-  onItemRemove,
-  travelLength,
-  style,
-}) {
+function Item({ isCheckedOff, item, onClickItemCheck, onItemRemove, style }) {
   return (
     <div {...style}>
       <div {...style('itemName')}>
-        {item.dayFactor
-          ? `${Math.ceil(item.dayFactor * travelLength)} x ${item.name}`
-          : item.name}
+        {item.dayFactor ? `${item.amount} x ${item.name}` : item.name}
       </div>
       <div {...style('toolbar')}>
         <FontAwesomeIcon
