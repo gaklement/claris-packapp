@@ -19,44 +19,44 @@ function Wizard({
 }) {
   const wizardEnd = !wizardQuestions[currentQuestionId]
 
+  if (wizardEnd) {
+    return <div />
+  }
   return (
     <div {...style}>
-      {!wizardEnd && (
-        <div
-          {...style('question')}
-          id="question"
-        >{`${wizardQuestions[currentQuestionId].question}`}</div>
+      <div
+        {...style('question')}
+        id="question"
+      >{`${wizardQuestions[currentQuestionId].question}`}</div>
+      {wizardQuestions[currentQuestionId].id === 'travelLengthQuestion' ? (
+        <input
+          {...style('numberInput')}
+          type="number"
+          placeholder="Gib eine Zahl ein"
+          onChange={({ target }) => {
+            setTravelLength(target.value)
+            setPendingAnswer('unLockNextButton')
+          }}
+        />
+      ) : (
+        <div {...style('answersContainer')}>
+          {wizardQuestions[currentQuestionId].answers.map((answer, key) => (
+            <div key={key} {...style('answer')}>
+              {
+                <input
+                  key={answer.id}
+                  type="radio"
+                  name="answer"
+                  value={answer.id}
+                  onClick={() => setPendingAnswer(answer.id)}
+                />
+              }
+              <div>{answer.option}</div>
+            </div>
+          ))}
+        </div>
       )}
-      {!wizardEnd &&
-        (wizardQuestions[currentQuestionId].id === 'travelLengthQuestion' ? (
-          <input
-            {...style('numberInput')}
-            type="number"
-            placeholder="Gib eine Zahl ein"
-            onChange={({ target }) => {
-              setTravelLength(target.value)
-              setPendingAnswer('unLockNextButton')
-            }}
-          />
-        ) : (
-          <div {...style('answersContainer')}>
-            {wizardQuestions[currentQuestionId].answers.map((answer, key) => (
-              <div key={key} {...style('answer')}>
-                {
-                  <input
-                    key={answer.id}
-                    type="radio"
-                    name="answer"
-                    value={answer.id}
-                    onClick={() => setPendingAnswer(answer.id)}
-                  />
-                }
-                <div>{answer.option}</div>
-              </div>
-            ))}
-          </div>
-        ))}
-      {!wizardEnd && (
+      {
         <button
           {...style('nextButton')}
           id="next"
@@ -71,7 +71,7 @@ function Wizard({
         >
           Weiter
         </button>
-      )}
+      }
     </div>
   )
 }
