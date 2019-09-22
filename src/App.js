@@ -7,6 +7,7 @@ import AllFavourites from './AllFavourites'
 import FavouriteButton from './FavouriteButton'
 import ItemList from './ItemList'
 import React from 'react'
+import WelcomeScreen from './WelcomeScreen'
 import Wizard from './Wizard'
 import { button } from './theme'
 import { database } from './firebase'
@@ -59,13 +60,7 @@ function App({
           }}
         />
       ) : (
-        <button
-          {...style('startWizard')}
-          type="input"
-          onClick={() => setWizardActive(true)}
-        >
-          Start wizard
-        </button>
+        <WelcomeScreen onClick={() => setWizardActive(true)} />
       )}
       {items.length > 0 && (
         <div id="items">
