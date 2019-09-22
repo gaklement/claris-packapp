@@ -45,7 +45,7 @@ const styled = defaultStyle(
       height: button.height,
       lineHeight: `${button.height}px`,
       marginBottom: 1,
-      paddingBottom: 20,
+      paddingBottom: 2,
 
       checkOff: {
         color: '#277933',

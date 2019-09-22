@@ -58,15 +58,6 @@ function App({
           packages={packages}
         />
       )}
-      {items.length > 0 && (
-        <div id="items">
-          <ItemList
-            items={items}
-            onItemRemove={onItemRemove}
-            packages={packages}
-          />
-        </div>
-      )}
       {wizardActive ? (
         <Wizard
           onWizardComplete={mappedItems => {
@@ -81,6 +72,15 @@ function App({
         >
           Start wizard
         </button>
+      )}
+      {items.length > 0 && (
+        <div id="items">
+          <ItemList
+            items={items}
+            onItemRemove={onItemRemove}
+            packages={packages}
+          />
+        </div>
       )}
     </div>
   )

@@ -6,5 +6,6 @@ export const button = {
 }
 
 export const color = {
+  primary: 'darkcyan',
   secondary: '#d6c3c3',
 }

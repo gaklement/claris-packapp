@@ -39,23 +39,26 @@ function Wizard({
             }}
           />
         ) : (
-          wizardQuestions[currentQuestionId].answers.map((answer, key) => (
-            <div key={key} {...style('answer')}>
-              {
-                <input
-                  key={answer.id}
-                  type="radio"
-                  name="answer"
-                  value={answer.id}
-                  onClick={() => setPendingAnswer(answer.id)}
-                />
-              }
-              <div>{answer.option}</div>
-            </div>
-          ))
+          <div {...style('answersContainer')}>
+            {wizardQuestions[currentQuestionId].answers.map((answer, key) => (
+              <div key={key} {...style('answer')}>
+                {
+                  <input
+                    key={answer.id}
+                    type="radio"
+                    name="answer"
+                    value={answer.id}
+                    onClick={() => setPendingAnswer(answer.id)}
+                  />
+                }
+                <div>{answer.option}</div>
+              </div>
+            ))}
+          </div>
         ))}
       {!wizardEnd && (
         <button
+          {...style('nextButton')}
           id="next"
           onClick={() => {
             onNextClick()
@@ -66,7 +69,7 @@ function Wizard({
             (travelLength !== undefined && isNil(pendingAnswer))
           }
         >
-          Next
+          Weiter
         </button>
       )}
     </div>
@@ -78,10 +81,25 @@ const styled = defaultStyle(() => ({
   border: 'none',
   borderRadius: button.borderRadius,
   opacity: 0.6,
+  padding: 10,
   textAlign: 'center',
 
   answer: {
     display: 'flex',
+  },
+
+  answersContainer: {
+    width: '80%',
+    margin: '0 auto',
+  },
+
+  nextButton: {
+    backgroundColor: color.primary,
+    border: 'none',
+    borderRadius: button.borderRadius,
+    color: 'white',
+    height: button.height,
+    marginTop: 10,
   },
 
   numberInput: {
