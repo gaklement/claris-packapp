@@ -2,6 +2,7 @@ import { compose, withHandlers, withState } from 'recompose'
 
 import React from 'react'
 import { defaultStyle } from 'substyle'
+import theme from './theme'
 import { uniqueId } from 'lodash'
 
 function AdHoc({ itemName, onItemAdd, onInputChange, onKeyDown, style }) {
@@ -24,8 +25,6 @@ function AdHoc({ itemName, onItemAdd, onInputChange, onKeyDown, style }) {
 }
 
 const styled = defaultStyle(() => {
-  const height = 28
-
   return {
     adHoc: {
       display: 'flex',
@@ -33,21 +32,21 @@ const styled = defaultStyle(() => {
     adHocAdd: {
       backgroundColor: '#dca3a3',
       border: 'none',
-      borderRadius: 3,
-      height,
-      lineHeight: `${height}px`,
+      borderRadius: theme.button.borderRadius,
+      height: theme.button.height,
+      lineHeight: `${theme.button.height}px`,
       marginLeft: 3,
       textAlign: 'center',
       paddingBottom: 1,
-      width: height,
+      width: theme.button.height,
     },
     adHocInput: {
-      borderRadius: 3,
+      borderRadius: theme.button.borderRadius,
       border: 'none',
       backgroundColor: 'white',
       flexGrow: 1,
-      height,
-      lineHeight: `${height}px`,
+      height: theme.button.height,
+      lineHeight: `${theme.button.height}px`,
       opacity: 0.6,
       paddingBottom: 0,
       paddingLeft: 4,

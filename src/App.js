@@ -13,6 +13,7 @@ import Wizard from './Wizard'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 import { initializeTestData } from './dataUtils'
+import theme from './theme'
 
 function App({
   itemName,
@@ -73,7 +74,11 @@ function App({
           }}
         />
       ) : (
-        <button type="input" onClick={() => setWizardActive(true)}>
+        <button
+          {...style('startWizard')}
+          type="input"
+          onClick={() => setWizardActive(true)}
+        >
           Start wizard
         </button>
       )}
@@ -83,10 +88,18 @@ function App({
 const styled = defaultStyle(() => {
   // const fontSize = 14
   return {
-    padding: 5,
     fontFamily: 'Inconsolata, monospace',
+    padding: 5,
 
     itemName: { display: 'inline' },
+
+    startWizard: {
+      background: theme.button.backgroundColor,
+      border: 'none',
+      borderRadius: theme.button.borderRadius,
+      height: theme.button.height,
+      width: '100%',
+    },
   }
 })
 

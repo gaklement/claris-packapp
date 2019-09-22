@@ -4,6 +4,7 @@ import { uniqBy, values } from 'lodash'
 import React from 'react'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
+import theme from './theme'
 
 function FavouriteButton({
   items,
@@ -34,18 +35,16 @@ function FavouriteButton({
 }
 
 const styled = defaultStyle(() => {
-  const height = 28
-
   return {
     // display: 'flex',
     marginTop: 20,
     favouriteInput: {
-      borderRadius: 3,
+      borderRadius: theme.button.borderRadius,
       border: 'none',
       backgroundColor: 'white',
       flexGrow: 1,
-      height,
-      lineHeight: `${height}px`,
+      height: theme.button.height,
+      lineHeight: `${theme.button.height}px`,
       opacity: 0.6,
       paddingBottom: 0,
       paddingLeft: 4,
@@ -55,9 +54,9 @@ const styled = defaultStyle(() => {
     favouriteAdd: {
       backgroundColor: '#dca3a3',
       border: 'none',
-      borderRadius: 3,
-      height,
-      lineHeight: `${height}px`,
+      borderRadius: theme.button.borderRadius,
+      height: theme.button.height,
+      lineHeight: `${theme.button.height}px`,
       marginTop: 3,
       textAlign: 'center',
       paddingBottom: 1,
