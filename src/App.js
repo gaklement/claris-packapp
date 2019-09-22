@@ -1,27 +1,23 @@
 import './App.css'
 
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
-import { uniqueId, values } from 'lodash'
 
 import AdHoc from './AdHoc'
 import AllFavourites from './AllFavourites'
 import FavouriteButton from './FavouriteButton'
 import ItemList from './ItemList'
 import React from 'react'
-import WelcomeScreen from './WelcomeScreen'
 import Wizard from './Wizard'
 import { button } from './theme'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
+import ihmk from './ihmk.png'
 import { initializeTestData } from './dataUtils'
+import { values } from 'lodash'
 
 function App({
-  itemName,
   items,
   itemsFromFavourites,
-  onKeyDown,
-  onInputChange,
-  onItemAdd,
   onItemRemove,
   packages,
   setItems,
@@ -30,12 +26,10 @@ function App({
   style,
   wizardActive,
 }) {
-  // if (!selectedMenuItem) {
-  //   return <WelcomeScreen onMenuItemSelect={onMenuItemSelect} />
-  // }
-
   return (
     <div {...style} className="App">
+      <img {...style('logo')} src={ihmk} alt="logo" />
+
       <AdHoc items={items} setItems={setItems} />
 
       <FavouriteButton items={items} />
@@ -91,6 +85,13 @@ const styled = defaultStyle(() => {
 
     itemName: { display: 'inline' },
 
+    logo: {
+      display: 'block',
+      margin: '0 auto',
+      paddingBottom: 10,
+      width: '50%',
+    },
+
     startWizard: {
       background: button.backgroundColor,
       border: 'none',
@@ -112,11 +113,6 @@ export default compose(
       console.log('==hello', updatedItems)
       setItems(updatedItems)
     },
-  }),
-  withHandlers({
-    onMenuItemSelect: ({ setSelectedMenuItem }) => menuItem => {
-      setSelectedMenuItem(menuItem)
-    }, //
   }),
   lifecycle({
     componentDidMount() {
