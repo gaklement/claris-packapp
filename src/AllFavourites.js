@@ -2,17 +2,20 @@ import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
 import React from 'react'
 import { database } from './firebase'
+import { defaultStyle } from 'substyle'
 import { keys } from 'lodash'
+import theme from './theme'
 
 function AllFavourites({
   favourites,
   onSelectChange,
   onFetchItems,
   setFavourites,
+  style,
 }) {
   return (
-    <div>
-      <select onChange={onSelectChange}>
+    <div {...style}>
+      <select {...style('favouriteSelect')} onChange={onSelectChange}>
         {favourites.map(favourite => {
           return (
             <option value={favourite} key={favourite}>
@@ -21,12 +24,36 @@ function AllFavourites({
           )
         })}
       </select>
-      <button type="text" onClick={onFetchItems}>
-        Liste abrufen
-      </button>
+      <div {...style('favouriteGetButton')} type="text" onClick={onFetchItems}>
+        Anzeigen
+      </div>
     </div>
   )
 }
+
+const styled = defaultStyle(() => ({
+  display: 'flex',
+  marginTop: 20,
+  favouriteGetButton: {
+    backgroundColor: theme.button.backgroundColor,
+    border: 'none',
+    borderRadius: theme.button.borderRadius,
+    height: theme.button.height,
+    lineHeight: `${theme.button.height}px`,
+    marginLeft: 3,
+    paddingLeft: theme.button.padding,
+    paddingRight: theme.button.padding,
+  },
+  favouriteSelect: {
+    background: 'white',
+    border: 'none',
+    borderRadius: theme.button.borderRadius,
+    flexGrow: 1,
+    height: theme.button.height,
+    marginBottom: 5,
+    opacity: 0.6,
+  },
+}))
 
 export default compose(
   withState('favourites', 'setFavourites', []),
@@ -52,5 +79,6 @@ export default compose(
         setSelectedFavourite(keys(snapshot.val())[0])
       })
     },
-  })
+  }),
+  styled
 )(AllFavourites)

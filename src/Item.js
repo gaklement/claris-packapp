@@ -3,6 +3,7 @@ import { faCheck, faRedo, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { defaultStyle } from 'substyle'
+import theme from './theme'
 
 function Item({ isCheckedOff, item, onClickItemCheck, onItemRemove, style }) {
   return (
@@ -42,7 +43,7 @@ const styled = defaultStyle(
       },
 
       remove: {
-        paddingRight: 4,
+        paddingRight: theme.button.padding,
       },
 
       toolbar: {

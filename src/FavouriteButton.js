@@ -47,7 +47,7 @@ const styled = defaultStyle(() => {
       lineHeight: `${theme.button.height}px`,
       opacity: 0.6,
       paddingBottom: 0,
-      paddingLeft: 4,
+      paddingLeft: theme.button.padding,
       // width: '100%',
       width: '98%', //sonst werd ich verruückt
     },
