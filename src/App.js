@@ -86,9 +86,7 @@ function App({
   )
 }
 const styled = defaultStyle(() => {
-  // const fontSize = 14
   return {
-    fontFamily: 'Inconsolata, monospace',
     padding: 5,
 
     itemName: { display: 'inline' },

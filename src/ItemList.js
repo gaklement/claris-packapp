@@ -64,7 +64,6 @@ function ItemList({
 
 const styled = defaultStyle(() => {
   return {
-    fontSize: 14,
     lineHeight: '24px',
     maxWidth: 250,
 

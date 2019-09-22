@@ -4,3 +4,7 @@ export const button = {
   height: 28,
   padding: 4,
 }
+
+export const color = {
+  secondary: '#d6c3c3',
+}

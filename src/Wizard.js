@@ -2,6 +2,8 @@ import { compose, withHandlers, withState } from 'recompose'
 import { flatten, isNil, values } from 'lodash'
 
 import React from 'react'
+import { button } from './theme'
+import { color } from './theme'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 import wizardQuestions from './wizardQuestions'
@@ -20,12 +22,17 @@ function Wizard({
   return (
     <div {...style}>
       {!wizardEnd && (
-        <div id="question">{`${wizardQuestions[currentQuestionId].question}`}</div>
+        <div
+          {...style('question')}
+          id="question"
+        >{`${wizardQuestions[currentQuestionId].question}`}</div>
       )}
       {!wizardEnd &&
         (wizardQuestions[currentQuestionId].id === 'travelLengthQuestion' ? (
           <input
+            {...style('numberInput')}
             type="number"
+            placeholder="Gib eine Zahl ein"
             onChange={({ target }) => {
               setTravelLength(target.value)
               setPendingAnswer('unLockNextButton')
@@ -67,12 +74,28 @@ function Wizard({
 }
 
 const styled = defaultStyle(() => ({
-  width: 400,
-  backgroundColor: 'lightblue',
-  margin: 'auto',
+  backgroundColor: 'white',
+  border: 'none',
+  borderRadius: button.borderRadius,
+  opacity: 0.6,
+  textAlign: 'center',
 
   answer: {
     display: 'flex',
+  },
+
+  numberInput: {
+    backgroundColor: color.secondary,
+    border: 'none',
+    display: 'block',
+    height: 20,
+    margin: 'auto',
+    paddingLeft: button.padding,
+  },
+
+  question: {
+    paddingTop: 5,
+    paddingBottom: 10,
   },
 }))
 
