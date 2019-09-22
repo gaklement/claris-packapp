@@ -74,6 +74,8 @@ export default compose(
       setItems([...items, item])
       setItemName('')
     },
+  }),
+  withHandlers({
     onKeyDown: ({ onItemAdd }) => ({ keyCode }) => {
       if (keyCode === 13) {
         onItemAdd()
