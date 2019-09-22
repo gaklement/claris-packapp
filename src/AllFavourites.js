@@ -1,10 +1,10 @@
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
 import React from 'react'
+import { button } from './theme'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 import { keys } from 'lodash'
-import theme from './theme'
 
 function AllFavourites({
   favourites,
@@ -35,21 +35,21 @@ const styled = defaultStyle(() => ({
   display: 'flex',
   marginTop: 20,
   favouriteGetButton: {
-    backgroundColor: theme.button.backgroundColor,
+    backgroundColor: button.backgroundColor,
     border: 'none',
-    borderRadius: theme.button.borderRadius,
-    height: theme.button.height,
-    lineHeight: `${theme.button.height}px`,
+    borderRadius: button.borderRadius,
+    height: button.height,
+    lineHeight: `${button.height}px`,
     marginLeft: 3,
-    paddingLeft: theme.button.padding,
-    paddingRight: theme.button.padding,
+    paddingLeft: button.padding,
+    paddingRight: button.padding,
   },
   favouriteSelect: {
     background: 'white',
     border: 'none',
-    borderRadius: theme.button.borderRadius,
+    borderRadius: button.borderRadius,
     flexGrow: 1,
-    height: theme.button.height,
+    height: button.height,
     marginBottom: 5,
     opacity: 0.6,
   },

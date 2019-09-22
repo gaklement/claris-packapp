@@ -10,10 +10,10 @@ import ItemList from './ItemList'
 import React from 'react'
 import WelcomeScreen from './WelcomeScreen'
 import Wizard from './Wizard'
+import { button } from './theme'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 import { initializeTestData } from './dataUtils'
-import theme from './theme'
 
 function App({
   itemName,
@@ -94,10 +94,10 @@ const styled = defaultStyle(() => {
     itemName: { display: 'inline' },
 
     startWizard: {
-      background: theme.button.backgroundColor,
+      background: button.backgroundColor,
       border: 'none',
-      borderRadius: theme.button.borderRadius,
-      height: theme.button.height,
+      borderRadius: button.borderRadius,
+      height: button.height,
       width: '100%',
     },
   }

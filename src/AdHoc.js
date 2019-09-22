@@ -1,8 +1,8 @@
 import { compose, withHandlers, withState } from 'recompose'
 
 import React from 'react'
+import { button } from './theme'
 import { defaultStyle } from 'substyle'
-import theme from './theme'
 import { uniqueId } from 'lodash'
 
 function AdHoc({ itemName, onItemAdd, onInputChange, onKeyDown, style }) {
@@ -32,24 +32,24 @@ const styled = defaultStyle(() => {
     adHocAdd: {
       backgroundColor: '#dca3a3',
       border: 'none',
-      borderRadius: theme.button.borderRadius,
-      height: theme.button.height,
-      lineHeight: `${theme.button.height}px`,
+      borderRadius: button.borderRadius,
+      height: button.height,
+      lineHeight: `${button.height}px`,
       marginLeft: 3,
       textAlign: 'center',
       paddingBottom: 1,
-      width: theme.button.height,
+      width: button.height,
     },
     adHocInput: {
-      borderRadius: theme.button.borderRadius,
+      borderRadius: button.borderRadius,
       border: 'none',
       backgroundColor: 'white',
       flexGrow: 1,
-      height: theme.button.height,
-      lineHeight: `${theme.button.height}px`,
+      height: button.height,
+      lineHeight: `${button.height}px`,
       opacity: 0.6,
       paddingBottom: 0,
-      paddingLeft: theme.button.padding,
+      paddingLeft: button.padding,
     },
   }
 })

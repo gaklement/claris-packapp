@@ -2,9 +2,9 @@ import { compose, withHandlers, withState } from 'recompose'
 import { uniqBy, values } from 'lodash'
 
 import React from 'react'
+import { button } from './theme'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
-import theme from './theme'
 
 function FavouriteButton({
   items,
@@ -39,24 +39,24 @@ const styled = defaultStyle(() => {
     // display: 'flex',
     marginTop: 20,
     favouriteInput: {
-      borderRadius: theme.button.borderRadius,
+      borderRadius: button.borderRadius,
       border: 'none',
       backgroundColor: 'white',
       flexGrow: 1,
-      height: theme.button.height,
-      lineHeight: `${theme.button.height}px`,
+      height: button.height,
+      lineHeight: `${button.height}px`,
       opacity: 0.6,
       paddingBottom: 0,
-      paddingLeft: theme.button.padding,
+      paddingLeft: button.padding,
       // width: '100%',
       width: '98%', //sonst werd ich verruückt
     },
     favouriteAdd: {
       backgroundColor: '#dca3a3',
       border: 'none',
-      borderRadius: theme.button.borderRadius,
-      height: theme.button.height,
-      lineHeight: `${theme.button.height}px`,
+      borderRadius: button.borderRadius,
+      height: button.height,
+      lineHeight: `${button.height}px`,
       marginTop: 3,
       textAlign: 'center',
       paddingBottom: 1,
