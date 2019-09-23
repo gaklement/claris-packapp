@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
 import { compose, withHandlers, withState } from 'recompose'
-import { duration, transition } from './transitions'
 import { flatten, values } from 'lodash'
 
-import { Transition } from 'react-transition-group'
+import React from 'react'
 import Wizard from './Wizard'
-import { button } from './theme'
 import { database } from './firebase'
 import wizardQuestions from './wizardQuestions'
 
@@ -18,51 +15,22 @@ function WizardContainer({
   travelLength,
 }) {
   const wizardEnd = !wizardQuestions[currentQuestionId]
-  const [inProp, setInProp] = useState(false)
 
   if (wizardEnd) {
     return <div />
   }
 
-  setTimeout(() => setInProp(true), duration)
-
   return (
-    <Transition in={inProp} timeout={duration}>
-      {state => {
-        return (
-          <div
-            style={{
-              ...defaultStyles,
-              ...transitionStyles[state],
-            }}
-          >
-            <Wizard
-              currentQuestionId={currentQuestionId}
-              onNextClick={onNextClick}
-              pendingAnswer={pendingAnswer}
-              setPendingAnswer={setPendingAnswer}
-              setTravelLength={setTravelLength}
-              travelLength={travelLength}
-              wizardQuestions={wizardQuestions}
-            />
-          </div>
-        )
-      }}
-    </Transition>
+    <Wizard
+      currentQuestionId={currentQuestionId}
+      onNextClick={onNextClick}
+      pendingAnswer={pendingAnswer}
+      setPendingAnswer={setPendingAnswer}
+      setTravelLength={setTravelLength}
+      travelLength={travelLength}
+      wizardQuestions={wizardQuestions}
+    />
   )
-}
-const defaultStyles = {
-  backgroundColor: 'white',
-  border: 'none',
-  borderRadius: button.borderRadius,
-  opacity: 0,
-  padding: 10,
-  textAlign: 'center',
-  transition,
-}
-
-const transitionStyles = {
-  entered: { opacity: 0.6 },
 }
 
 export default compose(
