@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import { compose, withHandlers, withState } from 'recompose'
 import { duration, transition } from './transitions'
-import { flatten, isNil, values } from 'lodash'
+import { flatten, values } from 'lodash'
 
+import NextButton from './NextButton'
 import { Transition } from 'react-transition-group'
 import WizardAnswers from './WizardAnswers'
 import WizardQuestion from './WizardQuestion'
 import { button } from './theme'
-import { color } from './theme'
 import { database } from './firebase'
-import { defaultStyle } from 'substyle'
 import wizardQuestions from './wizardQuestions'
 
 function Wizard({
@@ -18,7 +17,6 @@ function Wizard({
   pendingAnswer,
   setPendingAnswer,
   setTravelLength,
-  style,
   travelLength,
 }) {
   const wizardEnd = !wizardQuestions[currentQuestionId]
@@ -38,7 +36,6 @@ function Wizard({
             style={{
               ...defaultStyles,
               ...transitionStyles[state],
-              ...style,
             }}
           >
             <WizardQuestion
@@ -49,22 +46,11 @@ function Wizard({
               setTravelLength={setTravelLength}
               setPendingAnswer={setPendingAnswer}
             />
-            {
-              <button
-                {...style('nextButton')}
-                id="next"
-                onClick={() => {
-                  onNextClick()
-                }}
-                type="text"
-                disabled={
-                  travelLength === undefined ||
-                  (travelLength !== undefined && isNil(pendingAnswer))
-                }
-              >
-                Weiter
-              </button>
-            }
+            <NextButton
+              onNextClick={onNextClick}
+              pendingAnswer={pendingAnswer}
+              travelLength={travelLength}
+            />
           </div>
         )
       }}
@@ -84,17 +70,6 @@ const defaultStyles = {
 const transitionStyles = {
   entered: { opacity: 0.6 },
 }
-
-const styled = defaultStyle(() => ({
-  nextButton: {
-    backgroundColor: color.primary,
-    border: 'none',
-    borderRadius: button.borderRadius,
-    color: 'white',
-    height: button.height,
-    marginTop: 10,
-  },
-}))
 
 export default compose(
   withState('currentQuestionId', 'setCurrentQuestionId', 0),
@@ -178,8 +153,7 @@ export default compose(
       setGivenAnswers([...givenAnswers, pendingAnswer])
       setCurrentQuestionId(currentQuestionId + 1)
     },
-  }),
-  styled
+  })
 )(Wizard)
 
 function getMappedPackageIds({ categories, givenAnswers, pendingAnswer }) {
