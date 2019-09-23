@@ -4,6 +4,7 @@ import { duration, transition } from './transitions'
 import { flatten, isNil, values } from 'lodash'
 
 import { Transition } from 'react-transition-group'
+import WizardAnswers from './WizardAnswers'
 import WizardQuestion from './WizardQuestion'
 import { button } from './theme'
 import { color } from './theme'
@@ -43,37 +44,12 @@ function Wizard({
             <WizardQuestion
               currentQuestion={wizardQuestions[currentQuestionId].question}
             />
-            {wizardQuestions[currentQuestionId].id ===
-            'travelLengthQuestion' ? (
-              <input
-                {...style('numberInput')}
-                type="number"
-                placeholder="Gib eine Zahl ein"
-                onChange={({ target }) => {
-                  setTravelLength(target.value)
-                  setPendingAnswer('unLockNextButton')
-                }}
-              />
-            ) : (
-              <div {...style('answersContainer')}>
-                {wizardQuestions[currentQuestionId].answers.map(
-                  (answer, key) => (
-                    <div key={key} {...style('answer')}>
-                      {
-                        <input
-                          key={answer.id}
-                          type="radio"
-                          name="answer"
-                          value={answer.id}
-                          onClick={() => setPendingAnswer(answer.id)}
-                        />
-                      }
-                      <div>{answer.option}</div>
-                    </div>
-                  )
-                )}
-              </div>
-            )}
+            <WizardAnswers
+              wizardQuestions={wizardQuestions}
+              currentQuestionId={currentQuestionId}
+              setTravelLength={setTravelLength}
+              setPendingAnswer={setPendingAnswer}
+            />
             {
               <button
                 {...style('nextButton')}
@@ -111,15 +87,6 @@ const transitionStyles = {
 }
 
 const styled = defaultStyle(() => ({
-  answer: {
-    display: 'flex',
-  },
-
-  answersContainer: {
-    width: '80%',
-    margin: '0 auto',
-  },
-
   nextButton: {
     backgroundColor: color.primary,
     border: 'none',
@@ -127,15 +94,6 @@ const styled = defaultStyle(() => ({
     color: 'white',
     height: button.height,
     marginTop: 10,
-  },
-
-  numberInput: {
-    backgroundColor: color.secondary,
-    border: 'none',
-    display: 'block',
-    height: 20,
-    margin: 'auto',
-    paddingLeft: button.padding,
   },
 }))
 
