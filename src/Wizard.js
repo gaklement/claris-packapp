@@ -4,6 +4,7 @@ import { duration, transition } from './transitions'
 import { flatten, isNil, values } from 'lodash'
 
 import { Transition } from 'react-transition-group'
+import WizardQuestion from './WizardQuestion'
 import { button } from './theme'
 import { color } from './theme'
 import { database } from './firebase'
@@ -39,10 +40,9 @@ function Wizard({
               ...style,
             }}
           >
-            <div
-              {...style('question')}
-              id="question"
-            >{`${wizardQuestions[currentQuestionId].question}`}</div>
+            <WizardQuestion
+              currentQuestion={wizardQuestions[currentQuestionId].question}
+            />
             {wizardQuestions[currentQuestionId].id ===
             'travelLengthQuestion' ? (
               <input
@@ -136,11 +136,6 @@ const styled = defaultStyle(() => ({
     height: 20,
     margin: 'auto',
     paddingLeft: button.padding,
-  },
-
-  question: {
-    paddingTop: 5,
-    paddingBottom: 10,
   },
 }))
 
