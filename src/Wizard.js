@@ -11,13 +11,13 @@ function Wizard({
   travelLength,
   wizardQuestions,
 }) {
+  const currentQuestion = wizardQuestions[currentQuestionId]
   return (
     <div>
-      <WizardQuestion
-        currentQuestion={wizardQuestions[currentQuestionId].question}
-      />
+      <WizardQuestion currentQuestion={currentQuestion.question} />
       <WizardAnswers
-        currentQuestion={wizardQuestions[currentQuestionId]}
+        currentQuestionId={currentQuestion.id}
+        currentQuestionAnswers={currentQuestion.answers}
         setPendingAnswer={setPendingAnswer}
         setTravelLength={setTravelLength}
       />
