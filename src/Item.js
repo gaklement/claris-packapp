@@ -1,5 +1,4 @@
 import {
-  faCheck,
   faCheckCircle,
   faRedo,
   faTimes,
@@ -38,8 +37,6 @@ function Item({ isCheckedOff, item, onClickItemCheck, onItemRemove, style }) {
 
 const styled = defaultStyle(
   () => {
-    const fontColor = '#848282'
-
     return {
       display: 'flex',
       height: button.height,
@@ -92,8 +89,7 @@ const styled = defaultStyle(
         display: 'flex',
       },
       '&isCheckedOff': {
-        itemName: { backgroundColor: '#ededf3' },
-        toolbar: { backgroundColor: '#ededf3' },
+        opacity: 0.3,
       },
     }
   },
