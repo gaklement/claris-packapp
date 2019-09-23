@@ -8,7 +8,7 @@ import FavouriteButton from './FavouriteButton'
 import ItemList from './ItemList'
 import React from 'react'
 import WelcomeScreen from './WelcomeScreen'
-import Wizard from './Wizard'
+import WizardContainer from './WizardContainer'
 import { button } from './theme'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
@@ -54,7 +54,7 @@ function App({
         />
       )}
       {wizardActive ? (
-        <Wizard
+        <WizardContainer
           onWizardComplete={mappedItems => {
             setItems([...items, ...mappedItems])
           }}
