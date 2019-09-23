@@ -5,6 +5,7 @@ import { groupBy, map } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Items from './Items'
 import React from 'react'
+import { button } from './theme'
 import { defaultStyle } from 'substyle'
 
 function ItemList({
@@ -28,14 +29,14 @@ function ItemList({
 
         return (
           <div key={categoryGroupKey}>
-            <div>
+            <div {...style('categoryTile')}>
               <h3 {...style('title')}>
                 {packages.find(pack => pack.id === categoryGroupKey)
                   ? packages.find(pack => pack.id === categoryGroupKey).name
                   : 'Auf die Schnelle'}
               </h3>
               <FontAwesomeIcon
-                style={style('collapse')}
+                {...style('collapseIcon')}
                 icon={isCollapsed ? faChevronDown : faChevronUp}
                 onClick={() => onCollapseCategory(categoryGroupKey)}
               />
@@ -57,16 +58,28 @@ function ItemList({
 
 const styled = defaultStyle(() => {
   return {
-    lineHeight: '24px',
     maxWidth: 250,
+
+    categoryTile: {
+      alignItems: 'center',
+      backgroundColor: 'darkslateblue',
+      borderRadius: `${2 * button.borderRadius}px ${2 *
+        button.borderRadius}px 0px 0px`,
+      color: '#b7b7b7',
+      display: 'flex',
+      marginBottom: 10, //when collapsed
+      opacity: 0.8,
+      paddingLeft: button.padding,
+      paddingLight: button.padding,
+    },
+
+    collapseIcon: {
+      marginRight: button.padding,
+    },
 
     title: {
       display: 'inline-block',
-    },
-
-    collapse: {
-      float: 'right',
-      height: 56,
+      flexGrow: 1,
     },
   }
 })
