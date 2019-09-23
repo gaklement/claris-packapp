@@ -3,7 +3,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { groupBy, map } from 'lodash'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Item from './Item'
+import Items from './Items'
 import React from 'react'
 import { defaultStyle } from 'substyle'
 
@@ -25,6 +25,7 @@ function ItemList({
     <div {...style}>
       {map(itemGroupedByCategory, (categoryGroup, categoryGroupKey) => {
         const isCollapsed = collapsedCategories.includes(categoryGroupKey)
+
         return (
           <div key={categoryGroupKey}>
             <div>
@@ -39,22 +40,14 @@ function ItemList({
                 onClick={() => onCollapseCategory(categoryGroupKey)}
               />
             </div>
-
-            {!isCollapsed &&
-              map(categoryGroup, (item, key) => {
-                const isCheckedOff = checkedOffItems.find(
-                  checkedOffItem => checkedOffItem.id === item.id
-                )
-                return (
-                  <Item
-                    key={key}
-                    isCheckedOff={isCheckedOff}
-                    item={item}
-                    onClickItemCheck={onClickItemCheck}
-                    onItemRemove={onItemRemove}
-                  />
-                )
-              })}
+            {!isCollapsed && (
+              <Items
+                categoryGroup={categoryGroup}
+                checkedOffItems={checkedOffItems}
+                onClickItemCheck={onClickItemCheck}
+                onItemRemove={onItemRemove}
+              />
+            )}
           </div>
         )
       })}

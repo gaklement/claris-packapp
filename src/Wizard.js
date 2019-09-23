@@ -22,8 +22,6 @@ function Wizard({
   return (
     <Transition in={inProp} timeout={duration}>
       {state => {
-        console.log('==state', state)
-
         return (
           <div
             style={{
