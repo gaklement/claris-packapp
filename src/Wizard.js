@@ -1,7 +1,9 @@
+import React, { useState } from 'react'
 import { compose, withHandlers, withState } from 'recompose'
+import { duration, transition } from './transitions'
 import { flatten, isNil, values } from 'lodash'
 
-import React from 'react'
+import { Transition } from 'react-transition-group'
 import { button } from './theme'
 import { color } from './theme'
 import { database } from './firebase'
@@ -18,72 +20,97 @@ function Wizard({
   travelLength,
 }) {
   const wizardEnd = !wizardQuestions[currentQuestionId]
+  const [inProp, setInProp] = useState(false)
 
   if (wizardEnd) {
     return <div />
   }
+
+  setTimeout(() => setInProp(true), duration)
+
   return (
-    <div {...style}>
-      <div
-        {...style('question')}
-        id="question"
-      >{`${wizardQuestions[currentQuestionId].question}`}</div>
-      {wizardQuestions[currentQuestionId].id === 'travelLengthQuestion' ? (
-        <input
-          {...style('numberInput')}
-          type="number"
-          placeholder="Gib eine Zahl ein"
-          onChange={({ target }) => {
-            setTravelLength(target.value)
-            setPendingAnswer('unLockNextButton')
-          }}
-        />
-      ) : (
-        <div {...style('answersContainer')}>
-          {wizardQuestions[currentQuestionId].answers.map((answer, key) => (
-            <div key={key} {...style('answer')}>
-              {
-                <input
-                  key={answer.id}
-                  type="radio"
-                  name="answer"
-                  value={answer.id}
-                  onClick={() => setPendingAnswer(answer.id)}
-                />
-              }
-              <div>{answer.option}</div>
-            </div>
-          ))}
-        </div>
-      )}
-      {
-        <button
-          {...style('nextButton')}
-          id="next"
-          onClick={() => {
-            onNextClick()
-          }}
-          type="text"
-          disabled={
-            travelLength === undefined ||
-            (travelLength !== undefined && isNil(pendingAnswer))
-          }
-        >
-          Weiter
-        </button>
-      }
-    </div>
+    <Transition in={inProp} duration={duration}>
+      {state => {
+        return (
+          <div
+            style={{
+              ...defaultStyles,
+              ...transitionStyles[state],
+              ...style,
+            }}
+          >
+            <div
+              {...style('question')}
+              id="question"
+            >{`${wizardQuestions[currentQuestionId].question}`}</div>
+            {wizardQuestions[currentQuestionId].id ===
+            'travelLengthQuestion' ? (
+              <input
+                {...style('numberInput')}
+                type="number"
+                placeholder="Gib eine Zahl ein"
+                onChange={({ target }) => {
+                  setTravelLength(target.value)
+                  setPendingAnswer('unLockNextButton')
+                }}
+              />
+            ) : (
+              <div {...style('answersContainer')}>
+                {wizardQuestions[currentQuestionId].answers.map(
+                  (answer, key) => (
+                    <div key={key} {...style('answer')}>
+                      {
+                        <input
+                          key={answer.id}
+                          type="radio"
+                          name="answer"
+                          value={answer.id}
+                          onClick={() => setPendingAnswer(answer.id)}
+                        />
+                      }
+                      <div>{answer.option}</div>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+            {
+              <button
+                {...style('nextButton')}
+                id="next"
+                onClick={() => {
+                  onNextClick()
+                }}
+                type="text"
+                disabled={
+                  travelLength === undefined ||
+                  (travelLength !== undefined && isNil(pendingAnswer))
+                }
+              >
+                Weiter
+              </button>
+            }
+          </div>
+        )
+      }}
+    </Transition>
   )
 }
-
-const styled = defaultStyle(() => ({
+const defaultStyles = {
   backgroundColor: 'white',
   border: 'none',
   borderRadius: button.borderRadius,
-  opacity: 0.6,
+  opacity: 0,
   padding: 10,
   textAlign: 'center',
+  transition,
+}
 
+const transitionStyles = {
+  entered: { opacity: 0.6 },
+}
+
+const styled = defaultStyle(() => ({
   answer: {
     display: 'flex',
   },

@@ -1,30 +1,58 @@
-import { faAmbulance, faBolt, faList } from '@fortawesome/free-solid-svg-icons'
+import React, { useState } from 'react'
+import { duration, transition } from './transitions'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import { Transition } from 'react-transition-group'
 import { color } from './theme'
 import { defaultStyle } from 'substyle'
 import wizard from './wizard.png'
 
 function WelcomeScreen({ onMenuItemSelect, onClick, style }) {
+  const [inProp, setInProp] = useState(true)
+
   return (
-    <div {...style} onClick={onClick}>
-      <img {...style('wizard')} src={wizard} alt="wizard" />
-      <div {...style('action')}>WIZARD STARTEN</div>
-    </div>
+    <Transition in={inProp} timeout={duration}>
+      {state => (
+        <div
+          style={{
+            ...defaultStyles,
+            ...transitionStyles[state],
+            ...style,
+          }}
+          onClick={() => {
+            setInProp(false)
+            setTimeout(() => onClick(), duration)
+          }}
+        >
+          <img {...style('wizard')} src={wizard} alt="wizard" />
+          <div {...style('action')}>WIZARD STARTEN</div>
+        </div>
+      )}
+    </Transition>
   )
 }
 
-const styled = defaultStyle(() => ({
-  backgroundColor: 'darkcyan',
+const defaultStyles = {
+  backgroundColor: color.primary,
   border: '1px solid white',
   borderRadius: '50%',
   display: 'block',
   height: 150,
   margin: 'auto',
-  opacity: 0.6,
+  opacity: 1,
+  transition,
   width: 150,
+}
 
+const transitionStyles = {
+  exiting: {
+    opacity: 0.2,
+  },
+  exited: {
+    opacity: 0,
+  },
+}
+
+const styled = defaultStyle(() => ({
   action: {
     color: 'white',
     margin: 'auto',
