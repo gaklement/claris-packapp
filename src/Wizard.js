@@ -45,8 +45,7 @@ function Wizard({
               currentQuestion={wizardQuestions[currentQuestionId].question}
             />
             <WizardAnswers
-              wizardQuestions={wizardQuestions}
-              currentQuestionId={currentQuestionId}
+              currentQuestion={wizardQuestions[currentQuestionId]}
               setTravelLength={setTravelLength}
               setPendingAnswer={setPendingAnswer}
             />

@@ -4,13 +4,12 @@ import React from 'react'
 import { defaultStyle } from 'substyle'
 
 function WizardAnswers({
-  currentQuestionId,
+  currentQuestion,
   setPendingAnswer,
   setTravelLength,
   style,
-  wizardQuestions,
 }) {
-  return wizardQuestions[currentQuestionId].id === 'travelLengthQuestion' ? (
+  return currentQuestion.id === 'travelLengthQuestion' ? (
     <input
       {...style('numberInput')}
       type="number"
@@ -22,7 +21,7 @@ function WizardAnswers({
     />
   ) : (
     <div {...style('answersContainer')}>
-      {wizardQuestions[currentQuestionId].answers.map((answer, key) => (
+      {currentQuestion.answers.map((answer, key) => (
         <div key={key} {...style('answer')}>
           {
             <input
