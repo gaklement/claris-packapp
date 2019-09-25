@@ -38,6 +38,7 @@ const data = {
     { id: 'charger', name: 'Ladekabel', packageIds: ['rightBeforeLeaving'] },
     { id: 'cocktailDress', name: 'Cocktailkleid', packageIds: ['wedding'] },
     { id: 'conditioner', name: 'Spülung', packageIds: ['cosmetics'] },
+    { id: 'dress', name: 'Kleid', packageIds: ['summer'] },
     { id: 'diary', name: 'Tagebuch', packageIds: ['quietTime'] },
     {
       id: 'contactBalm',
@@ -75,6 +76,11 @@ const data = {
     { id: 'oropax', name: 'Oropax', packageIds: ['byPlane', 'cosmetics'] },
     { id: 'pants', name: 'lange Hose', packageIds: ['basics'], dayFactor: 0.4 },
     {
+      id: 'pashmina',
+      name: 'Tuch',
+      packageIds: ['springFall'],
+    },
+    {
       id: 'panties',
       name: 'Unterhosen',
       packageIds: ['basics'],
@@ -107,11 +113,21 @@ const data = {
       packageIds: ['basics'],
       dayFactor: 0.15,
     },
+    {
+      id: 'sweatPants',
+      name: 'Jogginghose',
+      packageIds: ['basics'], // should be ['springFall', 'winter']
+    },
+    {
+      id: 'sweatPantsShort',
+      name: 'kurze Jogginghose',
+      packageIds: ['summer'],
+    },
     { id: 'tampax', name: 'Tampons', packageIds: ['cosmetics'] },
     {
       id: 'tankTop',
       name: 'Trägeroberteil',
-      packageIds: ['basics'],
+      packageIds: ['summer'],
       dayFactor: 0.5,
     },
     {
@@ -123,6 +139,11 @@ const data = {
       id: 'ticket',
       name: 'Ticket',
       packageIds: ['byBus', 'byPlane', 'byTrain'],
+    },
+    {
+      id: 'tights',
+      name: 'Strumpfhose',
+      packageIds: ['winter', 'wedding'],
     },
     { id: 'tissues', name: 'Taschentücher', packageIds: ['cosmetics'] },
     {
