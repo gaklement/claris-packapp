@@ -78,6 +78,7 @@ const data = {
     { id: 'hairFoam', name: 'Haarschaum', packageIds: ['cosmetics'] },
     { id: 'hairNeedle', name: 'Haarspangen', packageIds: ['cosmetics'] },
     { id: 'hairspray', name: 'Haarspray', packageIds: ['cosmetics'] },
+    { id: 'highHeels', name: 'Hochhackige Schuhe', packageIds: ['wedding'] },
     { id: 'hikingShoes', name: 'Wanderschuhe', packageIds: ['hiking'] },
     { id: 'keys', name: 'Schlüssel', packageIds: ['basics'] },
     { id: 'littlePurse', name: 'Handtäschchen', packageIds: ['wedding'] },
