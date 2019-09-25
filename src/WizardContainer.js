@@ -145,6 +145,9 @@ function getMappedPackageIds({ categories, givenAnswers, pendingAnswer }) {
   let implicitCategories = []
 
   categories.forEach(category => {
+    if (!packageIds.includes(category)) {
+      return
+    }
     if (category.includePackageIds) {
       category.includePackageIds.forEach(includePackageId =>
         implicitCategories.push(includePackageId)
