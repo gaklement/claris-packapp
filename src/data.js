@@ -16,6 +16,9 @@ const data = {
     { id: 'wedding', name: 'Hochzeit' },
     { id: 'quietTime', name: 'Ruhe' },
     { id: 'rightBeforeLeaving', name: 'Kurz vor der Abfahrt' },
+    { id: 'springFall', name: 'Mittelwarmes Wetter' },
+    { id: 'summer', name: 'Warmes Wetter' },
+    { id: 'winter', name: 'Kaltes Wetter' },
   ],
   items: [
     { id: 'afterSunLotion', name: 'Après sun', packageIds: ['beach'] },
@@ -53,6 +56,7 @@ const data = {
     { id: 'flipFlops', name: 'Badelatschen', packageIds: ['beach'] },
     { id: 'floss', name: 'Zahnseide', packageIds: ['cosmetics'] },
     { id: 'gift', name: 'Geschenk', packageIds: ['wedding'] },
+    { id: 'gloves', name: 'Handschuhe', packageIds: ['winter'] },
     { id: 'gown', name: 'Abendkleid', packageIds: ['wedding'] },
     { id: 'hairbrush', name: 'Bürste', packageIds: ['cosmetics'] },
     { id: 'hairDecoration', name: 'Haarschmuck', packageIds: ['wedding'] },
@@ -81,6 +85,7 @@ const data = {
     { id: 'pillow', name: 'Kissen', packageIds: ['byBus', 'byPlane'] },
     { id: 'ponyTail', name: 'Haargummis', packageIds: ['cosmetics'] },
     { id: 'qTips', name: 'Wattestäbchen', packageIds: ['cosmetics'] },
+    { id: 'scarf', name: 'Schal', packageIds: ['winter'] },
     { id: 'shampoo', name: 'Shampoo', packageIds: ['cosmetics'] },
     { id: 'shoes', name: 'Schuhe', packageIds: ['basics'], dayFactor: 0.4 },
     {
@@ -110,6 +115,11 @@ const data = {
       dayFactor: 0.5,
     },
     {
+      id: 'transitJacket',
+      name: 'Übergangsjacke',
+      packageIds: ['springFall'],
+    },
+    {
       id: 'ticket',
       name: 'Ticket',
       packageIds: ['byBus', 'byPlane', 'byTrain'],
@@ -124,6 +134,21 @@ const data = {
     { id: 'tShirt', name: 'T-Shirt', packageIds: ['basics'], dayFactor: 1 },
     { id: 'tweezer', name: 'Pinzette', packageIds: ['cosmetics'] },
     { id: 'wallet', name: 'Portemonnaie', packageIds: ['basics'] },
+    {
+      id: 'waterSpray',
+      name: 'Sprühwasser aus der Dose',
+      packageIds: ['summer'],
+    },
+    {
+      id: 'woolenHat',
+      name: 'Mütze',
+      packageIds: ['winter'],
+    },
+    {
+      id: 'woolenSocks',
+      name: 'Dicke Wollsocken',
+      packageIds: ['winter'],
+    },
   ],
 }
 

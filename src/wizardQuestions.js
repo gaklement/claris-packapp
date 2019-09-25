@@ -32,17 +32,22 @@ export default [
   },
   {
     id: 1,
-    question: 'Basics oder Kosmetik',
+    question: 'Wie warm ist es da, wo du hinfährst?',
     answers: [
       {
-        id: '1-0',
-        option: 'Basics',
-        packageIds: ['basics'],
+        id: 'weatherWarm',
+        option: 'Warm',
+        packageIds: ['summer'],
       },
       {
-        id: '1-1',
-        option: 'Kosmetik',
-        packageIds: ['cosmetics'],
+        id: 'weatherMedium',
+        option: 'Mittelwarm',
+        packageIds: ['springFall'],
+      },
+      {
+        id: 'weatherCold',
+        option: 'Kalt',
+        packageIds: ['winter'],
       },
     ],
   },
