@@ -1,3 +1,4 @@
+import { button, margin } from './theme'
 import { compose, withHandlers, withState } from 'recompose'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { groupBy, map } from 'lodash'
@@ -6,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Items from './Items'
 import React from 'react'
 import { Transition } from 'react-transition-group'
-import { button } from './theme'
 import { defaultStyle } from 'substyle'
 
 function ItemList({
@@ -30,7 +30,12 @@ function ItemList({
 
         return (
           <div key={categoryGroupKey}>
-            <div {...style('categoryTile')}>
+            <div
+              {...style('categoryTile')}
+              onClick={() => {
+                onCollapseCategory(categoryGroupKey)
+              }}
+            >
               <h3 {...style('title')}>
                 {packages.find(pack => pack.id === categoryGroupKey)
                   ? packages.find(pack => pack.id === categoryGroupKey).name
@@ -39,9 +44,6 @@ function ItemList({
               <FontAwesomeIcon
                 {...style('collapseIcon')}
                 icon={isCollapsed ? faChevronDown : faChevronUp}
-                onClick={() => {
-                  onCollapseCategory(categoryGroupKey)
-                }}
               />
             </div>
             <Transition in={!isCollapsed} timeout={100}>
@@ -92,7 +94,7 @@ const styled = defaultStyle(() => {
     },
 
     collapseIcon: {
-      marginRight: button.padding,
+      marginRight: margin.medium,
     },
 
     title: {

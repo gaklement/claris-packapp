@@ -9,3 +9,9 @@ export const color = {
   primary: '#985b70',
   secondary: '#d6c3c3',
 }
+
+export const margin = {
+  small: 4,
+  medium: 8,
+  large: 20,
+}
