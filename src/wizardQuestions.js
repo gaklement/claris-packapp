@@ -93,4 +93,20 @@ export default [
       },
     ],
   },
+  {
+    id: 'quietTimeOrNo',
+    question: 'Hast du Zeit für dich allein?',
+    answers: [
+      {
+        id: 'quietTimeYes',
+        option: 'Ja',
+        packageIds: ['quietTime'],
+      },
+      {
+        id: 'quiteTimeNo',
+        option: 'Nein',
+        packageIds: [],
+      },
+    ],
+  },
 ]
