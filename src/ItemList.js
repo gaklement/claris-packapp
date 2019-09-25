@@ -29,7 +29,7 @@ function ItemList({
         const isCollapsed = collapsedCategories.includes(categoryGroupKey)
 
         return (
-          <div key={categoryGroupKey}>
+          <div {...style('categoryContainer')} key={categoryGroupKey}>
             <div
               {...style('categoryTile')}
               onClick={() => {
@@ -46,20 +46,19 @@ function ItemList({
                 icon={isCollapsed ? faChevronDown : faChevronUp}
               />
             </div>
-            <div {...style('itemsContainer')}>
-              <Transition in={!isCollapsed} timeout={100}>
-                {state => (
-                  <div style={{ ...defaultStyles, ...transitionStyles[state] }}>
-                    <Items
-                      categoryGroup={categoryGroup}
-                      checkedOffItems={checkedOffItems}
-                      onClickItemCheck={onClickItemCheck}
-                      onItemRemove={onItemRemove}
-                    />
-                  </div>
-                )}
-              </Transition>
-            </div>
+
+            <Transition in={!isCollapsed} timeout={100}>
+              {state => (
+                <div style={{ ...defaultStyles, ...transitionStyles[state] }}>
+                  <Items
+                    categoryGroup={categoryGroup}
+                    checkedOffItems={checkedOffItems}
+                    onClickItemCheck={onClickItemCheck}
+                    onItemRemove={onItemRemove}
+                  />
+                </div>
+              )}
+            </Transition>
           </div>
         )
       })}
@@ -74,6 +73,7 @@ const defaultStyles = {
 
 const transitionStyles = {
   exited: {
+    // marginBottom: 20,
     maxHeight: 0,
     overflow: 'hidden',
   },
@@ -81,13 +81,15 @@ const transitionStyles = {
 
 const styled = defaultStyle(() => {
   return {
+    categoryContainer: {
+      backgroundColor: color.quattronary,
+      borderRadius: `${2 * button.borderRadius}px`,
+      border: '1px solid lightgrey',
+      marginBottom: margin.large,
+    },
+
     categoryTile: {
       alignItems: 'center',
-      backgroundColor: color.quattronary,
-      borderRadius: `${2 * button.borderRadius}px ${2 *
-        button.borderRadius}px 0px 0px`,
-      border: '1px solid',
-      borderBottom: 0,
       color: '#e2e2e2',
       display: 'flex',
       // marginBottom: 10, //when collapsed
@@ -97,14 +99,6 @@ const styled = defaultStyle(() => {
 
     collapseIcon: {
       marginRight: margin.medium,
-    },
-
-    itemsContainer: {
-      backgroundColor: color.quattronary,
-      padding: margin.small,
-      paddingTop: margin.large,
-      border: '1px solid lightgrey',
-      borderTop: 0,
     },
 
     title: {
