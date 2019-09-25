@@ -25,7 +25,7 @@ function AllFavourites({
         })}
       </select>
       <div {...style('favouriteGetButton')} type="text" onClick={onFetchItems}>
-        Anzeigen
+        ANZEIGEN
       </div>
     </div>
   )

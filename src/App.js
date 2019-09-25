@@ -83,6 +83,7 @@ const styled = defaultStyle(() => {
     logo: {
       display: 'block',
       margin: '0 auto',
+      maxWidth: 150,
       paddingBottom: 10,
       width: '50%',
     },

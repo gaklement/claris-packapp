@@ -58,14 +58,15 @@ function ItemList({
 
 const styled = defaultStyle(() => {
   return {
-    maxWidth: 250,
+    // maxWidth: 250,
 
     categoryTile: {
       alignItems: 'center',
-      backgroundColor: 'darkslateblue',
+      backgroundColor: '#748dc3',
       borderRadius: `${2 * button.borderRadius}px ${2 *
         button.borderRadius}px 0px 0px`,
-      color: '#b7b7b7',
+      border: '1px solid',
+      color: '#e2e2e2',
       display: 'flex',
       marginBottom: 10, //when collapsed
       opacity: 0.8,

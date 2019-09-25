@@ -28,7 +28,7 @@ function FavouriteButton({
         disabled={!name}
         onClick={onSaveToFavourites}
       >
-        Speichern
+        SPEICHERN
       </div>
     </div>
   )
@@ -36,7 +36,9 @@ function FavouriteButton({
 
 const styled = defaultStyle(() => {
   return {
-    // display: 'flex',
+    display: 'flex',
+    flexDirection: 'column',
+
     marginTop: 20,
     favouriteInput: {
       borderRadius: button.borderRadius,
@@ -48,8 +50,6 @@ const styled = defaultStyle(() => {
       opacity: 0.6,
       paddingBottom: 0,
       paddingLeft: button.padding,
-      // width: '100%',
-      width: '98%', //sonst werd ich verruückt
     },
     favouriteAdd: {
       backgroundColor: '#dca3a3',
