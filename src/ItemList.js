@@ -8,6 +8,7 @@ import Items from './Items'
 import React from 'react'
 import { Transition } from 'react-transition-group'
 import { defaultStyle } from 'substyle'
+import { expandCollapseTransition } from './transitions'
 
 function ItemList({
   checkedOffItems,
@@ -68,13 +69,14 @@ function ItemList({
 
 const defaultStyles = {
   maxHeight: 1000,
-  transition: 'max-height 500ms ease-in-out',
+  opacity: 1,
+  transition: expandCollapseTransition,
 }
 
 const transitionStyles = {
   exited: {
-    // marginBottom: 20,
     maxHeight: 0,
+    opacity: 0,
     overflow: 'hidden',
   },
 }
@@ -92,7 +94,6 @@ const styled = defaultStyle(() => {
       alignItems: 'center',
       color: '#e2e2e2',
       display: 'flex',
-      // marginBottom: 10, //when collapsed
       paddingLeft: button.padding,
       paddingLight: button.padding,
     },
