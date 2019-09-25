@@ -10,7 +10,7 @@ function WizardAnswers({
   setTravelLength,
   style,
 }) {
-  return currentQuestionId === 'travelLengthQuestion' ? (
+  return currentQuestionId === 'travelLength' ? (
     <input
       {...style('numberInput')}
       type="number"
