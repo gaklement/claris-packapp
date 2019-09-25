@@ -103,7 +103,23 @@ export default [
         packageIds: ['quietTime'],
       },
       {
-        id: 'quiteTimeNo',
+        id: 'quietTimeNo',
+        option: 'Nein',
+        packageIds: [],
+      },
+    ],
+  },
+  {
+    id: 'weddingOrNo',
+    question: 'Fährst du auf eine Hochzeit?',
+    answers: [
+      {
+        id: 'weddingYes',
+        option: 'Ja',
+        packageIds: ['wedding'],
+      },
+      {
+        id: 'weddingNo',
         option: 'Nein',
         packageIds: [],
       },
