@@ -8,6 +8,7 @@ export const button = {
 export const color = {
   primary: '#985b70',
   secondary: '#d6c3c3',
+  quattronary: '#748dc3',
 }
 
 export const margin = {

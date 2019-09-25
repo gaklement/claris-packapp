@@ -1,3 +1,4 @@
+import { button, margin } from './theme'
 import {
   faCheckCircle,
   faRedo,
@@ -6,7 +7,6 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { button } from './theme'
 import { defaultStyle } from 'substyle'
 
 function Item({ isCheckedOff, item, onClickItemCheck, onItemRemove, style }) {
@@ -53,7 +53,7 @@ const styled = defaultStyle(
         border: 'none',
         borderRadius: button.borderRadius,
         height: button.height,
-        marginLeft: 3,
+        marginLeft: margin.small,
         opacity: 0.6,
         textAlign: 'center',
         width: button.height,
@@ -79,7 +79,7 @@ const styled = defaultStyle(
         border: 'none',
         borderRadius: button.borderRadius,
         height: button.height,
-        marginLeft: 3,
+        marginLeft: margin.small,
         opacity: 0.6,
         textAlign: 'center',
         width: button.height,

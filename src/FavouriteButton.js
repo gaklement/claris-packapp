@@ -1,8 +1,8 @@
+import { button, margin } from './theme'
 import { compose, withHandlers, withState } from 'recompose'
 import { uniqBy, values } from 'lodash'
 
 import React from 'react'
-import { button } from './theme'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 
@@ -39,7 +39,7 @@ const styled = defaultStyle(() => {
     display: 'flex',
     flexDirection: 'column',
 
-    marginTop: 20,
+    marginTop: margin.large,
     favouriteInput: {
       borderRadius: button.borderRadius,
       border: 'none',
@@ -57,7 +57,7 @@ const styled = defaultStyle(() => {
       borderRadius: button.borderRadius,
       height: button.height,
       lineHeight: `${button.height}px`,
-      marginTop: 3,
+      marginTop: margin.small,
       textAlign: 'center',
       paddingBottom: 1,
       width: '100%',

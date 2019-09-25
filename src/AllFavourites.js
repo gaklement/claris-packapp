@@ -1,7 +1,7 @@
+import { button, margin } from './theme'
 import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
 import React from 'react'
-import { button } from './theme'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 import { keys } from 'lodash'
@@ -33,14 +33,14 @@ function AllFavourites({
 
 const styled = defaultStyle(() => ({
   display: 'flex',
-  marginTop: 20,
+  marginTop: margin.large,
   favouriteGetButton: {
     backgroundColor: button.backgroundColor,
     border: 'none',
     borderRadius: button.borderRadius,
     height: button.height,
     lineHeight: `${button.height}px`,
-    marginLeft: 3,
+    marginLeft: margin.small,
     paddingLeft: button.padding,
     paddingRight: button.padding,
   },
@@ -50,7 +50,7 @@ const styled = defaultStyle(() => ({
     borderRadius: button.borderRadius,
     flexGrow: 1,
     height: button.height,
-    marginBottom: 5,
+    marginBottom: margin.medium,
     opacity: 0.6,
   },
 }))

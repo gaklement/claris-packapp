@@ -1,4 +1,4 @@
-import { button, margin } from './theme'
+import { button, color, margin } from './theme'
 import { compose, withHandlers, withState } from 'recompose'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { groupBy, map } from 'lodash'
@@ -46,18 +46,20 @@ function ItemList({
                 icon={isCollapsed ? faChevronDown : faChevronUp}
               />
             </div>
-            <Transition in={!isCollapsed} timeout={100}>
-              {state => (
-                <div style={{ ...defaultStyles, ...transitionStyles[state] }}>
-                  <Items
-                    categoryGroup={categoryGroup}
-                    checkedOffItems={checkedOffItems}
-                    onClickItemCheck={onClickItemCheck}
-                    onItemRemove={onItemRemove}
-                  />
-                </div>
-              )}
-            </Transition>
+            <div {...style('itemsContainer')}>
+              <Transition in={!isCollapsed} timeout={100}>
+                {state => (
+                  <div style={{ ...defaultStyles, ...transitionStyles[state] }}>
+                    <Items
+                      categoryGroup={categoryGroup}
+                      checkedOffItems={checkedOffItems}
+                      onClickItemCheck={onClickItemCheck}
+                      onItemRemove={onItemRemove}
+                    />
+                  </div>
+                )}
+              </Transition>
+            </div>
           </div>
         )
       })}
@@ -81,20 +83,28 @@ const styled = defaultStyle(() => {
   return {
     categoryTile: {
       alignItems: 'center',
-      backgroundColor: '#748dc3',
+      backgroundColor: color.quattronary,
       borderRadius: `${2 * button.borderRadius}px ${2 *
         button.borderRadius}px 0px 0px`,
       border: '1px solid',
+      borderBottom: 0,
       color: '#e2e2e2',
       display: 'flex',
-      marginBottom: 10, //when collapsed
-      opacity: 0.8,
+      // marginBottom: 10, //when collapsed
       paddingLeft: button.padding,
       paddingLight: button.padding,
     },
 
     collapseIcon: {
       marginRight: margin.medium,
+    },
+
+    itemsContainer: {
+      backgroundColor: color.quattronary,
+      padding: margin.small,
+      paddingTop: margin.large,
+      border: '1px solid lightgrey',
+      borderTop: 0,
     },
 
     title: {

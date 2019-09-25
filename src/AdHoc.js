@@ -1,7 +1,7 @@
+import { button, margin } from './theme'
 import { compose, withHandlers, withState } from 'recompose'
 
 import React from 'react'
-import { button } from './theme'
 import { defaultStyle } from 'substyle'
 import { uniqueId } from 'lodash'
 
@@ -35,7 +35,7 @@ const styled = defaultStyle(() => {
       borderRadius: button.borderRadius,
       height: button.height,
       lineHeight: `${button.height}px`,
-      marginLeft: 3,
+      marginLeft: margin.small,
       textAlign: 'center',
       paddingBottom: 1,
       width: button.height,
