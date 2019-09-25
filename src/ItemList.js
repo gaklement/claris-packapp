@@ -5,6 +5,7 @@ import { groupBy, map } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Items from './Items'
 import React from 'react'
+import { Transition } from 'react-transition-group'
 import { button } from './theme'
 import { defaultStyle } from 'substyle'
 
@@ -38,17 +39,23 @@ function ItemList({
               <FontAwesomeIcon
                 {...style('collapseIcon')}
                 icon={isCollapsed ? faChevronDown : faChevronUp}
-                onClick={() => onCollapseCategory(categoryGroupKey)}
+                onClick={() => {
+                  onCollapseCategory(categoryGroupKey)
+                }}
               />
             </div>
-            {!isCollapsed && (
-              <Items
-                categoryGroup={categoryGroup}
-                checkedOffItems={checkedOffItems}
-                onClickItemCheck={onClickItemCheck}
-                onItemRemove={onItemRemove}
-              />
-            )}
+            <Transition in={!isCollapsed} timeout={100}>
+              {state => (
+                <div style={{ ...defaultStyles, ...transitionStyles[state] }}>
+                  <Items
+                    categoryGroup={categoryGroup}
+                    checkedOffItems={checkedOffItems}
+                    onClickItemCheck={onClickItemCheck}
+                    onItemRemove={onItemRemove}
+                  />
+                </div>
+              )}
+            </Transition>
           </div>
         )
       })}
@@ -56,10 +63,20 @@ function ItemList({
   )
 }
 
+const defaultStyles = {
+  maxHeight: 1000,
+  transition: 'max-height 500ms ease-in-out',
+}
+
+const transitionStyles = {
+  exited: {
+    maxHeight: 0,
+    overflow: 'hidden',
+  },
+}
+
 const styled = defaultStyle(() => {
   return {
-    // maxWidth: 250,
-
     categoryTile: {
       alignItems: 'center',
       backgroundColor: '#748dc3',
