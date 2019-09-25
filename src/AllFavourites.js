@@ -63,7 +63,14 @@ export default compose(
     onSelectChange: ({ setSelectedFavourite }) => ({ target }) => {
       setSelectedFavourite(target.value)
     },
-    onFetchItems: ({ selectedFavourite, setItemsFromFavourites }) => () => {
+    onFetchItems: ({
+      favourites,
+      selectedFavourite,
+      setItemsFromFavourites,
+    }) => () => {
+      if (favourites.length === 0) {
+        return
+      }
       database
         .ref(`favourites/${selectedFavourite}`)
         .once('value', snapshot => {
