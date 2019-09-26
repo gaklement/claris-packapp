@@ -78,7 +78,12 @@ const data = {
     { id: 'hairFoam', name: 'Haarschaum', packageIds: ['cosmetics'] },
     { id: 'hairNeedle', name: 'Haarspangen', packageIds: ['cosmetics'] },
     { id: 'hairspray', name: 'Haarspray', packageIds: ['cosmetics'] },
-    { id: 'highHeels', name: 'Hochhackige Schuhe', packageIds: ['wedding'] },
+    { id: 'headPhones', name: 'Kopfhörer', packageIds: ['basics'] },
+    {
+      id: 'highHeels',
+      name: 'Hochhackige Schuhe',
+      packageIds: ['festiveEvent', 'wedding'],
+    },
     { id: 'hikingShoes', name: 'Wanderschuhe', packageIds: ['hiking'] },
     { id: 'keys', name: 'Schlüssel', packageIds: ['basics'] },
     { id: 'littlePurse', name: 'Handtäschchen', packageIds: ['wedding'] },
@@ -104,6 +109,11 @@ const data = {
     { id: 'pen', name: 'Stift', packageIds: ['quietTime'] },
     { id: 'phone', name: 'Handy', packageIds: ['rightBeforeLeaving'] },
     { id: 'pillow', name: 'Kissen', packageIds: ['byBus', 'byPlane'] },
+    {
+      id: 'podCasts',
+      name: 'Podcasts',
+      packageIds: ['byBus', 'byPlane', 'byTrain'],
+    },
     { id: 'ponyTail', name: 'Haargummis', packageIds: ['cosmetics'] },
     { id: 'qTips', name: 'Wattestäbchen', packageIds: ['cosmetics'] },
     {
