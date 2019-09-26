@@ -11,8 +11,15 @@ function FavouriteButton({
   name,
   onNameChange,
   onSaveToFavourites,
+  showSavedHint,
+  setShowSavedHint,
   style,
 }) {
+  if (showSavedHint) {
+    setTimeout(() => {
+      setShowSavedHint(false)
+    }, 1500)
+  }
   return (
     <div {...style}>
       <input
@@ -28,7 +35,7 @@ function FavouriteButton({
         disabled={!name}
         onClick={onSaveToFavourites}
       >
-        SPEICHERN
+        {showSavedHint ? 'GESPEICHERT' : 'SPEICHERN'}
       </div>
     </div>
   )
@@ -67,11 +74,12 @@ const styled = defaultStyle(() => {
 
 export default compose(
   withState('name', 'setName', ''),
+  withState('showSavedHint', 'setShowSavedHint', false),
   withHandlers({
     onNameChange: ({ setName }) => ({ target }) => {
       setName(target.value)
     },
-    onSaveToFavourites: ({ items, name }) => () => {
+    onSaveToFavourites: ({ items, name, setShowSavedHint }) => () => {
       if (!name) {
         return
       }
@@ -83,7 +91,9 @@ export default compose(
 
         database
           .ref(`favourites/${name}`)
-          .set(uniqBy([...items, ...favourites], 'id'))
+          .set(uniqBy([...items, ...favourites], 'id'), () => {
+            setShowSavedHint(true)
+          })
       })
     },
   }),
