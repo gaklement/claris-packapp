@@ -133,21 +133,24 @@ function getMappedPackageIds({ categories, givenAnswers, pendingAnswer }) {
   )
 
   // get their packageIds
-  const packageIds = flatten(
+  let packageIds = flatten(
     matchingAnswerOptions.map(matchingAnswerOption => {
       return matchingAnswerOption.packageIds
     })
   )
-
+  if (!packageIds.includes('basics')) {
+    packageIds = [...packageIds, 'basics']
+  }
   // get the packageIds that are implicitly included in
   // one of the categories that will be displayed on the packlist
 
   let implicitCategories = []
 
   categories.forEach(category => {
-    if (!packageIds.includes(category)) {
+    if (!packageIds.includes(category.id)) {
       return
     }
+
     if (category.includePackageIds) {
       category.includePackageIds.forEach(includePackageId =>
         implicitCategories.push(includePackageId)
