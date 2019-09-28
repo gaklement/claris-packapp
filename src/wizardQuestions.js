@@ -94,6 +94,86 @@ export default [
     ],
   },
   {
+    id: 'swimOrNo',
+    question: 'Kann man da schwimmen?',
+    answers: [
+      {
+        id: 'swimYes',
+        option: 'Ja',
+        packageIds: ['swim'],
+      },
+      {
+        id: 'swimNo',
+        option: 'Nein',
+        packageIds: [],
+      },
+    ],
+  },
+  {
+    id: 'eventOrNo',
+    question: 'Fährst du auf Fest?',
+    answers: [
+      {
+        id: 'eventYes',
+        option: 'Ja',
+        packageIds: ['festive'],
+      },
+      {
+        id: 'eventNo',
+        option: 'Nein',
+        packageIds: [],
+      },
+    ],
+  },
+  {
+    id: 'weddingOrNo',
+    question: 'Ist eine Hochzeit?',
+    answers: [
+      {
+        id: 'weddingYes',
+        option: 'Ja',
+        packageIds: ['wedding'],
+      },
+      {
+        id: 'weddingNo',
+        option: 'Nein',
+        packageIds: [],
+      },
+    ],
+  },
+  {
+    id: 'childrenOrNo',
+    question: 'Hängst du mit Kindern rum?',
+    answers: [
+      {
+        id: 'childrenYes',
+        option: 'Ja',
+        packageIds: ['children'],
+      },
+      {
+        id: 'childrenNo',
+        option: 'Nein',
+        packageIds: [],
+      },
+    ],
+  },
+  {
+    id: 'workOrNo',
+    question: 'Musst du arbeiten?',
+    answers: [
+      {
+        id: 'workYes',
+        option: 'Ja',
+        packageIds: ['work'],
+      },
+      {
+        id: 'workNo',
+        option: 'Nein',
+        packageIds: [],
+      },
+    ],
+  },
+  {
     id: 'quietTimeOrNo',
     question: 'Hast du Zeit für dich allein?',
     answers: [
@@ -104,22 +184,6 @@ export default [
       },
       {
         id: 'quietTimeNo',
-        option: 'Nein',
-        packageIds: [],
-      },
-    ],
-  },
-  {
-    id: 'weddingOrNo',
-    question: 'Fährst du auf eine Hochzeit?',
-    answers: [
-      {
-        id: 'weddingYes',
-        option: 'Ja',
-        packageIds: ['wedding'],
-      },
-      {
-        id: 'weddingNo',
         option: 'Nein',
         packageIds: [],
       },
