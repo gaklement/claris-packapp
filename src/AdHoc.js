@@ -36,6 +36,10 @@ function AdHoc({ itemName, onItemAdd, onInputChange, onKeyDown, style }) {
               >
                 <FontAwesomeIcon icon={faTimes} />
               </div>
+              <div {...style('description')}>
+                Wenn dir etwas zwischendrin einfällt, was du auf keinen Fall
+                vergessen willst, kannst du das hier eintragen
+              </div>
               <div {...style('adHoc')}>
                 <input
                   {...style('adHocInput')}
@@ -45,7 +49,6 @@ function AdHoc({ itemName, onItemAdd, onInputChange, onKeyDown, style }) {
                   onKeyDown={onKeyDown}
                   value={itemName}
                 />
-
                 <div {...style('adHocAdd')} onClick={onItemAdd}>
                   +
                 </div>
@@ -66,15 +69,16 @@ const defaultStyles = {
   height: 0,
   opacity: 0,
   transition: 'height 300ms ease-in-out, background-color 1000ms linear',
+  zIndex: 1,
 }
 
 const transitionStyles = {
   entered: {
     bottom: 0,
-    height: 100,
+    height: 120,
     opacity: 1,
     position: 'fixed',
-    width: '91%',
+    width: '92%',
   },
   exited: {
     height: 0,
@@ -114,6 +118,12 @@ const styled = defaultStyle(() => {
       marginRight: margin.medium,
       marginTop: margin.small,
       textAlign: 'right',
+    },
+    description: {
+      color: color.secondary,
+      marginBottom: margin.medium,
+      marginLeft: margin.small,
+      marginTop: margin.small,
     },
     popUpButton: {
       backgroundColor: color.primary,
