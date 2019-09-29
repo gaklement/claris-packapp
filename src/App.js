@@ -21,24 +21,27 @@ function App({
   itemsFromFavourites,
   onItemRemove,
   packages,
+  selectedMenuItem,
   setItems,
   setItemsFromFavourites,
-  setWizardActive,
+  setSelectedMenuItem,
   style,
-  wizardActive,
 }) {
   return (
     <div {...style} className="App">
       <img {...style('logo')} src={ihmk} alt="logo" />
 
       <AdHoc items={items} setItems={setItems} />
-
-      <FavouriteButton items={items} />
-      <AllFavourites
-        setItemsFromFavourites={itemsFromFavourites =>
-          setItemsFromFavourites(itemsFromFavourites)
-        }
-      />
+      {selectedMenuItem === 'favourites' && (
+        <div>
+          <FavouriteButton items={items} />
+          <AllFavourites
+            setItemsFromFavourites={itemsFromFavourites =>
+              setItemsFromFavourites(itemsFromFavourites)
+            }
+          />
+        </div>
+      )}
 
       {itemsFromFavourites.length > 0 && (
         <ItemList
@@ -53,14 +56,16 @@ function App({
           packages={packages}
         />
       )}
-      {wizardActive ? (
+      {selectedMenuItem === 'wizard' ? (
         <WizardContainer
           onWizardComplete={mappedItems => {
             setItems([...items, ...mappedItems])
           }}
         />
       ) : (
-        <WelcomeScreen onClick={() => setWizardActive(true)} />
+        <WelcomeScreen
+          onMenuItemSelect={menuItem => setSelectedMenuItem(menuItem)}
+        />
       )}
       {items.length > 0 && (
         <div id="items">
@@ -101,8 +106,8 @@ const styled = defaultStyle(() => {
 export default compose(
   withState('items', 'setItems', []),
   withState('itemsFromFavourites', 'setItemsFromFavourites', []),
+  withState('selectedMenuItem', 'setSelectedMenuItem', ''),
   withState('packages', 'setPackages', []),
-  withState('wizardActive', 'setWizardActive', false),
   withHandlers({
     onItemRemove: ({ items, setItems }) => removedItem => {
       const updatedItems = items.filter(item => item !== removedItem)

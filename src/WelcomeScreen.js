@@ -10,24 +10,45 @@ function WelcomeScreen({ onMenuItemSelect, onClick, style }) {
   const [inProp, setInProp] = useState(true)
 
   return (
-    <Transition in={inProp} timeout={duration}>
-      {state => (
-        <div
-          style={{
-            ...defaultStyles,
-            ...transitionStyles[state],
-            ...style,
-          }}
-          onClick={() => {
-            setInProp(false)
-            setTimeout(() => onClick(), duration)
-          }}
-        >
-          <img {...style('wizard')} src={wizard} alt="wizard" />
-          <div {...style('action')}>WIZARD STARTEN</div>
-        </div>
-      )}
-    </Transition>
+    <div>
+      <Transition in={inProp} timeout={duration}>
+        {state => (
+          <div
+            style={{
+              ...defaultStyles,
+              ...transitionStyles[state],
+              ...style,
+            }}
+            onClick={() => {
+              setInProp(false)
+
+              setTimeout(() => onMenuItemSelect('wizard'), duration)
+            }}
+          >
+            <img {...style('wizard')} src={wizard} alt="wizard" />
+            <div {...style('action')}>WIZARD STARTEN</div>
+          </div>
+        )}
+      </Transition>
+      <Transition in={inProp} timeout={duration}>
+        {state => (
+          <div
+            style={{
+              ...defaultStyles,
+              ...transitionStyles[state],
+              ...style,
+            }}
+            onClick={() => {
+              setInProp(false)
+              setTimeout(() => onMenuItemSelect('favourites'), duration)
+            }}
+          >
+            <img {...style('wizard')} src={wizard} alt="wizard" />
+            <div {...style('action')}>FAVOURITEN</div>
+          </div>
+        )}
+      </Transition>
+    </div>
   )
 }
 
