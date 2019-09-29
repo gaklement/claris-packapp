@@ -1,21 +1,15 @@
 import React, { useState } from 'react'
 import { button, color, margin } from './theme'
 import { compose, withHandlers, withState } from 'recompose'
-import { duration, expandCollapseTransition } from './transitions'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Transition } from 'react-transition-group'
 import { defaultStyle } from 'substyle'
+import { duration } from './transitions'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { uniqueId } from 'lodash'
 
-function AdHoc({
-  adHocActive,
-  itemName,
-  onItemAdd,
-  onInputChange,
-  onKeyDown,
-  setAdHocActive,
-  style,
-}) {
+function AdHoc({ itemName, onItemAdd, onInputChange, onKeyDown, style }) {
   const [showPopUpButton, setShowPopUpButton] = useState(true)
   return (
     <div {...style}>
@@ -36,6 +30,12 @@ function AdHoc({
             <div
               style={{ ...defaultStyles, ...transitionStyles[state], ...style }}
             >
+              <div
+                {...style('closePopUp')}
+                onClick={() => setShowPopUpButton(true)}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </div>
               <div {...style('adHoc')}>
                 <input
                   {...style('adHocInput')}
@@ -109,6 +109,12 @@ const styled = defaultStyle(() => {
       paddingBottom: 0,
       paddingLeft: button.padding,
     },
+    closePopUp: {
+      color: color.secondary,
+      marginRight: margin.medium,
+      marginTop: margin.small,
+      textAlign: 'right',
+    },
     popUpButton: {
       backgroundColor: color.primary,
       border: `1px solid ${color.secondary}`,
@@ -124,7 +130,6 @@ const styled = defaultStyle(() => {
       right: 0,
       textAlign: 'center',
       width: '40px',
-      zIndex: 1,
     },
   }
 })
