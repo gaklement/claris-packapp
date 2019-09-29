@@ -7,7 +7,7 @@ import wizard from './wizard.png'
 
 function WelcomeScreen({ onMenuItemSelect, style }) {
   return (
-    <div>
+    <div {...style}>
       <StartButton
         icon={wizard}
         label="WIZARD STARTEN"
@@ -27,6 +27,9 @@ function WelcomeScreen({ onMenuItemSelect, style }) {
 }
 
 const styled = defaultStyle(() => ({
+  display: 'flex',
+  marginBottom: margin.large,
+  marginTop: margin.large,
   wizard: {
     action: {},
 
