@@ -9,8 +9,15 @@ import { duration } from './transitions'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { uniqueId } from 'lodash'
 
-function AdHoc({ itemName, onItemAdd, onInputChange, onKeyDown, style }) {
-  const [showPopUpButton, setShowPopUpButton] = useState(true)
+function AdHoc({
+  itemName,
+  onItemAdd,
+  onInputChange,
+  onKeyDown,
+  setShowPopUpButton,
+  showPopUpButton,
+  style,
+}) {
   return (
     <div {...style}>
       {showPopUpButton && (
@@ -146,13 +153,19 @@ const styled = defaultStyle(() => {
 })
 
 export default compose(
-  // withState('adHocActive', 'setAdHocActive', false),
+  withState('showPopUpButton', 'setShowPopUpButton', true),
   withState('itemName', 'setItemName', 'Socken'),
   withHandlers({
     onInputChange: ({ setItemName }) => ({ target }) => {
       setItemName(target.value)
     },
-    onItemAdd: ({ itemName, items, setItems, setItemName }) => () => {
+    onItemAdd: ({
+      itemName,
+      items,
+      setShowPopUpButton,
+      setItems,
+      setItemName,
+    }) => () => {
       if (!itemName) {
         return
       }
@@ -165,6 +178,7 @@ export default compose(
 
       setItems([...items, item])
       setItemName('')
+      setShowPopUpButton(true)
     },
   }),
   withHandlers({
