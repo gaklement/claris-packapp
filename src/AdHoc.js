@@ -140,6 +140,7 @@ const styled = defaultStyle(() => {
       right: 0,
       textAlign: 'center',
       width: '40px',
+      zIndex: 1,
     },
   }
 })
