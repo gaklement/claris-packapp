@@ -111,7 +111,7 @@ export default compose(
   withHandlers({
     onItemRemove: ({ items, setItems }) => removedItem => {
       const updatedItems = items.filter(item => item !== removedItem)
-      console.log('==hello', updatedItems)
+
       setItems(updatedItems)
     },
   }),

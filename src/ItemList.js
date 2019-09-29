@@ -9,6 +9,7 @@ import React from 'react'
 import { Transition } from 'react-transition-group'
 import { defaultStyle } from 'substyle'
 import { expandCollapseTransition } from './transitions'
+import sortCategories from './sortCategories'
 
 function ItemList({
   checkedOffItems,
@@ -20,13 +21,15 @@ function ItemList({
   packages,
   style,
 }) {
-  const itemGroupedByCategory = groupBy(items, item => {
+  const itemsGroupedByCategory = groupBy(items, item => {
     return item.packageIds
   })
 
+  const sortedCategories = sortCategories(itemsGroupedByCategory)
+
   return (
     <div {...style}>
-      {map(itemGroupedByCategory, (categoryGroup, categoryGroupKey) => {
+      {map(sortedCategories, (categoryGroup, categoryGroupKey) => {
         const isCollapsed = collapsedCategories.includes(categoryGroupKey)
 
         return (
