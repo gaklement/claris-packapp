@@ -6,7 +6,7 @@ import React from 'react'
 import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 
-function FavouriteButton({
+function SaveFavouriteButton({
   items,
   name,
   onNameChange,
@@ -98,4 +98,4 @@ export default compose(
     },
   }),
   styled
-)(FavouriteButton)
+)(SaveFavouriteButton)

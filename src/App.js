@@ -4,9 +4,9 @@ import { compose, lifecycle, withHandlers, withState } from 'recompose'
 
 import AdHoc from './AdHoc'
 import AllFavourites from './AllFavourites'
-import FavouriteButton from './FavouriteButton'
 import ItemList from './ItemList'
 import React from 'react'
+import SaveFavouriteButton from './SaveFavouriteButton'
 import WelcomeScreen from './WelcomeScreen'
 import WizardContainer from './WizardContainer'
 import { button } from './theme'
@@ -30,11 +30,16 @@ function App({
   return (
     <div {...style} className="App">
       <img {...style('logo')} src={ihmk} alt="logo" />
-
-      <AdHoc items={items} setItems={setItems} />
+      {selectedMenuItem === 'wizard' && (
+        <WizardContainer
+          onWizardComplete={mappedItems => {
+            setItems([...items, ...mappedItems])
+          }}
+        />
+      )}
       {selectedMenuItem === 'favourites' && (
         <div>
-          <FavouriteButton items={items} />
+          <SaveFavouriteButton items={items} />
           <AllFavourites
             setItemsFromFavourites={itemsFromFavourites =>
               setItemsFromFavourites(itemsFromFavourites)
@@ -43,6 +48,11 @@ function App({
         </div>
       )}
 
+      <WelcomeScreen
+        onMenuItemSelect={menuItem => setSelectedMenuItem(menuItem)}
+      />
+
+      <AdHoc items={items} setItems={setItems} />
       {itemsFromFavourites.length > 0 && (
         <ItemList
           items={itemsFromFavourites}
@@ -54,17 +64,6 @@ function App({
             setItemsFromFavourites(updatedItems)
           }}
           packages={packages}
-        />
-      )}
-      {selectedMenuItem === 'wizard' ? (
-        <WizardContainer
-          onWizardComplete={mappedItems => {
-            setItems([...items, ...mappedItems])
-          }}
-        />
-      ) : (
-        <WelcomeScreen
-          onMenuItemSelect={menuItem => setSelectedMenuItem(menuItem)}
         />
       )}
       {items.length > 0 && (
