@@ -1,94 +1,48 @@
-import React, { useState } from 'react'
-import { duration, transition } from './transitions'
-
-import { Transition } from 'react-transition-group'
-import { color } from './theme'
+import React from 'react'
+import StartButton from './StartButton'
 import { defaultStyle } from 'substyle'
+import favourites from './favourites.png'
+import { margin } from './theme'
 import wizard from './wizard.png'
 
-function WelcomeScreen({ onMenuItemSelect, onClick, style }) {
-  const [inProp, setInProp] = useState(true)
-
+function WelcomeScreen({ onMenuItemSelect, style }) {
   return (
     <div>
-      <Transition in={inProp} timeout={duration}>
-        {state => (
-          <div
-            style={{
-              ...defaultStyles,
-              ...transitionStyles[state],
-              ...style,
-            }}
-            onClick={() => {
-              setInProp(false)
-
-              setTimeout(() => onMenuItemSelect('wizard'), duration)
-            }}
-          >
-            <img {...style('wizard')} src={wizard} alt="wizard" />
-            <div {...style('action')}>WIZARD STARTEN</div>
-          </div>
-        )}
-      </Transition>
-      <Transition in={inProp} timeout={duration}>
-        {state => (
-          <div
-            style={{
-              ...defaultStyles,
-              ...transitionStyles[state],
-              ...style,
-            }}
-            onClick={() => {
-              setInProp(false)
-              setTimeout(() => onMenuItemSelect('favourites'), duration)
-            }}
-          >
-            <img {...style('wizard')} src={wizard} alt="wizard" />
-            <div {...style('action')}>FAVOURITEN</div>
-          </div>
-        )}
-      </Transition>
+      <StartButton
+        icon={wizard}
+        label="WIZARD STARTEN"
+        menuName="wizard"
+        onMenuItemSelect={onMenuItemSelect}
+        style={style('wizard')}
+      />
+      <StartButton
+        icon={favourites}
+        label="FAVOURITEN"
+        menuName="favourites"
+        onMenuItemSelect={onMenuItemSelect}
+        style={style('favourites')}
+      />
     </div>
   )
 }
 
-const defaultStyles = {
-  backgroundColor: color.primary,
-  border: '1px solid white',
-  borderRadius: '50%',
-  display: 'block',
-  height: 150,
-  margin: 'auto',
-  opacity: 1,
-  transition,
-  width: 150,
-}
-
-const transitionStyles = {
-  exiting: {
-    opacity: 0.2,
-  },
-  exited: {
-    opacity: 0,
-  },
-}
-
 const styled = defaultStyle(() => ({
-  action: {
-    color: 'white',
-    margin: 'auto',
-    marginTop: 5,
-    textAlign: 'center',
-    width: '50%',
-  },
-
   wizard: {
-    display: 'block',
-    height: '50%',
-    margin: 'auto',
-    marginTop: 10,
-    paddingRight: 2,
-    width: '50%',
+    action: {},
+
+    icon: {},
+  },
+  favourites: {
+    action: {
+      width: '100%',
+    },
+
+    icon: {
+      height: '40%',
+      marginBottom: margin.medium,
+      marginTop: margin.large,
+      width: '40%',
+    },
   },
 }))
 

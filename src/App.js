@@ -30,6 +30,11 @@ function App({
   return (
     <div {...style} className="App">
       <img {...style('logo')} src={ihmk} alt="logo" />
+      {!selectedMenuItem && (
+        <WelcomeScreen
+          onMenuItemSelect={menuItem => setSelectedMenuItem(menuItem)}
+        />
+      )}
       {selectedMenuItem === 'wizard' && (
         <WizardContainer
           onWizardComplete={mappedItems => {
@@ -38,19 +43,12 @@ function App({
         />
       )}
       {selectedMenuItem === 'favourites' && (
-        <div>
-          <SaveFavouriteButton items={items} />
-          <AllFavourites
-            setItemsFromFavourites={itemsFromFavourites =>
-              setItemsFromFavourites(itemsFromFavourites)
-            }
-          />
-        </div>
+        <AllFavourites
+          setItemsFromFavourites={itemsFromFavourites =>
+            setItemsFromFavourites(itemsFromFavourites)
+          }
+        />
       )}
-
-      <WelcomeScreen
-        onMenuItemSelect={menuItem => setSelectedMenuItem(menuItem)}
-      />
 
       <AdHoc items={items} setItems={setItems} />
       {itemsFromFavourites.length > 0 && (
@@ -67,12 +65,15 @@ function App({
         />
       )}
       {items.length > 0 && (
-        <div id="items">
-          <ItemList
-            items={items}
-            onItemRemove={onItemRemove}
-            packages={packages}
-          />
+        <div>
+          <div id="items">
+            <ItemList
+              items={items}
+              onItemRemove={onItemRemove}
+              packages={packages}
+            />
+          </div>
+          <SaveFavouriteButton items={items} />
         </div>
       )}
     </div>
