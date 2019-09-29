@@ -36,11 +36,11 @@ const defaultStyles = {
   border: '1px solid white',
   borderRadius: '50%',
   display: 'block',
-  height: 150,
+  height: 120,
   margin: 'auto',
   opacity: 1,
   transition,
-  width: 150,
+  width: 120,
 }
 
 const transitionStyles = {

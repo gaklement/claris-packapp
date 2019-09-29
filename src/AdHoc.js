@@ -68,7 +68,7 @@ const defaultStyles = {
   borderRadius: button.borderRadius,
   height: 0,
   opacity: 0,
-  transition: 'height 300ms ease-in-out, background-color 1000ms linear',
+  transition: 'height 300ms ease-in-out',
   zIndex: 1,
 }
 
