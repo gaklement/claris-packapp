@@ -16,18 +16,21 @@ function AdHoc({
   setAdHocActive,
   style,
 }) {
-  const [inProp, setInProp] = useState(false)
+  const [showPopUpButton, setShowPopUpButton] = useState(true)
   return (
     <div {...style}>
-      <div
-        {...style('popUp')}
-        onClick={() => {
-          setInProp(true)
-        }}
-      >
-        +
-      </div>
-      <Transition in={inProp} timeout={duration}>
+      {showPopUpButton && (
+        <div
+          {...style('popUpButton')}
+          onClick={() => {
+            setShowPopUpButton(false)
+          }}
+        >
+          +
+        </div>
+      )}
+
+      <Transition in={!showPopUpButton} timeout={duration}>
         {state => {
           return (
             <div
@@ -71,7 +74,7 @@ const transitionStyles = {
     height: 100,
     opacity: 1,
     position: 'fixed',
-    width: '93%',
+    width: '91%',
   },
   exited: {
     height: 0,
@@ -106,7 +109,7 @@ const styled = defaultStyle(() => {
       paddingBottom: 0,
       paddingLeft: button.padding,
     },
-    popUp: {
+    popUpButton: {
       backgroundColor: color.primary,
       border: `1px solid ${color.secondary}`,
       borderRadius: '20px',
