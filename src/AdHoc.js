@@ -1,7 +1,9 @@
+import React, { useState } from 'react'
 import { button, color, margin } from './theme'
 import { compose, withHandlers, withState } from 'recompose'
+import { duration, expandCollapseTransition } from './transitions'
 
-import React from 'react'
+import { Transition } from 'react-transition-group'
 import { defaultStyle } from 'substyle'
 import { uniqueId } from 'lodash'
 
@@ -14,36 +16,73 @@ function AdHoc({
   setAdHocActive,
   style,
 }) {
+  const [inProp, setInProp] = useState(false)
   return (
-    <div>
-      <div {...style('popUp')} onClick={() => setAdHocActive(true)}>
+    <div {...style}>
+      <div
+        {...style('popUp')}
+        onClick={() => {
+          setInProp(true)
+        }}
+      >
         +
       </div>
+      <Transition in={inProp} timeout={duration}>
+        {state => {
+          return (
+            <div
+              style={{ ...defaultStyles, ...transitionStyles[state], ...style }}
+            >
+              <div {...style('adHoc')}>
+                <input
+                  {...style('adHocInput')}
+                  id="adHocName"
+                  type="text"
+                  onChange={onInputChange}
+                  onKeyDown={onKeyDown}
+                  value={itemName}
+                />
 
-      {adHocActive && (
-        <div {...style('adHoc')}>
-          <input
-            {...style('adHocInput')}
-            id="adHocName"
-            type="text"
-            onChange={onInputChange}
-            onKeyDown={onKeyDown}
-            value={itemName}
-          />
-
-          <div {...style('adHocAdd')} onClick={onItemAdd}>
-            +
-          </div>
-        </div>
-      )}
+                <div {...style('adHocAdd')} onClick={onItemAdd}>
+                  +
+                </div>
+              </div>
+            </div>
+          )
+        }}
+      </Transition>
     </div>
   )
+}
+
+const defaultStyles = {
+  backgroundColor: color.primary,
+  border: `1px solid ${color.secondary}`,
+  borderBottom: 'none',
+  borderRadius: button.borderRadius,
+  height: 0,
+  opacity: 0,
+  transition: 'height 300ms ease-in-out, background-color 1000ms linear',
+}
+
+const transitionStyles = {
+  entered: {
+    bottom: 0,
+    height: 100,
+    opacity: 1,
+    position: 'fixed',
+    width: '93%',
+  },
+  exited: {
+    height: 0,
+  },
 }
 
 const styled = defaultStyle(() => {
   return {
     adHoc: {
       display: 'flex',
+      margin: margin.small,
     },
     adHocAdd: {
       backgroundColor: '#dca3a3',
@@ -82,12 +121,13 @@ const styled = defaultStyle(() => {
       right: 0,
       textAlign: 'center',
       width: '40px',
+      zIndex: 1,
     },
   }
 })
 
 export default compose(
-  withState('adHocActive', 'setAdHocActive', false),
+  // withState('adHocActive', 'setAdHocActive', false),
   withState('itemName', 'setItemName', 'Socken'),
   withHandlers({
     onInputChange: ({ setItemName }) => ({ target }) => {
