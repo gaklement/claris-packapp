@@ -1,6 +1,7 @@
 import { button, color, margin } from './theme'
 import { compose, withHandlers, withState } from 'recompose'
 
+import AdHocCategorySelect from './AdHocCategorySelect'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Transition } from 'react-transition-group'
@@ -54,27 +55,19 @@ function AdHoc({
                 vergessen willst, kannst du das hier eintragen
               </div>
               <div {...style('adHoc')}>
-                <div {...style('controls')}>
-                  <input
-                    {...style('adHocInput')}
-                    id="adHocName"
-                    type="text"
-                    onChange={onInputChange}
-                    onKeyDown={onKeyDown}
-                    value={itemName}
-                  />
-                  <select
-                    onChange={event => setSelectedCategory(event.target.value)}
-                  >
-                    {categories &&
-                      categories.map(category => {
-                        return <option>{category.name}</option>
-                      })}
-                  </select>
-                </div>
-                <div {...style('adHocAdd')} onClick={onItemAdd}>
-                  +
-                </div>
+                <input
+                  {...style('adHocInput')}
+                  id="adHocName"
+                  type="text"
+                  onChange={onInputChange}
+                  onKeyDown={onKeyDown}
+                  value={itemName}
+                />
+                <AdHocCategorySelect
+                  categories={categories}
+                  onItemAdd={onItemAdd}
+                  setSelectedCategory={setSelectedCategory}
+                />
               </div>
             </div>
           )
@@ -98,7 +91,7 @@ const defaultStyles = {
 const transitionStyles = {
   entered: {
     bottom: 0,
-    height: 120,
+    height: 140,
     opacity: 1,
     padding: margin.small,
     position: 'fixed',
@@ -107,6 +100,7 @@ const transitionStyles = {
   exited: {
     height: 0,
     bottom: 0,
+    display: 'none',
   },
 }
 
@@ -114,18 +108,8 @@ const styled = defaultStyle(() => {
   return {
     adHoc: {
       display: 'flex',
+      flexDirection: 'column',
       margin: margin.small,
-    },
-    adHocAdd: {
-      backgroundColor: '#dca3a3',
-      border: 'none',
-      borderRadius: button.borderRadius,
-      height: button.height,
-      lineHeight: `${button.height}px`,
-      marginLeft: margin.small,
-      textAlign: 'center',
-      paddingBottom: 1,
-      width: button.height,
     },
     adHocInput: {
       borderRadius: button.borderRadius,
@@ -138,14 +122,12 @@ const styled = defaultStyle(() => {
       paddingBottom: 0,
       paddingLeft: button.padding,
     },
+
     closePopUp: {
       color: color.secondary,
       marginRight: margin.medium,
       marginTop: margin.small,
       textAlign: 'right',
-    },
-    controls: {
-      flexDirection: 'column',
     },
     description: {
       color: color.secondary,
