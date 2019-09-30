@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
 import { button, color, margin } from './theme'
 import { compose, withHandlers, withState } from 'recompose'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import { Transition } from 'react-transition-group'
 import { defaultStyle } from 'substyle'
 import { duration } from './transitions'
@@ -10,10 +10,12 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { uniqueId } from 'lodash'
 
 function AdHoc({
+  categories,
   itemName,
   onItemAdd,
   onInputChange,
   onKeyDown,
+  setSelectedCategory,
   setShowPopUpButton,
   showPopUpButton,
   style,
@@ -35,7 +37,11 @@ function AdHoc({
         {state => {
           return (
             <div
-              style={{ ...defaultStyles, ...transitionStyles[state], ...style }}
+              style={{
+                ...defaultStyles,
+                ...transitionStyles[state],
+                ...style,
+              }}
             >
               <div
                 {...style('closePopUp')}
@@ -48,14 +54,24 @@ function AdHoc({
                 vergessen willst, kannst du das hier eintragen
               </div>
               <div {...style('adHoc')}>
-                <input
-                  {...style('adHocInput')}
-                  id="adHocName"
-                  type="text"
-                  onChange={onInputChange}
-                  onKeyDown={onKeyDown}
-                  value={itemName}
-                />
+                <div {...style('controls')}>
+                  <input
+                    {...style('adHocInput')}
+                    id="adHocName"
+                    type="text"
+                    onChange={onInputChange}
+                    onKeyDown={onKeyDown}
+                    value={itemName}
+                  />
+                  <select
+                    onChange={event => setSelectedCategory(event.target.value)}
+                  >
+                    {categories &&
+                      categories.map(category => {
+                        return <option>{category.name}</option>
+                      })}
+                  </select>
+                </div>
                 <div {...style('adHocAdd')} onClick={onItemAdd}>
                   +
                 </div>
@@ -84,11 +100,13 @@ const transitionStyles = {
     bottom: 0,
     height: 120,
     opacity: 1,
+    padding: margin.small,
     position: 'fixed',
-    width: '92%',
+    width: '87%',
   },
   exited: {
     height: 0,
+    bottom: 0,
   },
 }
 
@@ -126,6 +144,9 @@ const styled = defaultStyle(() => {
       marginTop: margin.small,
       textAlign: 'right',
     },
+    controls: {
+      flexDirection: 'column',
+    },
     description: {
       color: color.secondary,
       marginBottom: margin.medium,
@@ -153,15 +174,18 @@ const styled = defaultStyle(() => {
 })
 
 export default compose(
-  withState('showPopUpButton', 'setShowPopUpButton', true),
   withState('itemName', 'setItemName', 'Socken'),
+  withState('selectedCategory', 'setSelectedCategory', 'adHoc'),
+  withState('showPopUpButton', 'setShowPopUpButton', true),
   withHandlers({
     onInputChange: ({ setItemName }) => ({ target }) => {
       setItemName(target.value)
     },
     onItemAdd: ({
+      categories,
       itemName,
       items,
+      selectedCategory,
       setShowPopUpButton,
       setItems,
       setItemName,
@@ -169,11 +193,14 @@ export default compose(
       if (!itemName) {
         return
       }
+      const mappedCategoryId = categories.find(
+        category => category.name === selectedCategory
+      )
 
       const item = {
         id: uniqueId(),
         name: itemName,
-        packageIds: ['adHoc'],
+        packageIds: [mappedCategoryId.id],
       }
 
       setItems([...items, item])

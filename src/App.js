@@ -50,7 +50,7 @@ function App({
         />
       )}
 
-      <AdHoc items={items} setItems={setItems} />
+      <AdHoc items={items} categories={packages} setItems={setItems} />
       {itemsFromFavourites.length > 0 && (
         <ItemList
           items={itemsFromFavourites}
