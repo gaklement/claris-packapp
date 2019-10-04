@@ -111,7 +111,7 @@ export default [
   },
   {
     id: 'eventOrNo',
-    question: 'Fährst du auf Fest?',
+    question: 'Fährst du auf ein Fest?',
     answers: [
       {
         id: 'eventYes',
@@ -159,7 +159,7 @@ export default [
   },
   {
     id: 'workOrNo',
-    question: 'Musst du arbeiten?',
+    question: 'Musst du etwa arbeiten?',
     answers: [
       {
         id: 'workYes',
