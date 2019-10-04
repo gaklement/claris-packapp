@@ -31,6 +31,9 @@ function ItemList({
     <div {...style}>
       {map(sortedCategories, (categoryGroup, categoryGroupKey) => {
         const isCollapsed = collapsedCategories.includes(categoryGroupKey)
+        const mappedPackage = packages.find(
+          pack => pack.id === categoryGroupKey
+        )
 
         return (
           <div {...style('categoryContainer')} key={categoryGroupKey}>
@@ -40,11 +43,7 @@ function ItemList({
                 onCollapseCategory(categoryGroupKey)
               }}
             >
-              <h3 {...style('title')}>
-                {packages.find(pack => pack.id === categoryGroupKey)
-                  ? packages.find(pack => pack.id === categoryGroupKey).name
-                  : 'Auf die Schnelle'}
-              </h3>
+              <h3 {...style('title')}>{mappedPackage && mappedPackage.name}</h3>
               <FontAwesomeIcon
                 {...style('collapseIcon')}
                 icon={isCollapsed ? faChevronDown : faChevronUp}

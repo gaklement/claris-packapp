@@ -157,7 +157,7 @@ const styled = defaultStyle(() => {
 
 export default compose(
   withState('itemName', 'setItemName', 'Socken'),
-  withState('selectedCategory', 'setSelectedCategory', 'adHoc'),
+  withState('selectedCategory', 'setSelectedCategory', 'Sonstiges'),
   withState('showPopUpButton', 'setShowPopUpButton', true),
   withHandlers({
     onInputChange: ({ setItemName }) => ({ target }) => {
