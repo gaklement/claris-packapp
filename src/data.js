@@ -110,7 +110,7 @@ const data = {
     { id: 'littlePurse', name: 'Handtäschchen', packageIds: ['wedding'] },
     { id: 'makeUp', name: 'Schminke', packageIds: ['rightBeforeLeaving'] },
     { id: 'makeUpRemover', name: 'Abschminkzeug', packageIds: ['cosmetics'] },
-    { id: 'medicin', name: 'NOT OK Medizin', packageIds: ['basics'] },
+    { id: 'medicin', name: 'Medizin', packageIds: ['basics'] },
     { id: 'mirror', name: 'Spiegelchen', packageIds: ['cosmetics'] },
     { id: 'mouthWash', name: 'Mundspülung', packageIds: ['cosmetics'] },
     { id: 'nightShirt', name: 'Schlaf T-Shirt', packageIds: ['basics'] },
