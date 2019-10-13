@@ -1,6 +1,6 @@
 import * as firebase from 'firebase'
 
-// Your web app's Firebase configuration
+// Firebase configuration
 var firebaseConfig = {
   apiKey: 'AIzaSyAYTO_59ostyhXjU8_d1plmGDRrV0OJ2OE',
   authDomain: 'claris-packapp.firebaseapp.com',
@@ -14,5 +14,3 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 export const database = firebase.database()
-
-// console.log('==fireStore', firebase.fireStore)

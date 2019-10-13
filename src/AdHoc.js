@@ -182,7 +182,7 @@ export default compose(
       const item = {
         id: uniqueId(),
         name: itemName,
-        packageIds: [mappedCategoryId.id],
+        packageIds: [mappedCategoryId ? mappedCategoryId.id : 'adHoc'],
       }
 
       setItems([...items, item])

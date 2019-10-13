@@ -17,11 +17,13 @@ import { initializeTestData } from './dataUtils'
 import { values } from 'lodash'
 
 function App({
+  checkedOffItems,
   items,
   itemsFromFavourites,
   onItemRemove,
   packages,
   selectedMenuItem,
+  setCheckedOffItems,
   setItems,
   setItemsFromFavourites,
   setSelectedMenuItem,
@@ -44,15 +46,20 @@ function App({
       )}
       {selectedMenuItem === 'favourites' && (
         <AllFavourites
+          checkedOffItems={checkedOffItems}
+          items={items}
+          itemsFromFavourites={itemsFromFavourites}
           setItemsFromFavourites={itemsFromFavourites =>
             setItemsFromFavourites(itemsFromFavourites)
           }
+          setCheckedOffItems={setCheckedOffItems}
         />
       )}
 
       <AdHoc items={items} categories={packages} setItems={setItems} />
       {itemsFromFavourites.length > 0 && (
         <ItemList
+          checkedOffItems={checkedOffItems}
           items={itemsFromFavourites}
           onItemRemove={removedItem => {
             const updatedItems = itemsFromFavourites.filter(
@@ -62,18 +69,24 @@ function App({
             setItemsFromFavourites(updatedItems)
           }}
           packages={packages}
+          setCheckedOffItems={setCheckedOffItems}
         />
       )}
       {items.length > 0 && (
         <div>
           <div id="items">
             <ItemList
+              checkedOffItems={checkedOffItems}
               items={items}
               onItemRemove={onItemRemove}
               packages={packages}
+              setCheckedOffItems={setCheckedOffItems}
             />
           </div>
-          <SaveFavouriteButton items={items} />
+          <SaveFavouriteButton
+            checkedOffItems={checkedOffItems}
+            items={items}
+          />
         </div>
       )}
     </div>
@@ -104,6 +117,7 @@ const styled = defaultStyle(() => {
 })
 
 export default compose(
+  withState('checkedOffItems', 'setCheckedOffItems', []),
   withState('items', 'setItems', []),
   withState('itemsFromFavourites', 'setItemsFromFavourites', []),
   withState('selectedMenuItem', 'setSelectedMenuItem', ''),

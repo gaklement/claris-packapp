@@ -7,7 +7,6 @@ import { database } from './firebase'
 import { defaultStyle } from 'substyle'
 
 function SaveFavouriteButton({
-  items,
   name,
   onNameChange,
   onSaveToFavourites,
@@ -55,7 +54,6 @@ const styled = defaultStyle(() => {
       height: button.height,
       lineHeight: `${button.height}px`,
       opacity: 0.6,
-      paddingBottom: 0,
       paddingLeft: button.padding,
     },
     favouriteAdd: {
@@ -72,6 +70,13 @@ const styled = defaultStyle(() => {
   }
 })
 
+function extendByCheckedOffProperty(checkedOffItems, items) {
+  return items.map(item => ({
+    ...item,
+    isCheckedOff: item.isCheckedOff || checkedOffItems.includes(item),
+  }))
+}
+
 export default compose(
   withState('name', 'setName', ''),
   withState('showSavedHint', 'setShowSavedHint', false),
@@ -79,10 +84,21 @@ export default compose(
     onNameChange: ({ setName }) => ({ target }) => {
       setName(target.value)
     },
-    onSaveToFavourites: ({ items, name, setShowSavedHint }) => () => {
+    onSaveToFavourites: ({
+      checkedOffItems,
+      items,
+      itemsFromFavourites = [],
+      name,
+      setShowSavedHint,
+    }) => () => {
       if (!name) {
         return
       }
+
+      const itemsWithCheckedOff = extendByCheckedOffProperty(checkedOffItems, [
+        ...items,
+        ...itemsFromFavourites,
+      ])
 
       let favourites
 
@@ -91,7 +107,7 @@ export default compose(
 
         database
           .ref(`favourites/${name}`)
-          .set(uniqBy([...items, ...favourites], 'id'), () => {
+          .set(uniqBy([...itemsWithCheckedOff, ...favourites], 'id'), () => {
             setShowSavedHint(true)
           })
       })

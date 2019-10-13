@@ -112,7 +112,6 @@ const styled = defaultStyle(() => {
 })
 
 export default compose(
-  withState('checkedOffItems', 'setCheckedOffItems', []),
   withState('collapsedCategories', 'setCollapsedCategories', []),
   withHandlers({
     onClickItemCheck: ({ checkedOffItems, setCheckedOffItems }) => (

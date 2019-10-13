@@ -1,9 +1,8 @@
-import { color, margin } from './theme'
-
 import Item from './Item'
 import React from 'react'
 import { defaultStyle } from 'substyle'
 import { map } from 'lodash'
+import { margin } from './theme'
 
 function Items({
   categoryGroup,
@@ -33,11 +32,8 @@ function Items({
 }
 
 const styled = defaultStyle(() => ({
-  // backgroundColor: color.quattronary,
   padding: margin.small,
   paddingTop: margin.large,
-  // border: '1px solid lightgrey',
-  // borderTop: 0,
 }))
 
 export default styled(Items)
